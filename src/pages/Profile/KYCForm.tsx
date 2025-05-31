@@ -14,7 +14,7 @@ import { CheckCircle, Upload, AlertCircle, ChevronRight, ChevronLeft, X } from "
 import Button from "@/components/Button";
 
 
-export default function Kyc() {
+export default function KycForm() {
 
   // Form state
   const [step, setStep] = useState<number>(1);
@@ -180,7 +180,7 @@ export default function Kyc() {
     userKyc.mutate(formData, {
       onSuccess: (response) => {
         toast.success(response.message || "Your identity has been successfully verified!");
-        navigate('/pin');
+        navigate('/user/account');
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (error: any) => {

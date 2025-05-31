@@ -1,5 +1,5 @@
 //Component
-import Kyc from "../Kyc/Form";
+import KycForm from "./KYCForm";
 import Done from "./Done";
 
 //Icons
@@ -14,7 +14,7 @@ const KYC = ({ user }: { user: User }) => {
                         <Information variant="Bulk" size={24} className="text-primary animate-bounce shrink-0" />
                         <h1 className="text-sm md:text-base xl:text-lg text-center">We regret to inform you that your previous KYC submission was rejected. To avoid any disruption to your account, please resubmit the required documentation at your earliest convenience.</h1>
                     </div>
-                    <Kyc />
+                    <KycForm />
                 </div>
             )}
             {user.kyc && (user.kyc.status === 'pending' || !user.kyc.status) && (

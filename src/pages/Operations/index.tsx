@@ -1,7 +1,7 @@
 const index = () => {
     return ( 
-        <main>
-            
+        <main className="flex justify-center items-center">
+
         </main>
      );
 }

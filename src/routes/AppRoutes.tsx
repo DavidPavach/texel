@@ -8,6 +8,7 @@ import Login from "@/pages/Login";
 import Create from "@/pages/Create";
 import Verification from '@/pages/Verification';
 import Kyc from '@/pages/Kyc';
+import Pin from '@/pages/Pin';
 import HomePage from "@/pages/HomePage";
 import NotFound from '@/components/Not-Found';
 import Operations from '@/pages/Operations';
@@ -35,6 +36,7 @@ const AppRoutes = () => {
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/kyc" element={<Kyc />} />
+                <Route path="/pin" element={<Pin />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/operations" element={<Operations />} />
