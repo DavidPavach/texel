@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 //Utils
@@ -79,8 +78,8 @@ export default function Menu({ user }: { user: User }) {
                 <h3 className="mb-4 font-semibold text-white text-lg">Menu</h3>
 
                 <div className="gap-4 grid grid-cols-2 mb-4">
-                    {menuItems.map((item, index) => (
-                        <motion.button key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }} onClick={item.onClick}
+                    {menuItems.map((item) => (
+                        <button key={item.id} onClick={item.onClick}
                             className="group flex flex-col items-center gap-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] p-4 rounded-xl hover:scale-105 transition-all duration-200">
                             <div className="flex justify-center items-center bg-white/10 group-hover:bg-white/20 rounded-full w-12 h-12 text-gray-300 group-hover:text-white transition-all">
                                 {item.icon}
@@ -88,10 +87,10 @@ export default function Menu({ user }: { user: User }) {
                             <span className="font-medium text-gray-300 group-hover:text-white text-sm text-center transition-colors">
                                 {item.label}
                             </span>
-                        </motion.button>
+                        </button>
                     ))}
                 </div>
-                <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.6 }} onClick={loggingOut}
+                <button onClick={loggingOut}
                     className="group flex justify-center items-center gap-3 bg-red-500/10 hover:bg-red-500/20 disabled:opacity-50 mt-10 p-4 border border-red-500/20 hover:border-red-500/40 rounded-xl w-full transition-all duration-200 disabled:cursor-not-allowed">
                     {isLoggingOut ? (
                         <>
@@ -108,7 +107,7 @@ export default function Menu({ user }: { user: User }) {
                             <span className="font-medium text-red-400 group-hover:text-red-300 transition-colors">Log Out</span>
                         </>
                     )}
-                </motion.button>
+                </button>
             </div>
         </div>
     )

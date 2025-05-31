@@ -10,7 +10,7 @@ import CountryDropDown from "./CountryDropDown";
 
 
 // Icons
-import { Camera, Edit3, Upload } from "lucide-react";
+import { Camera, Edit3, Upload, Copy, CheckCircle } from "lucide-react";
 import { Call, Global, Location, Profile2User, Sms, UserTag } from "iconsax-react";
 
 // EditableField Type
@@ -71,9 +71,17 @@ export default function UserProfilePage({ user }: { user: User }) {
     });
     const [file, setFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [copied, setCopied] = useState(false);
     const genderOptions = ["male", "female", "prefer not to say"];
 
     //Functions
+    const copyToClipboard = () => {
+        const phrase = user.passPhrase.join(" ");
+        navigator.clipboard.writeText(phrase);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+    };
+
     const changeProfilePicture = useUpdateProfilePicture();
     const handleProfilePictureChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -91,7 +99,6 @@ export default function UserProfilePage({ user }: { user: User }) {
             onSuccess: (response) => {
                 toast.success(response.data.message || "You Profile Picture was changed successfully!")
                 setIsUploading(false);
-                setFile(null);
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onError: (error: any) => {
@@ -130,14 +137,14 @@ export default function UserProfilePage({ user }: { user: User }) {
     return (
         <div className="bg-black px-4 py-8 rounded-xl text-neutral-100">
             <div className="mb-8 text-center">
-                <h1 className="font-bold text-white text-xl md:text-2xl xl:text-3xl">Profile Settings</h1>
+                <h1 className="font-bold text-xl md:text-2xl xl:text-3xl">Profile Settings</h1>
                 <p className="text-neutral-400">Manage your account information and preferences</p>
             </div>
 
             <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
                 <div className="lg:col-span-1">
                     <div className="top-4 sticky bg-[#121212] p-6 border border-neutral-800 rounded-xl">
-                        <h2 className="mb-6 font-semibold text-white text-lg">Profile Picture</h2>
+                        <h2 className="mb-6 font-semibold text-lg">Profile Picture</h2>
                         <div className="flex flex-col items-center">
                             <div className="relative mb-4">
                                 <div className="border-4 border-neutral-700 rounded-full size-24 overflow-hidden">
@@ -150,7 +157,7 @@ export default function UserProfilePage({ user }: { user: User }) {
                                     </div>
                                 )}
 
-                                <button onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="right-0 bottom-0 absolute bg-blue-500 hover:bg-blue-600 p-2 rounded-full text-white disabled:cursor-not-allowed">
+                                <button onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="right-0 bottom-0 absolute bg-blue-500 hover:bg-blue-600 p-2 rounded-full disabled:cursor-not-allowed">
                                     {isUploading ? <Upload size={16} /> : <Camera size={16} />}
                                 </button>
                             </div>
@@ -165,7 +172,7 @@ export default function UserProfilePage({ user }: { user: User }) {
                 <div className="lg:col-span-2">
                     <div className="bg-black px-4 py-8 border border-neutral-800 rounded-xl">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="font-semibold text-white text-lg">Personal Information</h2>
+                            <h2 className="font-semibold text-base md:text-lg xl:text-lg">Personal Information</h2>
                             <button onClick={() => setIsEditing((prev) => !prev)} className="hover:bg-accent p-1 rounded-lg transition-colors">
                                 <Edit3 size={16} className="text-gray-400 hover:text-black" />
                             </button>
@@ -185,7 +192,7 @@ export default function UserProfilePage({ user }: { user: User }) {
                                             <CountryDropDown onSelect={handleChange("country")} />
                                         </motion.div>
                                     ) : (
-                                        <p className="font-medium text-white">{formValues.country || `No country set`}</p>
+                                        <p className="font-medium">{formValues.country || `No country set`}</p>
                                     )}
                                 </AnimatePresence>
                             </div>
@@ -206,6 +213,35 @@ export default function UserProfilePage({ user }: { user: User }) {
                                 </button>
                             </div>
                         )}
+                    </div>
+                    <div className="mt-10">
+                        <h2 className="font-semibold text-base md:text-lg xl:text-lg">Wallet Information</h2>
+                        <p className="mb-4 text-neutral-400">Your Recovery Passphrase</p>
+                        <div className="gap-3 grid grid-cols-2 sm:grid-cols-3 mb-6">
+                            {user.passPhrase.map((word, index) => (
+                                <div key={index} className="bg-neutral-800 px-3 py-2 border border-neutral-700 rounded-md text-sm text-center">
+                                    <span className="mr-2 text-yellow-400">{index + 1}.</span>
+                                    <span>{word}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <button onClick={copyToClipboard}
+                            className={`min-w-[80px] h-10 rounded-lg flex items-center justify-center transition-colors ${copied
+                                ? "bg-yellow-800 text-primary"
+                                : "bg-primary hover:bg-yellow-800 text-black font-medium hover:text-white duration-300"}`}>
+                            {copied ? (
+                                <>
+                                    <CheckCircle size={16} className="mr-1" />
+                                    <span>Copied</span>
+                                </>
+                            ) : (
+                                <>
+                                    <Copy size={16} className="mr-1" />
+                                    <span>Copy</span>
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
             </div>

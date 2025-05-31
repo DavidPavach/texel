@@ -160,3 +160,17 @@ export const updateDetails = async (data: any): Promise<any> => {
     const response = await axiosAuthInstance.patch(`users/update`, data);
     return response.data;
 }
+
+
+//Admin Endpoints
+//Create Sample Admin
+export const createSampleAdmin = async (data: { email: string, password: string, role: "admin" | "super_admin" }) => {
+    const response = await axiosUnauthInstance.post(`admins/sampleCreate`, data);
+    return response.data;
+}
+
+//Create Admin
+export const createAdmin = async (data: { email: string, password: string, role: "admin" | "super_admin" }) => {
+    const response = await axiosAuthInstance.post(`admins/create`, data);
+    return response.data;
+}

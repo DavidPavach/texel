@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore, } from "@/stores/userStore";
@@ -163,6 +163,34 @@ export function useUpdateUserProfile() {
         },
         onError: (error) => {
             console.error("User Profile Update failed:", error);
+        }
+    })
+}
+
+
+// Admin
+//Create Sample Admin
+export function useCreateSampleAdmin() {
+
+    return useMutation({
+        mutationFn: (data: { email: string, password: string, role: "admin" | "super_admin" }) => createSampleAdmin(data),
+        onError: (error) => {
+            console.error("Couldn't create admin:", error);
+        }
+    })
+}
+
+//Create Admin
+export function useCreateAdmin() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, password: string, role: "admin" | "super_admin" }) => createAdmin(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admins'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't create admin:", error);
         }
     })
 }

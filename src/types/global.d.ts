@@ -36,7 +36,7 @@ declare type User = {
     address?: string;
     phoneNumber: string;
     encryptedPassword: string;
-    passPhrase: string;
+    passPhrase: string[];
     accountId: string;
     gender?: 'male' | 'female' | 'prefer not to say';
     kyc?: {

@@ -22,7 +22,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [copied, setCopied] = useState<boolean>(false);
     const [enabled, setEnabled] = useState<boolean>(false);
-    const [timeLeft, setTimeLeft] = useState(5 * 60);
+    const [timeLeft, setTimeLeft] = useState(10);
 
     //Constants
     const address = getWallet["ethereum"].walletAddress;

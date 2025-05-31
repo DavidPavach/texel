@@ -15,7 +15,6 @@ export default function Receive({ coin }: { coin: string }) {
     const currencySymbol = coinMeta[coin].symbol;
     const currencyLogo = coinMeta[coin].logo;
     const address = getWallet[coin].walletAddress;
-    const networkFee = getWallet[coin].networkFee;
     const estimatedTime = getWallet[coin].estimatedTime;
     const coinQrCode = getWallet[coin].qrCode;
     const coinNetwork = getWallet[coin].network;
@@ -102,11 +101,7 @@ export default function Receive({ coin }: { coin: string }) {
                         </button>
                     </div>
 
-                    <div className="gap-3 grid grid-cols-3 mt-6 w-full">
-                        <div className="bg-[#1E1E1E] p-3 rounded-lg">
-                            <p className="mb-1 text-neutral-400 text-xs">Network Fee</p>
-                            <p className="font-medium text-white text-sm">{networkFee} {currency}</p>
-                        </div>
+                    <div className="gap-3 grid grid-cols-2 mt-6 w-full">
                         <div className="bg-[#1E1E1E] p-3 rounded-lg">
                             <p className="mb-1 text-neutral-400 text-xs">Estimated Time</p>
                             <p className="font-medium text-white text-sm">{estimatedTime}</p>

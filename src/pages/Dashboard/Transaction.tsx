@@ -26,7 +26,7 @@ const Transaction = () => {
                     ))}
                 </div>
             ) : (
-                <TransactionActivityCard title="Recent Activity" transactions={data.data.data} />
+                <TransactionActivityCard title="Recent Activity" transactions={data.data} />
             )}
         </main>
     );
