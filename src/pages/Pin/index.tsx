@@ -44,7 +44,7 @@ const Index = () => {
                 {isError &&
                     <ErrorDisplay onRetry={refetch} isFullPage={false} title="Transaction Pin Failed" message="We couldn't load your transaction pin page data. Click below to try again." retryLabel="Reload" />
                 }
-                {user && <Form encryptedPassword={user.encryptedPassword} email={user.email} />}
+                {user && <Form email={user.email} />}
             </div>
             <div className="hidden lg:block relative p-2 w-[50%] h-dvh">
                 <Link to="/" className="group top-8 right-8 z-[2] absolute place-items-center grid bg-white rounded-[50%] size-10">
