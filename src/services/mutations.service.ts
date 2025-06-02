@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore, } from "@/stores/userStore";
@@ -79,8 +79,12 @@ export function useVerifyUser() {
 //Kyc
 export function useUserKyc() {
 
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (data: FormData) => userKycFn(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+        },
         onError: (error) => {
             console.error("User Kyc failed:", error);
         }
@@ -191,6 +195,20 @@ export function useCreateAdmin() {
         },
         onError: (error) => {
             console.error("Couldn't create admin:", error);
+        }
+    })
+}
+
+// Authenticate Admin
+export function useLoginAdmin() {
+
+    return useMutation({
+        mutationFn: (data: { email: string, password: string }) => loginAdmin(data),
+        onError: (error) => {
+            console.error("Admin Login failed:", error);
+        },
+        onSuccess: async (response) => {
+            setTokens(response.data.accessToken);
         }
     })
 }

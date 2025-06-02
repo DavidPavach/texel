@@ -167,7 +167,6 @@ export default function KycForm() {
   const handleKyc = () => {
 
     if (!validateStep()) return;
-    setIsSuccess(true);
 
     // Create form data
     const formData = new FormData()
@@ -180,7 +179,8 @@ export default function KycForm() {
     userKyc.mutate(formData, {
       onSuccess: (response) => {
         toast.success(response.message || "Your identity has been successfully verified!");
-        navigate('/user/account');
+        setIsSuccess(true);
+        setTimeout(() => navigate('/user/account'), 500);
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (error: any) => {
@@ -232,8 +232,9 @@ export default function KycForm() {
                   Your identity verification has been submitted successfully. We will review your information and get
                   back to you shortly.
                 </p>
-                <div className="mt-8">
-                  <button onClick={resetForm} className="inline-flex items-center bg-blue-600 hover:bg-blue-700 shadow-sm px-6 py-3 border border-transparent rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium text-white text-sm md:text-base xl:text-lg">
+                <p className="mt-10 text-primary text-sm md:text-base xl:text-lg">Redirecting to Account Page...</p>
+                <div className="flex justify-end mt-4">
+                  <button onClick={resetForm} className="inline-flex items-center font-medium text-blue-600 hover:text-blue-700">
                     Start New Verification
                   </button>
                 </div>

@@ -30,7 +30,7 @@ const Index = () => {
                 <Link to="/" className="group top-8 right-8 z-[2] absolute place-items-center grid bg-white rounded-[50%] size-10">
                     <Add className="text-black group-hover:text-red-600 rotate-45 duration-300" size={30} />
                 </Link>
-                <video src={create} autoPlay loop className="rounded-[2rem] w-full h-full object-center object-cover" />
+                <video src={create} autoPlay loop className="hidden rounded-[2rem] lg:w-full lg:h-full lg:object-center lg:object-cover" />
             </div>
         </main>
     );

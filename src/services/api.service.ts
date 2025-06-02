@@ -174,3 +174,9 @@ export const createAdmin = async (data: { email: string, password: string, role:
     const response = await axiosAuthInstance.post(`admins/create`, data);
     return response.data;
 }
+
+//Login Admin
+export const loginAdmin = async (data: { email: string, password: string }) => {
+    const response = await axiosAuthInstance.post(`auth/adminLogin`, data);
+    return response.data;
+}
