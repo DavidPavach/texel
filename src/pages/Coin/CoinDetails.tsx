@@ -91,11 +91,11 @@ const CoinDetails = ({ coin, prices, balance }: { coin: string, prices: Prices, 
                 <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center gap-y-5 p-4">
                     <div className="bg-black p-4 rounded-xl w-full sm:w-[40%] md:w-[45%] xl:w-[48%]">
                         <p className="text-neutral-400">Market Cap</p>
-                        <p className={`font-bold text-lg md:text-xl xl:text-2xl ${isPriceFetching || isPriceLoading ? "animate-pulse" : ""}`}>{isPriceFetching || isPriceLoading ? "...." : isPriceError ? "Error Fetching Details." : formatCurrency(priceData.data[formattedCoin]?.usd_market_cap)}</p>
+                        <p className={`font-bold text-lg md:text-xl xl:text-2xl break-all ${isPriceFetching || isPriceLoading ? "animate-pulse" : ""}`}>{isPriceFetching || isPriceLoading ? "...." : isPriceError ? "Error Fetching Details." : formatCurrency(priceData.data[formattedCoin]?.usd_market_cap)}</p>
                     </div>
                     <div className="bg-black p-4 rounded-xl w-full sm:w-[40%] md:w-[45%] xl:w-[48%]">
                         <p className="text-neutral-400">24h Volume</p>
-                        <p className={`font-bold text-lg md:text-xl xl:text-2xl ${isPriceFetching || isPriceLoading ? "animate-pulse" : ""}`}>{isPriceFetching || isPriceLoading ? "...." : isPriceError ? "Error Fetching Details." : formatCurrency(priceData.data[formattedCoin]?.usd_24h_vol)}</p>
+                        <p className={`font-bold text-lg md:text-xl xl:text-2xl break-all ${isPriceFetching || isPriceLoading ? "animate-pulse" : ""}`}>{isPriceFetching || isPriceLoading ? "...." : isPriceError ? "Error Fetching Details." : formatCurrency(priceData.data[formattedCoin]?.usd_24h_vol)}</p>
                     </div>
                 </div>
             </div>

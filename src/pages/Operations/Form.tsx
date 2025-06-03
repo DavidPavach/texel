@@ -41,7 +41,7 @@ const Form = () => {
     return (
         <main className="bg-lightBlack p-4 rounded-xl w-full max-w-2xl text-neutral-100">
             <h1 className="my-4 font-semibold text-lg md:text-xl xl:text-2xl">Create Admin</h1>
-            <form action="" className="flex flex-col gap-y-3">
+            <form className="flex flex-col gap-y-3">
                 <input type="email" value={formValues.email} onChange={handleChange("email")} autoFocus placeholder="Enter new admin Email" className="bg-black disabled:bg-red-800/10 px-4 py-3 border border-neutral-800 rounded-xl focus:outline-none w-full text-sm md:text-base xl:text-lg duration-300 focus:caret-primary" />
                 <input type="text" value={formValues.password} onChange={handleChange("password")} autoFocus placeholder="Enter new admin Password" className="bg-black disabled:bg-red-800/10 px-4 py-3 border border-neutral-800 rounded-xl focus:outline-none w-full text-sm md:text-base xl:text-lg duration-300 focus:caret-primary" />
                 <select value={formValues.role} onChange={handleChange("role")} className="bg-black px-4 py-3 border border-neutral-800 rounded-xl focus:outline-none w-full text-sm md:text-base xl:text-lg capitalize duration-300 focus:caret-primary">

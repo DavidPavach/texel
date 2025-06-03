@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { getAllTransactions, getCardRequest, getCoinPrice, getCoinTransactions, getPrices, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnectStats } from "./api.service";
+import { getAdminDetails, getAllTransactions, getCardRequest, getCoinPrice, getCoinTransactions, getPrices, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnectStats } from "./api.service";
 
 //Get Current logged In User Details
 export function GetUserDetails() {
@@ -72,5 +72,14 @@ export function GetCardRequest() {
     return useQuery({
         queryKey: ['cardRequest'],
         queryFn: () => getCardRequest()
+    })
+}
+
+//Admin Endpoints
+//Get current logged in admin
+export function GetAdminDetails() {
+    return useQuery({
+        queryKey: ['adminDetails'],
+        queryFn: () => getAdminDetails()
     })
 }

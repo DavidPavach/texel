@@ -50,7 +50,7 @@ const Form = ({ email }: { email: string }) => {
 
     return (
         <main className="mt-10 text-neutral-100">
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex flex-col gap-y-6 bg-lightBlack px-6 py-8 rounded-xl w-full">
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex flex-col gap-y-6 bg-lightBlack px-6 py-8 rounded-2xl w-full">
                 <div className="text-center">
                     <h2 className="font-semibold text-lg md:text-xl xl:text-2xl">Enter New Transaction PIN</h2>
                     <p className="mt-1 text-neutral-400">Please enter a new PIN to facilitate secure transactions.</p>

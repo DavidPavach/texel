@@ -12,6 +12,7 @@ import Pin from '@/pages/Pin';
 import HomePage from "@/pages/HomePage";
 import NotFound from '@/components/Not-Found';
 import Operations from '@/pages/Operations';
+import Unauthorised from '@/pages/Unauthorised';
 
 //User Pages
 import Dashboard from '@/pages/Dashboard';
@@ -21,11 +22,22 @@ import Buy from '@/pages/Buy';
 import Profile from '@/pages/Profile';
 import Connect from '@/pages/Connect';
 import Transactions from '@/pages/Transactions';
+import AdminLayout from '@/Layouts/AdminLayout';
+
+//Admin Page
+import AdminTransactions from '@/pages/Admin/Transactions';
+
 
 const User = () => (
     <UserLayout>
         <Outlet />
     </UserLayout>
+)
+
+const Admin = () => (
+    <AdminLayout>
+        <Outlet />
+    </AdminLayout>
 )
 
 const AppRoutes = () => {
@@ -40,6 +52,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/operations" element={<Operations />} />
+                <Route path="/unauthorised" element={<Unauthorised />} />
 
                 {/* User Routes */}
                 <Route path="/user" element={<User />}>
@@ -52,6 +65,10 @@ const AppRoutes = () => {
                     <Route path="transactions" element={<Transactions />} />
                 </Route>
 
+                {/* Admin Routes */}
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="transactions" element={<AdminTransactions />} />
+                </Route>
             </Routes>
         </Router>
     );

@@ -180,3 +180,9 @@ export const loginAdmin = async (data: { email: string, password: string }) => {
     const response = await axiosAuthInstance.post(`auth/adminLogin`, data);
     return response.data;
 }
+
+//Get logged Admin Details
+export const getAdminDetails = async () => {
+    const result = await axiosAuthInstance.get<Admin>(`admins/getDetails`);
+    return result.data;
+}

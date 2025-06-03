@@ -122,23 +122,43 @@ declare type DrawerProps = {
 
 //Featured Exchange
 declare type FeaturedExchangeProps = {
-    name: string
-    logo: string
-    description: string
-    videoId: string
-    url: string
-    features: string[]
+    name: string;
+    logo: string;
+    description: string;
+    videoId: string;
+    url: string;
+    features: string[];
 }
 
 //Exchange
 declare type ExchangeCardProps = {
-    name: string
-    logo: string
-    description: string
-    videoId: string
-    features: string[]
-    paymentMethods: string[]
-    processingTime: string
-    securityLevel: "high" | "medium" | "low"
-    url: string
+    name: string;
+    logo: string;
+    description: string;
+    videoId: string;
+    features: string[];
+    paymentMethods: string[];
+    processingTime: string;
+    securityLevel: "high" | "medium" | "low";
+    url: string;
+}
+
+
+// Admin Types
+//Admin
+declare type Admin = {
+    _id: string;
+    email: string;
+    password: string;
+    isSuspended: boolean;
+    role: "admin" | "super_admin";
+    encryptedPassword: string;
+    adminId: string;
+}
+
+declare type AdminStore = {
+    admin: Admin | null;
+    setAdmin: (admin: Admin) => void;
+    refetchAdminData: () => Promise<void>;
+    clearAdmin: () => void;
 }

@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails } from "./api.service";
 
 //Stores, Utils, Enums
-import { calculateTotalUsd, useUserStore, } from "@/stores/userStore";
-import { setTokens } from "@/lib/token";
+import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
+import { useAdminStore } from "@/stores/adminStore";
+import { setAdminTokens, setTokens } from "@/lib/token";
 
 //Authenticate Users
 export function useAuthUser() {
@@ -202,13 +203,16 @@ export function useCreateAdmin() {
 // Authenticate Admin
 export function useLoginAdmin() {
 
+    const { setAdmin } = useAdminStore();
     return useMutation({
         mutationFn: (data: { email: string, password: string }) => loginAdmin(data),
         onError: (error) => {
             console.error("Admin Login failed:", error);
         },
         onSuccess: async (response) => {
-            setTokens(response.data.accessToken);
+            setAdminTokens(response.data.accessToken);
+            const admin = await getAdminDetails();
+            setAdmin(admin);
         }
     })
 }
