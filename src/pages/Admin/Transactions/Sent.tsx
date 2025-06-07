@@ -1,17 +1,18 @@
 import { useState } from "react";
 
-//Hooks
-import TransactionActivityCard from "../Dashboard/TransactionCard";
+//Services
+import { GetTransactions } from "@/services/queries.service";
 
 //Components
-import { GetAllTransactions } from "@/services/queries.service";
 import ErrorDisplay from "@/components/Error";
+import Table from "./Table";
 import PaginationControls from "@/components/Pagination";
 
-const Transaction = () => {
+
+const Sent = ({ prices }: { prices: Prices }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const { data, isLoading, isError, isFetching, refetch } = GetAllTransactions(currentPage.toString(), "20");
+    const { data, isFetching, isLoading, isError, refetch } = GetTransactions("sent", currentPage.toString(), "20")
 
     const transactions = data?.data?.data || [];
     const totalPages = data?.data?.pagination?.pages || 1;
@@ -24,11 +25,12 @@ const Transaction = () => {
 
     return (
         <main>
+            <p className="mt-4 font-semibold text-neutral-100 text-lg md:text-xl xl:text-2xl">Sent Transactions Table</p>
             {isError ? (
-                <ErrorDisplay onRetry={() => refetch()} isFullPage={true} title="Recent Activity Failed" message="We couldn't load your recent activity. Click below to try again." retryLabel="Reload Transactions" />
+                <ErrorDisplay onRetry={() => refetch()} isFullPage={true} title="Sent Transactions Failed" message="We couldn't load your sent transactions. Click below to try again." retryLabel="Reload Transactions" />
             ) : isLoading || isFetching ? (
                 <div className="flex flex-col gap-y-5 mt-4 px-4 pb-4">
-                    {[...Array(3)].map((_, i) => (
+                    {[...Array(5)].map((_, i) => (
                         <div key={i} className="flex items-center space-x-3">
                             <div className="bg-neutral-800 rounded-full size-8 animate-pulse"></div>
                             <div className="flex-1">
@@ -39,8 +41,8 @@ const Transaction = () => {
                     ))}
                 </div>
             ) : (
-                <div className="mt-10 px-4 pb-8">
-                    <TransactionActivityCard title="All Transactions" transactions={transactions} />
+                <div className="mt-10">
+                    <Table transactions={transactions} prices={prices} />
                     {totalPages > 1 && (
                         <PaginationControls currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                     )}
@@ -48,6 +50,6 @@ const Transaction = () => {
             )}
         </main>
     );
-};
+}
 
-export default Transaction;
+export default Sent;

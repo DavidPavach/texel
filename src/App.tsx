@@ -22,7 +22,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <AppRoutes />
         <ReactQueryDevtools initialIsOpen={false} />
-        <ToastContainer position="top-center" isPausedOnHover={true} duration={10000} /> 
+        <ToastContainer position="top-center" isPausedOnHover={true} duration={5000} /> 
       </QueryClientProvider>
     </main>
    );

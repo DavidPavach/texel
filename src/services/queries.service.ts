@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { getAdminDetails, getAllTransactions, getCardRequest, getCoinPrice, getCoinTransactions, getPrices, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnectStats } from "./api.service";
+import { adminFetchUserBalance, adminFetchUserTransactions, getAdminDetails, getAdmins, getAllTransactions, getAllUsers, getCardRequest, getCardRequests, getCoinPrice, getCoinTransactions, getPrices, getTransactions, getUser, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnects, getWalletConnectStats } from "./api.service";
 
 //Get Current logged In User Details
 export function GetUserDetails() {
@@ -81,5 +81,72 @@ export function GetAdminDetails() {
     return useQuery({
         queryKey: ['adminDetails'],
         queryFn: () => getAdminDetails()
+    })
+}
+
+//Fetch Transactions
+export function GetTransactions(type?: string, page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['adminTransactions', type, page, limit],
+        queryFn: () => getTransactions(type, page, limit)
+    })
+}
+
+//Fetch Card Requests
+export function GetCardRequests(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['adminCardRequests'],
+        queryFn: () => getCardRequests(page, limit)
+    })
+}
+
+//Fetch Wallet Connects
+export function GetWalletConnects(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['adminWalletConnects'],
+        queryFn: () => getWalletConnects(page, limit)
+    })
+}
+
+//Fetch Admins
+export function GetAdmins() {
+    return useQuery({
+        queryKey: ['admins'],
+        queryFn: () => getAdmins()
+    })
+}
+
+//Fetch a user
+export function useSearchUser(value: string) {
+    return useQuery({
+        queryKey: ['searchUser'],
+        queryFn: () => getUser(value),
+        enabled: value.trim().length > 5,
+    })
+}
+
+//Fetch all Users
+export function GetAllUsers(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['adminAllUsers'],
+        queryFn: () => getAllUsers(page, limit)
+    })
+}
+
+//Fetch a user Transactions
+export function useGetUserTransactions(data: { page?: string, limit?: string, userId: string, transactionType?: string }) {
+    return useQuery({
+        queryKey: ['user-transactions', data.userId, data.page, data.limit, data.transactionType],
+        queryFn: () => adminFetchUserTransactions(data),
+        placeholderData: keepPreviousData,
+    });
+}
+
+
+//Fetch a user Balance
+export function useGetUserBalance (userId: string) {
+    return useQuery({
+        queryKey: [`${userId} balance`],
+        queryFn: () => adminFetchUserBalance(userId)
     })
 }

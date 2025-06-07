@@ -26,6 +26,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 
 //Admin Page
 import AdminTransactions from '@/pages/Admin/Transactions';
+import AdminUsers from '@/pages/Admin/Users';
 
 
 const User = () => (
@@ -68,6 +69,7 @@ const AppRoutes = () => {
                 {/* Admin Routes */}
                 <Route path="/admin" element={<Admin />}>
                     <Route path="transactions" element={<AdminTransactions />} />
+                    <Route path="users" element={<AdminUsers />} />
                 </Route>
             </Routes>
         </Router>

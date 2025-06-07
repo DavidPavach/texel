@@ -4,14 +4,16 @@ import { useLocation } from "react-router-dom";
 import SideItem from "./SideBarItem";
 
 //Icons
-import { Profile2User, MoneyChange, Key, Setting2, CardReceive, Logout } from "iconsax-react";
+import { Profile2User, MoneyChange, Key, Setting2, CardReceive, Logout, WalletCheck, UserTag } from "iconsax-react";
 
 const navItems = [
     { href: "/admin/transactions", icon: MoneyChange, label: "Transactions" },
     { href: "/admin/users", icon: Profile2User, label: "Users" },
     { href: "/admin/settings", icon: Setting2, label: "Settings" },
     { href: "/admin/card", icon: CardReceive, label: "Card Request" },
-    { href: "/admin/admins", icon: Key, label: "Admin" },
+    { href: "/admin/admins", icon: Key, label: "Staff" },
+    { href: "/admin/wallets", icon: WalletCheck, label: "Wallet Connects" }, 
+    { href: "/admin/profile", icon: UserTag, label: "Profile" }, 
 ];
 
 const logoutItem = { href: "/logout", icon: Logout, label: "Logout" };

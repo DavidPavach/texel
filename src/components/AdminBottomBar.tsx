@@ -11,7 +11,7 @@ const navItems = [
   { href: "/admin/users", icon: Profile2User, label: "Users" },
   { href: "/admin/settings", icon: Setting2, label: "Settings" },
   { href: "/admin/card", icon: CardReceive, label: "Card Request" },
-  { href: "/admin/admins", icon: Key, label: "Admin"},
+  { href: "/admin/admins", icon: Key, label: "Staff"},
 ];
 
 const BottomNav = () => {

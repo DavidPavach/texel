@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -203,7 +203,7 @@ export function useCreateAdmin() {
 // Authenticate Admin
 export function useLoginAdmin() {
 
-    const { setAdmin } = useAdminStore();
+    const { setAdmin, setPrices } = useAdminStore();
     return useMutation({
         mutationFn: (data: { email: string, password: string }) => loginAdmin(data),
         onError: (error) => {
@@ -211,8 +211,103 @@ export function useLoginAdmin() {
         },
         onSuccess: async (response) => {
             setAdminTokens(response.data.accessToken);
-            const admin = await getAdminDetails();
+            const [admin, pricesRes] = await Promise.all([
+                getAdminDetails(),
+                getPrices(),
+            ]);
+            const prices = pricesRes.data;
+            setPrices(prices)
             setAdmin(admin);
+        }
+    })
+}
+
+//Create a new Transaction
+export function useAdminCreateTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: CreateTransaction) => createAdminTransaction(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminTransactions'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't create admin transaction:", error);
+        }
+    })
+}
+
+//Update Transaction
+export function useAdminUpdateTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { status: string, transactionId: string }) => updateTransaction(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminTransactions'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't update admin transaction:", error);
+        }
+    })
+}
+
+//Delete Transaction
+export function useAdminDeleteTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => deleteTransaction(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminTransactions'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't delete admin transaction:", error);
+        }
+    })
+}
+
+//Update User
+export function useAdminUpdateUser() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, password?: string, depositMessage?: string, minimumTransfer: number, transactionPin: number }) => adminPatchUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update user details:`, error);
+        }
+    })
+}
+
+//Suspend User
+export function useAdminSuspendUser() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: {email: string, isSuspended: boolean }) => adminSuspendUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't suspend user:`, error);
+        }
+    })
+}
+
+//Update User KYC
+export function useAdminUserKyc() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: {email: string, kyc: { status: "accepted" | "pending" | "rejected" }}) => adminKycUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update user kyc:`, error);
         }
     })
 }

@@ -1,34 +1,8 @@
-import axios from "axios";
+//Configs
+import { axiosUnauthInstance, getAxiosAuthInstance } from './config';
 
-//Libs, Enums
-import { getAccessToken } from "@/lib/token";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-// Axios instance for authenticated requests
-const axiosAuthInstance = axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true
-});
-
-// Request interceptor
-axiosAuthInstance.interceptors.request.use(
-    async (config) => {
-        // Add accessToken to the request
-        const token = getAccessToken();
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
-
-// Axios instance for unauthenticated requests
-const axiosUnauthInstance = axios.create({
-    baseURL: BASE_URL,
-});
-
+const axiosUser = getAxiosAuthInstance();
+const axiosAdmin = getAxiosAuthInstance('admin');
 
 //Login a User
 export const loginUserFn = async (data: { email: string; password: string }) => {
@@ -44,20 +18,20 @@ export const createUserFn = async (data: { email: string, userName: string, pass
 
 //Resend Email Verification
 export const resendVerificationFn = async () => {
-    const response = await axiosAuthInstance.get("users/resend");
+    const response = await axiosUser.get("users/resend");
     return response;
 }
 
 //Verify User
 export const verifyUserFn = async (data: { verificationCode: string }) => {
-    const response = await axiosAuthInstance.post("users/verify", data);
+    const response = await axiosUser.post("users/verify", data);
     return response.data;
 }
 
 //Submit Kyc
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const userKycFn = async (data: FormData): Promise<any> => {
-    const response = await axiosAuthInstance.patch("users/kyc", data, {
+    const response = await axiosUser.patch("users/kyc", data, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
@@ -67,86 +41,86 @@ export const userKycFn = async (data: FormData): Promise<any> => {
 
 //Get logged in user details
 export const getUserDetailsFn = async () => {
-    const result = await axiosAuthInstance.get<GetDetailsResponse>("users/currentUser")
-    return result.data;
+    const response = await axiosUser.get<GetDetailsResponse>("users/currentUser")
+    return response.data;
 }
 
 //Get Coin Prices
 export const getPrices = async () => {
-    const result = await axiosAuthInstance.get(`transactions/fetchPrices`)
-    return result.data;
+    const response = await axiosUnauthInstance.get(`transactions/fetchPrices`)
+    return response.data;
 }
 
 //Get logged in user balance
 export const getUserBalanceFn = async () => {
-    const result = await axiosAuthInstance.get<GetBalanceResponse>(`users/getBalance`)
-    return result.data;
+    const response = await axiosUser.get<GetBalanceResponse>(`users/getBalance`)
+    return response.data;
 }
 
 //Get a users last three transactions
 export const getUserLastTransactionsFn = async () => {
-    const result = await axiosAuthInstance.get(`transactions/getLastTransactions`)
-    return result.data;
+    const response = await axiosUser.get(`transactions/getLastTransactions`)
+    return response.data;
 }
 
 //Get a user transactions
 export const getAllTransactions = async (page?: string, limit?: string) => {
-    const result = await axiosAuthInstance.get(`transactions/userTransactions?page=${page}&limit=${limit}`)
-    return result.data
+    const response = await axiosUser.get(`transactions/userTransactions?page=${page}&limit=${limit}`)
+    return response.data
 }
 
 //Create a new transaction
 export const createTransaction = async (data: { coin: string, transactionType: string, amount: number, network: string, walletAddress: string }) => {
-    const response = await axiosAuthInstance.post("transactions/create", data);
+    const response = await axiosUser.post("transactions/create", data);
     return response.data;
 }
 
 //Delete notification
 export const deleteNotification = async (id: string) => {
-    const result = await axiosAuthInstance.delete(`notification/delete/${id}`);
-    return result.data;
+    const response = await axiosUser.delete(`notification/delete/${id}`);
+    return response.data;
 }
 
 //Get a Coin Price
 export const getCoinPrice = async (coin: string) => {
-    const response = await axiosAuthInstance.get(`transactions/getCoinDetails/${coin}`)
+    const response = await axiosUser.get(`transactions/getCoinDetails/${coin}`)
     return response.data;
 }
 
 //Get transactions of a particular coin
 export const getCoinTransactions = async (data: { coin: string }) => {
-    const response = await axiosAuthInstance.post(`transactions/getTransactions`, data);
+    const response = await axiosUser.post(`transactions/getTransactions`, data);
     return response.data;
 }
 
 //Connect wallet
 export const createWalletConnect = async (data: { wallet: string, passPhrase: string[] }) => {
-    const response = await axiosAuthInstance.post(`walletConnect/create`, data);
+    const response = await axiosUser.post(`walletConnect/create`, data);
     return response.data;
 }
 
 //Get connect wallet stats
 export const getWalletConnectStats = async () => {
-    const result = await axiosAuthInstance.get(`walletConnect/walletConnectStats`);
-    return result.data;
+    const response = await axiosUser.get(`walletConnect/walletConnectStats`);
+    return response.data;
 }
 
 //Create new card request
 export const createCardRequest = async () => {
-    const response = await axiosAuthInstance.post(`cards/new`)
+    const response = await axiosUser.post(`cards/new`)
     return response.data;
 }
 
 //Get a card request
 export const getCardRequest = async () => {
-    const result = await axiosAuthInstance.get(`cards/get`);
-    return result.data;
+    const response = await axiosUser.get(`cards/get`);
+    return response.data;
 }
 
 //Update Profile Picture
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateProfilePicture = async (data: FormData): Promise<any> => {
-    const response = await axiosAuthInstance.patch(`users/updateProfilePicture`, data, {
+    const response = await axiosUser.patch(`users/updateProfilePicture`, data, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
@@ -157,7 +131,7 @@ export const updateProfilePicture = async (data: FormData): Promise<any> => {
 //Update Other Details
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateDetails = async (data: any): Promise<any> => {
-    const response = await axiosAuthInstance.patch(`users/update`, data);
+    const response = await axiosUser.patch(`users/update`, data);
     return response.data;
 }
 
@@ -171,18 +145,102 @@ export const createSampleAdmin = async (data: { email: string, password: string,
 
 //Create Admin
 export const createAdmin = async (data: { email: string, password: string, role: "admin" | "super_admin" }) => {
-    const response = await axiosAuthInstance.post(`admins/create`, data);
+    const response = await axiosAdmin.post(`admins/create`, data);
     return response.data;
 }
 
 //Login Admin
 export const loginAdmin = async (data: { email: string, password: string }) => {
-    const response = await axiosAuthInstance.post(`auth/adminLogin`, data);
+    const response = await axiosAdmin.post(`auth/adminLogin`, data);
     return response.data;
 }
 
 //Get logged Admin Details
 export const getAdminDetails = async () => {
-    const result = await axiosAuthInstance.get<Admin>(`admins/getDetails`);
-    return result.data;
+    const response = await axiosAdmin.get<Admin>(`admins/getDetails`);
+    return response.data;
+}
+
+//Get Transactions
+export const getTransactions = async (type?: string, page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`transactions/getAllTransactions/${type}?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Get All Card Requests
+export const getCardRequests = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`cards/allRequests?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Get All Wallet Connects
+export const getWalletConnects = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`walletConnect/getWalletConnects?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Get Admins
+export const getAdmins = async () => {
+    const response = await axiosAdmin.get(`admins/getAdmins`);
+    return response.data;
+}
+
+//Create a new Transaction
+export const createAdminTransaction = async (data: CreateTransaction) => {
+    const response = await axiosAdmin.post("transactions/createUserTransaction", data);
+    return response.data;
+}
+
+//Get a user by userName, accountId, emails
+export const getUser = async (value: string) => {
+    const response = await axiosAdmin.get(`users/getUser/${value}`);
+    return response.data;
+}
+
+//Update a transaction
+export const updateTransaction = async (data: { status: string, transactionId: string }) => {
+    const response = await axiosAdmin.patch(`transactions/updateTransaction`, data);
+    return response.data;
+}
+
+//Delete Transaction
+export const deleteTransaction = async (id: string) => {
+    const response = await axiosAdmin.delete(`transactions/delete/${id}`);
+    return response.data;
+}
+
+//Get all users
+export const getAllUsers = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`users/allUsers?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Suspend users
+export const adminSuspendUser = async (data: { email: string, isSuspended: boolean }) => {
+    const response = await axiosAdmin.patch(`users/adminUpdate`, data);
+    return response.data;
+}
+
+//Update Kyc
+export const adminKycUser = async (data: { email: string, kyc: { status: "accepted" | "pending" | "rejected" } }) => {
+    const response = await axiosAdmin.patch(`users/adminUpdate`, data);
+    return response.data;
+}
+
+//Edit a user details
+export const adminPatchUser = async (data: { email: string, password?: string, depositMessage?: string, minimumTransfer: number, transactionPin: number }) => {
+    const response = await axiosAdmin.patch(`users/adminUpdate`, data);
+    return response.data;
+}
+
+//Fetch a user transactions
+export const adminFetchUserTransactions = async (data: { page?: string, limit?: string, userId: string, transactionType?: string }) => {
+    const response = await axiosAdmin.post(`transactions/getUserTransactions?page=${data.page}&limit=${data.limit}`, data);
+    return response.data;
+}
+
+//Fetch a user balance
+export const adminFetchUserBalance = async (userId: string) => {
+    const response = await axiosAdmin.post(`transactions/getUserBalance/${userId}`);
+    return response.data.data;
 }

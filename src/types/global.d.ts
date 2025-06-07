@@ -158,7 +158,53 @@ declare type Admin = {
 
 declare type AdminStore = {
     admin: Admin | null;
+    prices: Prices | null;
     setAdmin: (admin: Admin) => void;
+    setPrices: (prices: Prices) => void;
     refetchAdminData: () => Promise<void>;
     clearAdmin: () => void;
+    fetchPrices: () => void;
+}
+
+//Transactions
+declare type Transaction = {
+    _id: string;
+    amount: number;
+    coin: string;
+    network: string;
+    status: "pending" | "successful" | "failed";
+    transactionHash: string;
+    transactionType: string;
+    walletAddress: string;
+    createdAt: string;
+    user: {
+        userName: string;
+        email: string;
+        profilePicture: string;
+        accountId: string;
+    };
+}
+declare type UserTransaction = {
+    _id: string;
+    user: string;
+    transactionType: TransactionType;
+    coin: TransactionCoin;
+    amount: number;
+    network: string | null;
+    walletAddress: string;
+    transactionHash: string;
+    status: TransactionStatus;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+//Create Transaction
+declare type CreateTransaction = {
+    coin: string,
+    transactionType: string,
+    amount: number,
+    network: string,
+    walletAddress: string,
+    user: string,
+    status: string
 }

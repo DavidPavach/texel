@@ -2,7 +2,6 @@ import { useState } from "react"
 import { motion } from "framer-motion";
 
 //Enums, Utils and Stores
-import { TransactionCoin } from "@/enums";
 import { formatDate } from "@/utils/format";
 import { formatCoinValue } from "@/stores/userStore";
 import { useUserStore } from "@/stores/userStore";
@@ -14,22 +13,8 @@ import { Filter } from "lucide-react";
 type TransactionType = "sent" | "received"
 type TransactionStatus = "successful" | "pending" | "failed" | "processing"
 
-type Transaction = {
-    _id: string;
-    user: string;
-    transactionType: TransactionType;
-    coin: TransactionCoin;
-    amount: number;
-    network: string | null;
-    walletAddress: string;
-    transactionHash: string;
-    status: TransactionStatus;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
 type TransactionActivityCardProps = {
-    transactions: Transaction[]
+    transactions: UserTransaction[]
     title?: string
 }
 
