@@ -115,7 +115,7 @@ export default function UserManagement({ user, onClose }: UserManagementProps) {
                 </TabsContent>
 
                 <TabsContent value="settings" className="mt-6">
-                    <UserSettings userId={user._id} currentDepositMessage={user.depositMessage} currentMinimumTransfer={user.minimumTransfer} />
+                    <UserSettings email={user.email} userName={user.userName} currentDepositMessage={user.depositMessage} currentMinimumTransfer={user.minimumTransfer} />
                 </TabsContent>
             </Tabs>
         </div>

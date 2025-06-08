@@ -228,7 +228,7 @@ export const adminKycUser = async (data: { email: string, kyc: { status: "accept
 }
 
 //Edit a user details
-export const adminPatchUser = async (data: { email: string, password?: string, depositMessage?: string, minimumTransfer: number, transactionPin: number }) => {
+export const adminPatchUser = async (data: { email: string, password?: string, depositMessage?: string, minimumTransfer?: number, transactionPin?: number }) => {
     const response = await axiosAdmin.patch(`users/adminUpdate`, data);
     return response.data;
 }
@@ -243,4 +243,10 @@ export const adminFetchUserTransactions = async (data: { page?: string, limit?: 
 export const adminFetchUserBalance = async (userId: string) => {
     const response = await axiosAdmin.post(`transactions/getUserBalance/${userId}`);
     return response.data.data;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const adminUpdateDetails = async (data: any): Promise<any> => {
+    const response = await axiosUser.patch(`users/adminUpdate`, data);
+    return response.data;
 }

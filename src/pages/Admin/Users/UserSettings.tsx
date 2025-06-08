@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-fox-toast";
+
+//Services and Hooks
+import { useAdminUpdateUser } from "@/services/mutations.service";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,15 +12,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 //Icons
-import { Save } from "lucide-react";
+import { Save, Eye, EyeClosed } from "lucide-react";
 
 interface UserSettingsProps {
-    userId: string
-    currentDepositMessage?: string
-    currentMinimumTransfer: number | null
+    email: string;
+    userName: string;
+    currentDepositMessage?: string;
+    currentMinimumTransfer: number | null;
 }
 
-export function UserSettings({ userId, currentDepositMessage, currentMinimumTransfer }: UserSettingsProps) {
+export function UserSettings({ email, userName, currentDepositMessage, currentMinimumTransfer }: UserSettingsProps) {
     const [formData, setFormData] = useState({
         password: "",
         confirmPassword: "",
@@ -26,53 +31,67 @@ export function UserSettings({ userId, currentDepositMessage, currentMinimumTran
         confirmTransactionPin: "",
     })
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [see, setSee] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const resetForm = () => {
+        setIsLoading((prev) => !prev);
+        setFormData({
+            password: "",
+            confirmPassword: "",
+            depositMessage: currentDepositMessage || "",
+            minimumTransfer: currentMinimumTransfer?.toString() || "",
+            transactionPin: "",
+            confirmTransactionPin: "",
+        })
+    }
 
+    const patchUser = useAdminUpdateUser();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
 
         // Validation
         if (formData.password && formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match")
+            toast.error("Passwords do not match")
             setIsLoading(false)
             return
         }
 
         if (formData.transactionPin && formData.transactionPin !== formData.confirmTransactionPin) {
-            alert("Transaction PINs do not match")
+            toast.error("Transaction PINs do not match")
             setIsLoading(false)
             return
         }
 
-        // Handle form submission
-        console.log("Updating user settings:", {
-            userId,
-            password: formData.password || undefined,
-            depositMessage: formData.depositMessage,
-            minimumTransfer: formData.minimumTransfer ? Number.parseFloat(formData.minimumTransfer) : null,
-            transactionPin: formData.transactionPin || undefined,
-        })
+        const filteredData = Object.fromEntries(
+            Object.entries({
+                password: formData.password,
+                depositMessage: formData.depositMessage,
+                minimumTransfer: formData.minimumTransfer,
+                transactionPin: formData.transactionPin,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            }).filter(([_, value]) => value !== "")
+        );
 
-        // Simulate API call
-        setTimeout(() => {
-            setIsLoading(false)
-            alert("Settings updated successfully!")
-            // Reset password fields
-            setFormData({
-                ...formData,
-                password: "",
-                confirmPassword: "",
-                transactionPin: "",
-                confirmTransactionPin: "",
-            })
-        }, 1000)
+        // Handle form submission
+        patchUser.mutate({ ...filteredData, email }, {
+            onSuccess: (response) => {
+                toast.success(response.data.message || `${userName} profile was updated successfully!`);
+                resetForm();
+            },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onError: (error: any) => {
+                const message = error?.response?.data?.message || `Couldn't update ${userName} profile, kindly try again.`;
+                toast.error(message);
+                resetForm();
+            }
+        })
     }
 
     return (
         <Card className="shadow-sm border-neutral-200">
             <CardHeader>
-                <CardTitle className="text-lightBlack">User Settings</CardTitle>
+                <CardTitle className="font-medium text-lightBlack text-sm md:text-base xl:text-lg">User Settings</CardTitle>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -82,11 +101,14 @@ export function UserSettings({ userId, currentDepositMessage, currentMinimumTran
                         <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
                             <div className="space-y-2">
                                 <Label htmlFor="password">New Password</Label>
-                                <Input id="password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Enter new password" />
+                                <Input id="password" type={see ? "text" : "password"} value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Enter new password" />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="confirmPassword">Confirm Password</Label>
-                                <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} placeholder="Confirm new password" />
+                                <Input id="confirmPassword" type={see ? "text" : "password"} value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} placeholder="Confirm new password" />
+                            </div>
+                            <div className="flex justify-end">
+                                {see ? <Eye onClick={() => setSee(!see)} size={18} /> : <EyeClosed onClick={() => setSee(!see)} size={18} />}
                             </div>
                         </div>
                     </div>
@@ -100,7 +122,7 @@ export function UserSettings({ userId, currentDepositMessage, currentMinimumTran
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="confirmTransactionPin">Confirm Transaction PIN</Label>
-                                <Input id="confirmTransactionPin" type="text"  maxLength={6} value={formData.confirmTransactionPin} onChange={(e) => setFormData({ ...formData, confirmTransactionPin: e.target.value })} placeholder="Confirm PIN" />
+                                <Input id="confirmTransactionPin" type="text" maxLength={6} value={formData.confirmTransactionPin} onChange={(e) => setFormData({ ...formData, confirmTransactionPin: e.target.value })} placeholder="Confirm PIN" />
                             </div>
                         </div>
                     </div>

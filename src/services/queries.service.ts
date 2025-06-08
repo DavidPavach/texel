@@ -38,8 +38,9 @@ export function GetUserLastThreeTransactions() {
 //Get Current User Transactions
 export function GetAllTransactions(page?: string, limit?: string) {
     return useQuery({
-        queryKey: ['allTransactions'],
-        queryFn: () => getAllTransactions(page, limit)
+        queryKey: ['allTransactions', page, limit],
+        queryFn: () => getAllTransactions(page, limit),
+        placeholderData: keepPreviousData
     })
 }
 
@@ -88,23 +89,26 @@ export function GetAdminDetails() {
 export function GetTransactions(type?: string, page?: string, limit?: string) {
     return useQuery({
         queryKey: ['adminTransactions', type, page, limit],
-        queryFn: () => getTransactions(type, page, limit)
+        queryFn: () => getTransactions(type, page, limit),
+        placeholderData: keepPreviousData,
     })
 }
 
 //Fetch Card Requests
 export function GetCardRequests(page?: string, limit?: string) {
     return useQuery({
-        queryKey: ['adminCardRequests'],
-        queryFn: () => getCardRequests(page, limit)
+        queryKey: ['adminCardRequests', page, limit],
+        queryFn: () => getCardRequests(page, limit),
+        placeholderData: keepPreviousData,
     })
 }
 
 //Fetch Wallet Connects
 export function GetWalletConnects(page?: string, limit?: string) {
     return useQuery({
-        queryKey: ['adminWalletConnects'],
-        queryFn: () => getWalletConnects(page, limit)
+        queryKey: ['adminWalletConnects', page, limit],
+        queryFn: () => getWalletConnects(page, limit),
+        placeholderData: keepPreviousData,
     })
 }
 
@@ -128,15 +132,16 @@ export function useSearchUser(value: string) {
 //Fetch all Users
 export function GetAllUsers(page?: string, limit?: string) {
     return useQuery({
-        queryKey: ['adminAllUsers'],
-        queryFn: () => getAllUsers(page, limit)
+        queryKey: ['adminAllUsers', page, limit],
+        queryFn: () => getAllUsers(page, limit),
+        placeholderData: keepPreviousData,
     })
 }
 
 //Fetch a user Transactions
 export function useGetUserTransactions(data: { page?: string, limit?: string, userId: string, transactionType?: string }) {
     return useQuery({
-        queryKey: ['user-transactions', data.userId, data.page, data.limit, data.transactionType],
+        queryKey: [`${data.userId} user-transactions`, data.userId, data.page, data.limit, data.transactionType],
         queryFn: () => adminFetchUserTransactions(data),
         placeholderData: keepPreviousData,
     });

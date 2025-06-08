@@ -272,7 +272,7 @@ export function useAdminUpdateUser() {
 
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data: { email: string, password?: string, depositMessage?: string, minimumTransfer: number, transactionPin: number }) => adminPatchUser(data),
+        mutationFn: (data: { email: string, password?: string, depositMessage?: string, minimumTransfer?: number, transactionPin?: number }) => adminPatchUser(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
         },
@@ -287,7 +287,7 @@ export function useAdminSuspendUser() {
 
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data: {email: string, isSuspended: boolean }) => adminSuspendUser(data),
+        mutationFn: (data: { email: string, isSuspended: boolean }) => adminSuspendUser(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
         },
@@ -302,7 +302,7 @@ export function useAdminUserKyc() {
 
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data: {email: string, kyc: { status: "accepted" | "pending" | "rejected" }}) => adminKycUser(data),
+        mutationFn: (data: { email: string, kyc: { status: "accepted" | "pending" | "rejected" } }) => adminKycUser(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['adminAllUsers'] });
         },

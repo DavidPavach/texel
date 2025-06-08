@@ -1,4 +1,4 @@
-import { useSearchUser } from "@/services/queries.service";;
+import { useSearchUser } from "@/services/queries.service";
 import { useState } from "react";
 import { toast } from "react-fox-toast";
 
