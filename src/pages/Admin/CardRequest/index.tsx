@@ -3,7 +3,7 @@ import { GetCardRequests } from "@/services/queries.service";
 
 const Index = () => {
 
-    const { data, isFetching, isLoading, isError, refetch } = GetCardRequests();
+    const { data } = GetCardRequests();
     console.log("The data", data)
 
     return (
