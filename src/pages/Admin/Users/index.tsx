@@ -71,7 +71,7 @@ const Index = () => {
                                 <input type="search" id="search" className="bg-neutral-200 px-4 py-3 rounded-xl focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
                             </div>
 
-                            {userLoading && <p className="mt-4">Searching...</p>}
+                            {userLoading && <p className="mt-4 text-primary">Searching...</p>}
                             {searchValue.length > 5 && error && <p className="mt-4 text-red-500">Search failed</p>}
 
                             {!error && searchValue.length > 5 && userData && (

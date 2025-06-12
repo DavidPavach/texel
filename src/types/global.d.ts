@@ -208,3 +208,9 @@ declare type CreateTransaction = {
     user: string,
     status: string
 }
+
+declare type UtilityData = {
+  _id: string
+  cardPrice: number
+  minimumAmount: number
+}

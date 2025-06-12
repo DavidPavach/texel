@@ -27,7 +27,12 @@ import AdminLayout from '@/Layouts/AdminLayout';
 //Admin Page
 import AdminTransactions from '@/pages/Admin/Transactions';
 import AdminUsers from '@/pages/Admin/Users';
-
+import AdminUtility from '@/pages/Admin/Utility';
+import AdminProfile from '@/pages/Admin/Profile';
+import AdminStaff from '@/pages/Admin/Staff';
+import AdminCards from '@/pages/Admin/CardRequest';
+import AdminWallet from '@/pages/Admin/Wallet';
+import AdminNotifications from '@/pages/Admin/Notifications';
 
 const User = () => (
     <UserLayout>
@@ -70,6 +75,13 @@ const AppRoutes = () => {
                 <Route path="/admin" element={<Admin />}>
                     <Route path="transactions" element={<AdminTransactions />} />
                     <Route path="users" element={<AdminUsers />} />
+                    <Route path="settings" element={<AdminUtility />} />
+                    <Route path="profile" element={<AdminProfile />} />
+                    <Route path="admins" element={<AdminStaff />} />
+                    <Route path="card" element={<AdminCards />} />
+                    <Route path="wallets" element={<AdminWallet />} />
+                    <Route path="notifications" element={<AdminNotifications />} />
+
                 </Route>
             </Routes>
         </Router>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -308,6 +308,21 @@ export function useAdminUserKyc() {
         },
         onError: (error) => {
             console.error(`Couldn't update user kyc:`, error);
+        }
+    })
+}
+
+//Update Utility
+export function useAdminEditUtility() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { id: string, cardPrice: number, minimumAmount: number }) => adminEditUtility(data.id, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminUtility'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update utility:`, error);
         }
     })
 }

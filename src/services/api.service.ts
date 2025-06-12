@@ -245,8 +245,14 @@ export const adminFetchUserBalance = async (userId: string) => {
     return response.data.data;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const adminUpdateDetails = async (data: any): Promise<any> => {
-    const response = await axiosUser.patch(`users/adminUpdate`, data);
+//Get Utility
+export const adminGetUtility = async (id: string) => {
+    const response = await axiosUnauthInstance.get(`utility/get/${id}`);
+    return response.data;
+}
+
+//Edit a Utility
+export const adminEditUtility = async (id: string, data: { cardPrice: number, minimumAmount: number }) => {
+    const response = await axiosAdmin.patch(`utility/edit/${id}`, data);
     return response.data;
 }

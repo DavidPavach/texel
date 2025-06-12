@@ -111,4 +111,4 @@ export const getWallet: Record<string, { walletAddress: string; qrCode: string; 
 }
 
 //Utility ID
-export const utilityId = "664f2be2472cc0f123456789";
+export const utilityId = "684a99a928b8b927a037eb72";

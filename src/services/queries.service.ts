@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { adminFetchUserBalance, adminFetchUserTransactions, getAdminDetails, getAdmins, getAllTransactions, getAllUsers, getCardRequest, getCardRequests, getCoinPrice, getCoinTransactions, getPrices, getTransactions, getUser, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnects, getWalletConnectStats } from "./api.service";
+import { adminFetchUserBalance, adminFetchUserTransactions, adminGetUtility, getAdminDetails, getAdmins, getAllTransactions, getAllUsers, getCardRequest, getCardRequests, getCoinPrice, getCoinTransactions, getPrices, getTransactions, getUser, getUserBalanceFn, getUserDetailsFn, getUserLastTransactionsFn, getWalletConnects, getWalletConnectStats } from "./api.service";
 
 //Get Current logged In User Details
 export function GetUserDetails() {
@@ -147,11 +147,18 @@ export function useGetUserTransactions(data: { page?: string, limit?: string, us
     });
 }
 
-
 //Fetch a user Balance
-export function useGetUserBalance (userId: string) {
+export function useGetUserBalance(userId: string) {
     return useQuery({
         queryKey: [`${userId} balance`],
         queryFn: () => adminFetchUserBalance(userId)
+    })
+}
+
+//Fetch Utility
+export function GetUtility(id: string) {
+    return useQuery({
+        queryKey: ["adminUtility"],
+        queryFn: () => adminGetUtility(id)
     })
 }

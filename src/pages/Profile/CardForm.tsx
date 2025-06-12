@@ -68,7 +68,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
     const createCardRequest = useCreateCardRequest();
     const handleSubmit = async () => {
 
-        if (enabled) return toast.error("You have to check the box to continue.")
+        if (!enabled) return toast.error("You have to check the box to continue.")
         setIsSubmitting(true);
         createCardRequest.mutate(undefined, {
             onSuccess: (response) => {
