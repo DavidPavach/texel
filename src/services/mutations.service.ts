@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -323,6 +323,36 @@ export function useAdminEditUtility() {
         },
         onError: (error) => {
             console.error(`Couldn't update utility:`, error);
+        }
+    })
+}
+
+//Update Card Request
+export function useAdminUpdateCardRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { requestId: string, status: string }) => adminUpdateCardRequest(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminCardRequests'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update card request details:`, error);
+        }
+    })
+}
+
+//Delete Card Request
+export function useAdminDeleteCardRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (requestId: string) => adminDeleteCardRequest(requestId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminCardRequests'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete card request details:`, error);
         }
     })
 }

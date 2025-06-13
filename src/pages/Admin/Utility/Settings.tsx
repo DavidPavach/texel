@@ -66,11 +66,11 @@ export function Settings({ data }: { data: UtilityData }) {
     }
 
     return (
-        <Card className="mx-auto max-w-2xl">
+        <Card>
             <CardHeader className="bg-neutral-100/50 border-neutral-200 border-b rounded-t-2xl">
                 <div className="flex justify-between items-center">
                     <CardTitle className="flex items-center gap-2 text-lightBlack text-base md:text-lg xl:text-xl">
-                        <Setting2 className="size-4 md:size-5 xl:size-6 text-primary" variant="Bold" />
+                        <Setting2 className="size-5 md:size-6 xl:size-7 text-primary" variant="Bold" />
                         Utility Settings
                     </CardTitle>
                     <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)} className="hover:bg-neutral-50 border-neutral-200">

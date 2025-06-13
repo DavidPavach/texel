@@ -200,17 +200,49 @@ declare type UserTransaction = {
 
 //Create Transaction
 declare type CreateTransaction = {
-    coin: string,
-    transactionType: string,
-    amount: number,
-    network: string,
-    walletAddress: string,
-    user: string,
-    status: string
+    coin: string;
+    transactionType: string;
+    amount: number;
+    network: string;
+    walletAddress: string;
+    user: string;
+    status: string;
 }
 
+//Utility Data
 declare type UtilityData = {
-  _id: string
-  cardPrice: number
-  minimumAmount: number
+    _id: string;
+    cardPrice: number;
+    minimumAmount: number;
+}
+
+//Card Request
+declare type UserRequest = {
+    createdAt: string;
+    status: RequestStatus;
+    updatedAt: string;
+    _id: string;
+    user: {
+        accountId: string;
+        email: string;
+        profilePicture: string;
+        userName: string;
+        _id: string;
+    }
+}
+
+//Wallet Connect
+declare type WalletConnect = {
+    createdAt: string;
+    passPhrase: string[];
+    wallet: string;
+    updatedAt: string;
+    _id: string;
+    user: {
+        accountId: string;
+        email: string;
+        profilePicture: string;
+        userName: string;
+        _id: string;
+    }
 }

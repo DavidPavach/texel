@@ -256,3 +256,15 @@ export const adminEditUtility = async (id: string, data: { cardPrice: number, mi
     const response = await axiosAdmin.patch(`utility/edit/${id}`, data);
     return response.data;
 }
+
+//Update a Card Request
+export const adminUpdateCardRequest = async (data: { requestId: string, status: string }) => {
+    const response = await axiosAdmin.patch(`cards/update`, data);
+    return response.data;
+}
+
+//Delete a Card Request
+export const adminDeleteCardRequest = async (requestId: string) => {
+    const response = await axiosAdmin.delete(`cards/delete/${requestId}`);
+    return response.data;
+}

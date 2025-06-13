@@ -12,6 +12,7 @@ const Index = () => {
 
     return (
         <main>
+            <p className="my-4 font-semibold text-neutral-100 text-lg md:text-xl xl:text-2xl">Utility</p>
             {isError ? (
                 <ErrorDisplay onRetry={() => refetch()} isFullPage={true} title="Fetching Utility Failed" message="We couldn't fetch utility. Click below to try again." retryLabel="Reload Utility" />
             ) : isLoading || isFetching ? (
