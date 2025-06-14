@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -353,6 +353,21 @@ export function useAdminDeleteCardRequest() {
         },
         onError: (error) => {
             console.error(`Couldn't delete card request details:`, error);
+        }
+    })
+}
+
+//Edit Admin Details
+export function useAdminEditDetails() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { adminId: string, email?: string, password?: string, role?: "admin" | "super_admin", isSuspended: boolean }) => adminPatch(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admins'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update admin details:`, error);
         }
     })
 }
