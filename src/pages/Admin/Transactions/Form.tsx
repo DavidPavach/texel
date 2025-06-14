@@ -1,10 +1,10 @@
-import { useSearchUser } from "@/services/queries.service";
 import { useState } from "react";
 import { toast } from "react-fox-toast";
 
-//Enums, Hooks and Functions
+//Enums, Hooks and Services
 import { getWallet, TransactionCoin } from "@/enums";
 import { useAdminCreateTransaction } from "@/services/mutations.service";
+import { useSearchUser } from "@/services/queries.service";
 import { generateWalletAddress } from "@/utils/generate";
 
 //Icons

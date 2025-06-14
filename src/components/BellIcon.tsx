@@ -6,7 +6,7 @@ import { useNotificationStore } from '@/stores/notificationStore';
 import { formatDate } from '@/utils/format';
 
 //Icons
-import { MoneySend, Notification, NotificationBing } from 'iconsax-react';
+import { BuyCrypto, KeyboardOpen, Notification, NotificationBing } from 'iconsax-react';
 import { X } from 'lucide-react';
 
 export const BellIcon = () => {
@@ -41,7 +41,8 @@ export const BellIcon = () => {
                             <ul className="space-y-2 max-h-[75vh] overflow-y-auto">
                                 {notifications.map((n) => {
                                     const isTransaction = n.type === 'transaction';
-                                    const Icon = isTransaction ? <MoneySend size={22} variant='Bold' className={'text-green-400'} /> : <Notification size={22} variant='Bold' className={'text-blue-400'} />;
+                                    const isSystem = n.type === 'system';
+                                    const Icon = isTransaction ? <BuyCrypto size={22} variant='Bold' className='text-green-400' /> : isSystem ? <KeyboardOpen size={22} variant='Bold' className='text-accent' /> : <Notification size={22} variant='Bold' className='text-blue-400' />;
 
                                     return (
                                         <motion.li key={n._id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="relative flex items-start gap-3 bg-neutral-800 px-3 py-4 border border-neutral-700 rounded-xl">

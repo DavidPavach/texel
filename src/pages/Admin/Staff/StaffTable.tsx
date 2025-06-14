@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-fox-toast";
+
+//Hooks
+import { useAdminEditDetails } from "@/services/mutations.service";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,8 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, Plus, Edit, Shield, ShieldAlert, UserX, User } from "lucide-react";
 import AdminModal from "./Form";
-import { useAdminEditDetails } from "@/services/mutations.service";
-import { toast } from "react-fox-toast";
 
 
 export default function AdminManagement({ initialAdmins }: { initialAdmins: Admin[] }) {

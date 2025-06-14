@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch, createNotification } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -368,6 +368,18 @@ export function useAdminEditDetails() {
         },
         onError: (error) => {
             console.error(`Couldn't update admin details:`, error);
+        }
+    })
+}
+
+
+//Create New Notification
+export function useAdminCreateNotification() {
+
+    return useMutation({
+        mutationFn: (data: { user: string, type: string, title: string, message: string }) => createNotification(data),
+        onError: (error) => {
+            console.error(`Couldn't create notification:`, error);
         }
     })
 }

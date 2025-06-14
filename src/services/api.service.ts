@@ -157,7 +157,7 @@ export const loginAdmin = async (data: { email: string, password: string }) => {
 
 //Get logged Admin Details
 export const getAdminDetails = async () => {
-    const response = await axiosAdmin.get<Admin>(`admins/getDetails`);
+    const response = await axiosAdmin.get(`admins/getDetails`);
     return response.data;
 }
 
@@ -272,5 +272,11 @@ export const adminDeleteCardRequest = async (requestId: string) => {
 //Edit an Admin
 export const adminPatch = async (data: { adminId: string, email?: string, password?: string, role?: "admin" | "super_admin", isSuspended: boolean }) => {
     const response = await axiosAdmin.patch(`admins/updateAdmin`, data);
+    return response.data;
+}
+
+//Create Notification
+export const createNotification = async (data: { user: string, type: string, title: string, message: string }) => {
+    const response = await axiosAdmin.post(`notification/create`, data);
     return response.data;
 }

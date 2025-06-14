@@ -20,7 +20,6 @@ import CountryDropDown from './CountryDropDown';
 
 //Icons and Images
 import { EyeClosed, Eye } from 'lucide-react';
-import google from "/google.svg";
 
 
 const Form = () => {
@@ -90,7 +89,6 @@ const Form = () => {
                 </div>
                 <CountryDropDown onSelect={selectCountry} />
                 <Button text="Submit" loadingText='Creating Account....' variant='primary' size='lg' disabled={disableButton} loading={registerUser.isPending} />
-                <button className="flex justify-center items-center gap-x-2 bg-[#FAF9F6]/60 hover:bg-inherit py-3 border border-neutral-400 rounded-[2rem] text-neutral-700 duration-300"><img src={google} alt="Google Icon" /> Google</button>
             </form>
         </motion.div>
     );

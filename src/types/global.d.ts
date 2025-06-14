@@ -149,7 +149,7 @@ declare type ExchangeCardProps = {
 declare type Admin = {
     _id: string;
     email: string;
-    password: string;
+    password?: string;
     isSuspended: boolean;
     role: "admin" | "super_admin";
     encryptedPassword: string;
@@ -245,4 +245,12 @@ declare type WalletConnect = {
         userName: string;
         _id: string;
     }
+}
+
+//Notification Data
+declare type NotificationFormData = {
+    user: string
+    type: string
+    title: string
+    message: string
 }

@@ -138,12 +138,12 @@ export default function AdminModal({ admin, isOpen, onClose, isCreating }: { adm
                         {errors.email && <p className="text-[10px] text-red-600 md:text-xs xl:text-sm">{errors.email}</p>}
                     </div>
 
-                    <div className="space-y-2">
+                    {admin && <div className="space-y-2">
                         <Label className="font-medium text-neutral-700">
                             Old Password
                         </Label>
-                        {admin && <Input value={admin.encryptedPassword} contentEditable={false} className="cursor-not-allowed" disabled />}
-                    </div>
+                        <Input value={admin.encryptedPassword} readOnly={true} contentEditable={false} className="cursor-not-allowed" disabled />
+                    </div>}
 
                     <div className="space-y-2">
                         <Label htmlFor="password" className="font-medium text-neutral-700">
