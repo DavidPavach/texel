@@ -1,81 +1,73 @@
 import { useState, useEffect } from "react";
 
-//Utils
+// Utils
 import { formatDate } from "@/utils/format";
 
-//Components
+// Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 
-//Icons
-import { Calendar, ExternalLink, Search, Filter, RefreshCw, Bitcoin, Newspaper } from "lucide-react";
+// Icons
+import { Calendar, ExternalLink, Filter, RefreshCw, Bitcoin, Newspaper } from "lucide-react";
+
 
 
 export default function Index() {
 
-    const [articles, setArticles] = useState<NewsArticle[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null)
-    const [searchTerm, setSearchTerm] = useState("")
-    const [categoryFilter, setCategoryFilter] = useState("all")
-    const [refreshing, setRefreshing] = useState(false)
+    const [articles, setArticles] = useState<NewsArticle[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [categoryFilter, setCategoryFilter] = useState("all");
+    const [refreshing, setRefreshing] = useState(false);
 
     const fetchNews = async () => {
         try {
-            setError(null)
-            const response = await fetch("https://api.coingecko.com/api/v3/news")
+            setError(null);
+            const response = await fetch(
+                "https://newsdata.io/api/1/latest?apikey=pub_4565c81c6da745b8bee34b94850ff8f0&q=cryptocurrency"
+            );
+            if (!response.ok) throw new Error("Failed to fetch news");
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch news")
-            }
-
-            const data = await response.json()
-            setArticles(data.data || [])
+            const data = await response.json();
+            setArticles(data.results || []);
         } catch (err) {
-            setError("Failed to load cryptocurrency news. Please try again later.")
-            console.error("Error fetching news:", err)
+            setError("Failed to load cryptocurrency news. Please try again later.");
+            console.error("Error fetching news:", err);
         } finally {
-            setLoading(false)
-            setRefreshing(false)
+            setLoading(false);
+            setRefreshing(false);
         }
-    }
+    };
 
     useEffect(() => {
-        fetchNews()
-    }, [])
+        fetchNews();
+    }, []);
 
     const handleRefresh = () => {
-        setRefreshing(true)
-        fetchNews()
-    }
+        setRefreshing(true);
+        fetchNews();
+    };
 
     const filteredArticles = articles.filter((article) => {
-        const matchesSearch =
-            article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            article.description.toLowerCase().includes(searchTerm.toLowerCase())
-
         const matchesCategory =
-            categoryFilter === "all" || (article.categories && article.categories.includes(categoryFilter))
+            categoryFilter === "all" ||
+            (article.category && article.category.includes(categoryFilter));
 
-        return matchesSearch && matchesCategory
-    })
-
+        return matchesCategory;
+    });
 
     const getUniqueCategories = () => {
-        const categories = new Set<string>()
+        const categories = new Set<string>();
         articles.forEach((article) => {
-            article.categories?.forEach((cat) => categories.add(cat))
-        })
-        return Array.from(categories).slice(0, 10)
-    }
+            article.category?.forEach((cat) => categories.add(cat));
+        });
+        return Array.from(categories).slice(0, 10);
+    };
 
-    if (loading) {
-        return <NewsLoadingSkeleton />
-    }
+    if (loading) return <NewsLoadingSkeleton />;
 
     return (
         <div className="px-4 md:px-8 py-8">
@@ -100,27 +92,21 @@ export default function Index() {
 
                 <Card className="shadow-sm mb-6 border-neutral-200">
                     <CardContent className="pt-6">
-                        <div className="flex md:flex-row flex-col gap-4">
-                            <div className="relative flex-1">
-                                <Search className="top-1/2 left-3 absolute size-4 text-neutral-500 -translate-y-1/2 transform" />
-                                <Input placeholder="Search news articles..." className="pl-10" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Filter className="size-4 text-neutral-500" />
-                                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Filter by category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="all">All Categories</SelectItem>
-                                        {getUniqueCategories().map((category) => (
-                                            <SelectItem key={category} value={category}>
-                                                {category.charAt(0).toUpperCase() + category.slice(1)}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
+                        <div className="flex items-center gap-2">
+                            <Filter className="size-4 text-neutral-500" />
+                            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Filter by category" />
+                                </SelectTrigger>
+                                <SelectContent className="text-xs md:text-sm xl:text-base">
+                                    <SelectItem value="all" >All Categories</SelectItem>
+                                    {getUniqueCategories().map((category) => (
+                                        <SelectItem key={category} value={category}>
+                                            {category.charAt(0).toUpperCase() + category.slice(1)}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
                     </CardContent>
                 </Card>
@@ -139,7 +125,7 @@ export default function Index() {
                 {filteredArticles.length > 0 ? (
                     <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {filteredArticles.map((article) => (
-                            <NewsCard key={article.id} article={article} />
+                            <NewsCard key={article.article_id} article={article} />
                         ))}
                     </div>
                 ) : (
@@ -148,12 +134,9 @@ export default function Index() {
                             <CardContent className="pt-6">
                                 <div className="py-12 text-center">
                                     <Newspaper className="mx-auto mb-4 size-12 text-neutral-400" />
-                                    <h3 className="mb-2 font-medium text-neutral-600 text-sm md:text-base xl:text-lg">No articles found</h3>
-                                    <p className="text-neutral-500">
-                                        {searchTerm || categoryFilter !== "all"
-                                            ? "Try adjusting your search or filter criteria"
-                                            : "No news articles available at the moment"}
-                                    </p>
+                                    <h3 className="mb-2 font-medium text-neutral-600 text-sm md:text-base xl:text-lg">
+                                        No articles found
+                                    </h3>
                                 </div>
                             </CardContent>
                         </Card>
@@ -169,57 +152,62 @@ export default function Index() {
                 )}
             </div>
         </div>
-    )
+    );
 }
 
 function NewsCard({ article }: { article: NewsArticle }) {
-
-
     return (
         <Card className="flex flex-col shadow-sm hover:shadow-md border-neutral-200 h-full transition-shadow duration-200">
-            {article.thumb_2x && (
+            {article.image_url && (
                 <div className="rounded-t-lg aspect-video overflow-hidden">
-                    <img src={article.thumb_2x || "/placeholder.svg"} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                    <img
+                        src={article.image_url || "/placeholder.svg"}
+                        alt={article.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = "none"
-                        }} />
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = "none";
+                        }}
+                    />
                 </div>
             )}
 
             <CardHeader className="flex-1">
                 <div className="space-y-2">
-                    {article.categories && article.categories.length > 0 && (
+                    {article.category && article.category.length > 0 && (
                         <div className="flex flex-wrap gap-1">
-                            {article.categories.slice(0, 2).map((category) => (
-                                <Badge key={category} className="bg-primary/20 hover:bg-primary/20 text-primary text-xs">
-                                    {category}
+                            {article.category.slice(0, 2).map((cat) => (
+                                <Badge key={cat} className="bg-primary/20 hover:bg-primary/20 text-primary text-xs">
+                                    {cat}
                                 </Badge>
                             ))}
                         </div>
                     )}
-
-                    <CardTitle className="text-lightBlack text-sm md:text-base xl:text-lg line-clamp-2 leading-tight">{article.title}</CardTitle>
+                    <CardTitle className="text-lightBlack text-sm md:text-base xl:text-lg line-clamp-2 leading-tight">
+                        {article.title}
+                    </CardTitle>
                 </div>
             </CardHeader>
 
             <CardContent className="flex flex-col flex-1 pt-0">
-                <p className="flex-1 mb-4 text-neutral-600 text-sm line-clamp-3">{article.description}</p>
+                <p className="flex-1 mb-4 text-neutral-600 text-sm line-clamp-3">
+                    {article.description}
+                </p>
 
                 <div className="space-y-3">
                     <div className="flex justify-between items-center text-neutral-500 text-xs">
                         <div className="flex items-center gap-1">
                             <Calendar className="size-3" />
-                            <span>{formatDate(new Date(article.published_at))}</span>
+                            <span>{formatDate(new Date(article.pubDate))}</span>
                         </div>
                         <div className="flex items-center gap-1">
                             <Newspaper className="size-3" />
-                            <span className="max-w-[100px] truncate">{article.source}</span>
+                            <span className="max-w-[100px] truncate">{article.source_id}</span>
                         </div>
                     </div>
 
                     <Button asChild className="bg-primary hover:bg-primary/90 w-full text-black">
-                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="flex justify-center items-center gap-2">
+                        <a href={article.link} target="_blank" rel="noopener noreferrer" className="flex justify-center items-center gap-2">
                             Read Full Article
                             <ExternalLink className="size-4" />
                         </a>
@@ -227,7 +215,7 @@ function NewsCard({ article }: { article: NewsArticle }) {
                 </div>
             </CardContent>
         </Card>
-    )
+    );
 }
 
 function NewsLoadingSkeleton() {
@@ -284,5 +272,5 @@ function NewsLoadingSkeleton() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

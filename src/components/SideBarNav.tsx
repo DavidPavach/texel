@@ -29,7 +29,7 @@ const SideBar = () => {
     const handleLogOut = () => {
         toast.info("Logging you out...")
         clearTokens();
-        setTimeout(() => navigate("/operations"), 1000)
+        setTimeout(() => navigate("/login"), 1000)
     }
 
     return (

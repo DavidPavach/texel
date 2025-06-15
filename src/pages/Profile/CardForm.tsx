@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-fox-toast";
 
-//Enums, Services and Stores
-import { getWallet } from "@/enums";
+//Enums, Services and Hooks
+import { getWallet, utilityId } from "@/enums";
 import { useCreateCardRequest } from "@/services/mutations.service";
-import { useUtilityStore } from "@/stores/utilityStore";
+import { GetUtility } from "@/services/queries.service";
 
 //Icons and Images
 import { RotateCcw, Copy, CheckCircle, X } from "lucide-react";
@@ -24,12 +24,16 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
     const [copied, setCopied] = useState<boolean>(false);
     const [enabled, setEnabled] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState(10);
-    const { data } = useUtilityStore();
+    const { data, isError } = GetUtility(utilityId);
 
     //Constants
     const address = getWallet["ethereum"].walletAddress;
     const coinQrCode = getWallet["ethereum"].qrCode;
     const coinNetwork = getWallet["ethereum"].network;
+    let cardPrice: number = 1600;
+    if (!isError && data?.data?.cardPrice != null) {
+        cardPrice = data.data.cardPrice;
+    }
 
     //Functions
     useEffect(() => {
@@ -159,7 +163,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
                                         </button>
                                     </div>
                                     <p className="mt-2 text-red-500 text-xs md:text-sm">
-                                        Please deposit ${data?.minimumAmount} in <span className="text-primary">Ethereum</span> to this address. Ensure the network is only <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
+                                        Please deposit <span className="text-primary">${cardPrice.toLocaleString()} of Ethereum</span> to this address. Ensure the network is only <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
                                     </p>
                                 </div>
 

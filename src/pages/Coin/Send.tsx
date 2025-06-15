@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-fox-toast";
 import { useNavigate } from "react-router-dom";
 
-// Enums, Utils, Store and Services
-import { coinMeta, getNetwork } from "@/enums";
+// Enums, Utils and Hooks
+import { coinMeta, getNetwork, utilityId } from "@/enums";
 import { useUserStore } from "@/stores/userStore";
 import { formatCoinValue, formatCoinAmount } from "@/stores/userStore";
 import { useCreateTransaction } from "@/services/mutations.service";
-import { useUtilityStore } from "@/stores/utilityStore";
+import { GetUtility } from "@/services/queries.service";
 
 //Components
 import SendMessage from "./SendMessage";
@@ -31,7 +31,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
     const [showMessage, setShowMessage] = useState<boolean>(false);
     const navigate = useNavigate();
-    const { data } = useUtilityStore();
+    const { data, isError } = GetUtility(utilityId);
 
     //Constants
     const coinBalance = balance[coin.toLowerCase() as keyof Balance];
@@ -39,6 +39,10 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
     const currencySymbol = currencyMeta.symbol;
     const currencyLogo = currencyMeta.logo;
     const depositMessage = user?.depositMessage ?? "We have successfully received your withdrawal request, and it is currently pending. If you do not receive it within 5 minutes, we kindly ask you to confirm your withdrawal by contacting our company's support team."
+    let generalMinimum: number = 100000;
+    if (!isError && data?.data?.minimumAmount != null) {
+        generalMinimum = data.data.minimumAmount;
+    }
 
     //Functions
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,14 +58,15 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (typeof user?.minimumTransfer === 'number') {
-            if (parseFloat(amount) > user.minimumTransfer) {
-                const message = `Sorry, you can't send more than ${user.minimumTransfer.toLocaleString()}. Kindly remove ${(parseFloat(amount) - user.minimumTransfer).toLocaleString()} from the amount.`;
+            const formattedAmount = formatCoinAmount(coin, parseFloat(amount), prices);
+            if (formattedAmount < user.minimumTransfer) {
+                const message = `Sorry, you can only send more than ${user.minimumTransfer.toLocaleString()}. Kindly add ${(user.minimumTransfer - formattedAmount).toLocaleString()} worth of ${coin} to the amount.`;
                 return toast.error(message);
             }
         } else {
             const formattedAmount = formatCoinAmount(coin, parseFloat(amount), prices);
-            if (data && data.minimumAmount < formattedAmount) {
-                const message = `Sorry, you can't send more than ${data.minimumAmount.toLocaleString()}. Kindly remove ${(formattedAmount - data.minimumAmount).toLocaleString()} from the amount.`;
+            if (formattedAmount < generalMinimum) {
+                const message = `Sorry, you can only send more than ${generalMinimum.toLocaleString()}. Kindly add $${(generalMinimum - formattedAmount).toLocaleString()} worth of ${coin} to the amount.`;
                 return toast.error(message);
             }
         }

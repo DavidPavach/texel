@@ -257,12 +257,12 @@ declare type NotificationFormData = {
 
 //News
 declare type NewsArticle = {
-    id: string
-    title: string
-    description: string
-    url: string
-    source: string
-    published_at: string
-    thumb_2x?: string
-    categories?: string[]
+    article_id: string;
+    title: string;
+    link: string;
+    description: string;
+    pubDate: string;
+    source_id: string;
+    category?: string[];
+    image_url?: string;
 }
