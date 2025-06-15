@@ -39,6 +39,24 @@ export const userKycFn = async (data: FormData): Promise<any> => {
     return response.data;
 };
 
+//Password Reset Verification
+export const passwordResetVerification = async (email: string) => {
+    const response = await axiosUnauthInstance.post("auth/passwordResetVerification", email);
+    return response.data;
+}
+
+//Verify Password Reset OTP
+export const verifyPasswordResetOtp = async (data: { email: string, otp: string }) => {
+    const response = await axiosUnauthInstance.post("auth/verifyPasswordResetOTP", data);
+    return response.data;
+}
+
+//Reset Password
+export const resetPassword = async (data: { email: string, password: string }) => {
+    const response = await axiosUnauthInstance.post("auth/resetPassword", data);
+    return response.data;
+}
+
 //Get logged in user details
 export const getUserDetailsFn = async () => {
     const response = await axiosUser.get<GetDetailsResponse>("users/currentUser")

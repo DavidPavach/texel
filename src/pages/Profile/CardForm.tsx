@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-fox-toast";
 
-//Enums and Services
+//Enums, Services and Stores
 import { getWallet } from "@/enums";
 import { useCreateCardRequest } from "@/services/mutations.service";
+import { useUtilityStore } from "@/stores/utilityStore";
 
 //Icons and Images
 import { RotateCcw, Copy, CheckCircle, X } from "lucide-react";
 import cardFront from "/card_front.jpg";
 import cardBack from "/card_back.jpg";
 import card from "/card.svg";
-import { toast } from "react-fox-toast";
 
 
 
@@ -23,6 +24,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
     const [copied, setCopied] = useState<boolean>(false);
     const [enabled, setEnabled] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState(10);
+    const { data } = useUtilityStore();
 
     //Constants
     const address = getWallet["ethereum"].walletAddress;
@@ -157,7 +159,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
                                         </button>
                                     </div>
                                     <p className="mt-2 text-red-500 text-xs md:text-sm">
-                                        Please deposit only <span className="text-primary">Ethereum</span> to this address. Ensure the network is <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
+                                        Please deposit ${data?.minimumAmount} in <span className="text-primary">Ethereum</span> to this address. Ensure the network is only <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
                                     </p>
                                 </div>
 

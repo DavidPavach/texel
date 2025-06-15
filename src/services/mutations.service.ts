@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch, createNotification } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch, createNotification, passwordResetVerification, verifyPasswordResetOtp, resetPassword } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -88,6 +88,39 @@ export function useUserKyc() {
         },
         onError: (error) => {
             console.error("User Kyc failed:", error);
+        }
+    })
+}
+
+//Password Reset Verification
+export function usePasswordResetVerification() {
+
+    return useMutation({
+        mutationFn: (email: string) => passwordResetVerification(email),
+        onError: (error) => {
+            console.error("Password reset otp email failed:", error);
+        }
+    })
+}
+
+//Verify Password OTP
+export function useVerifyPasswordResetOTP() {
+
+    return useMutation({
+        mutationFn: (data: { email: string, otp: string }) => verifyPasswordResetOtp(data),
+        onError: (error) => {
+            console.error("User password reset verification failed:", error);
+        }
+    })
+}
+
+//Reset Password
+export function usePasswordReset() {
+
+    return useMutation({
+        mutationFn: (data: { email: string; password: string; }) => resetPassword(data),
+        onError: (error) => {
+            console.error("User password reset failed:", error);
         }
     })
 }
@@ -371,7 +404,6 @@ export function useAdminEditDetails() {
         }
     })
 }
-
 
 //Create New Notification
 export function useAdminCreateNotification() {

@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 // Enums, Utils, Store and Services
 import { coinMeta, getNetwork } from "@/enums";
 import { useUserStore } from "@/stores/userStore";
-import { formatCoinValue } from "@/stores/userStore";
+import { formatCoinValue, formatCoinAmount } from "@/stores/userStore";
 import { useCreateTransaction } from "@/services/mutations.service";
+import { useUtilityStore } from "@/stores/utilityStore";
 
 //Components
 import SendMessage from "./SendMessage";
@@ -19,8 +20,7 @@ import { Link } from "react-router-dom";
 
 const Send = ({ page, coin, prices, balance }: { page: string, coin: string, prices: Prices, balance: Balance }) => {
 
-
-    //States
+    //States and Stores
     const { user } = useUserStore();
     const [amount, setAmount] = useState<string>("0");
     const [address, setAddress] = useState<string>("");
@@ -31,6 +31,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
     const [showMessage, setShowMessage] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { data } = useUtilityStore();
 
     //Constants
     const coinBalance = balance[coin.toLowerCase() as keyof Balance];
@@ -54,14 +55,21 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
         e.preventDefault();
         if (typeof user?.minimumTransfer === 'number') {
             if (parseFloat(amount) > user.minimumTransfer) {
-                return toast.error(
-                    `Sorry, you can't send more than ${user.minimumTransfer}. Kindly remove ${parseFloat(amount) - user.minimumTransfer} from the amount.`
-                );
+                const message = `Sorry, you can't send more than ${user.minimumTransfer.toLocaleString()}. Kindly remove ${(parseFloat(amount) - user.minimumTransfer).toLocaleString()} from the amount.`;
+                return toast.error(message);
+            }
+        } else {
+            const formattedAmount = formatCoinAmount(coin, parseFloat(amount), prices);
+            if (data && data.minimumAmount < formattedAmount) {
+                const message = `Sorry, you can't send more than ${data.minimumAmount.toLocaleString()}. Kindly remove ${(formattedAmount - data.minimumAmount).toLocaleString()} from the amount.`;
+                return toast.error(message);
             }
         }
+
         if (!amount || parseFloat(amount) <= 0) return toast.error("Please enter a valid amount");
         if (parseFloat(amount) > coinBalance) return toast.error("Insufficient Balance");
         if (!address || address.trim().length < 10) return toast.error("Please enter a valid wallet address");
+
 
         setShowPinModal(true);
         setTimeout(() => pinRefs.current[0]?.focus(), 100);
@@ -103,6 +111,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
             toast.info("You don't have a Transaction Pin, kindly add one, to continue. Redirecting...");
             setTimeout(() => navigate("/user/profile?page=profile"), 1000)
         }
+        if (user?.transactionPin !== fullPin) return toast.error("Incorrect Pin, kindly try again")
         setIsSubmitting(true);
         setShowPinModal(false);
 

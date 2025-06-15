@@ -25,7 +25,7 @@ const Index = () => {
                 <Form />
                 <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center gap-y-2 mt-10 text-neutral-600">
                     <p>New User?<Link to="/create" className="ml-1 text-neutral-900 hover:text-white underline duration-300">Create Account</Link></p>
-                    <p>Lost Account?<Link to="/login" className="ml-1 text-neutral-900 hover:text-white underline duration-300">Forgot Password</Link></p>
+                    <p>Lost Account?<Link to="/forgot" className="ml-1 text-neutral-900 hover:text-white underline duration-300">Forgot Password</Link></p>
                 </div>
             </div>
             <div className="hidden lg:block relative p-2 w-[50%] h-dvh">

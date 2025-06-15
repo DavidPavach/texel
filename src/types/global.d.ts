@@ -254,3 +254,15 @@ declare type NotificationFormData = {
     title: string
     message: string
 }
+
+//News
+declare type NewsArticle = {
+    id: string
+    title: string
+    description: string
+    url: string
+    source: string
+    published_at: string
+    thumb_2x?: string
+    categories?: string[]
+}

@@ -20,6 +20,13 @@ export const formatCoinValue = (coin: string, amount: number, prices: Prices): s
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
 };
 
+export const formatCoinAmount = (coin: string, amount: number, prices: Prices): number => {
+  const apiKey = coinMap[coin.toLowerCase()] ?? '';
+  const price = prices[apiKey]?.usd ?? 0;
+  const total = amount * price;
+  return total;
+};
+
 export const useUserStore = create<UserStore>((set) => ({
   user: null,
   balance: null,

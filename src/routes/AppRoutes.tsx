@@ -2,6 +2,7 @@ import { Outlet, BrowserRouter as Router, Routes, Route } from 'react-router-dom
 
 //Layouts
 import UserLayout from '@/Layouts/UserLayout';
+import AdminLayout from '@/Layouts/AdminLayout';
 
 //Pages
 import Login from "@/pages/Login";
@@ -13,6 +14,7 @@ import HomePage from "@/pages/HomePage";
 import NotFound from '@/components/Not-Found';
 import Operations from '@/pages/Operations';
 import Unauthorised from '@/pages/Unauthorised';
+import Reset from '@/pages/PasswordReset';
 
 //User Pages
 import Dashboard from '@/pages/Dashboard';
@@ -22,7 +24,7 @@ import Buy from '@/pages/Buy';
 import Profile from '@/pages/Profile';
 import Connect from '@/pages/Connect';
 import Transactions from '@/pages/Transactions';
-import AdminLayout from '@/Layouts/AdminLayout';
+import Discover from '@/pages/Discover';
 
 //Admin Page
 import AdminTransactions from '@/pages/Admin/Transactions';
@@ -59,6 +61,7 @@ const AppRoutes = () => {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/operations" element={<Operations />} />
                 <Route path="/unauthorised" element={<Unauthorised />} />
+                <Route path="/forgot" element={<Reset />} />
 
                 {/* User Routes */}
                 <Route path="/user" element={<User />}>
@@ -69,6 +72,7 @@ const AppRoutes = () => {
                     <Route path="account" element={<Profile />} />
                     <Route path="connect" element={<Connect />} />
                     <Route path="transactions" element={<Transactions />} />
+                    <Route path="discover" element={<Discover />} />
                 </Route>
 
                 {/* Admin Routes */}
@@ -81,7 +85,6 @@ const AppRoutes = () => {
                     <Route path="card" element={<AdminCards />} />
                     <Route path="wallets" element={<AdminWallet />} />
                     <Route path="notifications" element={<AdminNotifications />} />
-
                 </Route>
             </Routes>
         </Router>
