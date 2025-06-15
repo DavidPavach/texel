@@ -99,7 +99,15 @@ export default function AdminModal({ admin, isOpen, onClose, isCreating }: { adm
             })
         } else {
             createAdmin.mutate(formData, {
-
+                onSuccess: (response) => {
+                    toast.success(response.data.message || "Admin was created successfully!");
+                    reset()
+                },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onError: (error: any) => {
+                    const message = error?.response?.data?.message || "Couldn't create admin, kindly try again later.";
+                    toast.error(message);
+                },
             })
         }
 

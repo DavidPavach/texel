@@ -40,8 +40,8 @@ export const userKycFn = async (data: FormData): Promise<any> => {
 };
 
 //Password Reset Verification
-export const passwordResetVerification = async (email: string) => {
-    const response = await axiosUnauthInstance.post("auth/passwordResetVerification", email);
+export const passwordResetVerification = async (data: { email: string }) => {
+    const response = await axiosUnauthInstance.post("auth/passwordResetVerification", data);
     return response.data;
 }
 

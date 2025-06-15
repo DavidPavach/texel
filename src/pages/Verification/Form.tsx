@@ -12,6 +12,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import Button from "@/components/Button";
 
 const Form = () => {
+    
     // States
     const [value, setValue] = useState("");
     const [timer, setTimer] = useState(180);

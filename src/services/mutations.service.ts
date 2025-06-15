@@ -96,7 +96,7 @@ export function useUserKyc() {
 export function usePasswordResetVerification() {
 
     return useMutation({
-        mutationFn: (email: string) => passwordResetVerification(email),
+        mutationFn: (data : {email: string}) => passwordResetVerification(data),
         onError: (error) => {
             console.error("Password reset otp email failed:", error);
         }

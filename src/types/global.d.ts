@@ -3,7 +3,7 @@ declare type FancyButtonProps = {
     text: string;
     loadingText?: string;
     icon?: React.ReactNode;
-    onClick?: () => Promise<void> | void;
+    onClick?: () => Promise<void> | void | string;
     variant?: "primary" | "secondary" | "success";
     size?: "sm" | "md" | "lg";
     disabled: boolean;
@@ -149,7 +149,7 @@ declare type ExchangeCardProps = {
 declare type Admin = {
     _id: string;
     email: string;
-    password?: string;
+    password: string;
     isSuspended: boolean;
     role: "admin" | "super_admin";
     encryptedPassword: string;

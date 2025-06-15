@@ -35,7 +35,7 @@ const Index = () => {
                 </div>
                 <div className="mt-4 text-neutral-700 text-center">
                     <h1 className="font-light text-xl md:text-2xl xl:text-3xl">Secure Transaction</h1>
-                    <p className="md:text-base xl:text-lg sm">Create a new Transaction PIN to secure your account and Transactions.</p>
+                    <p className="text-sm md:text-base xl:text-lg">Create a new Transaction PIN to secure your account and Transactions.</p>
                 </div>
                 {isLoading && (
                     <div className="bg-neutral-800 mx-auto mt-2 rounded-2xl w-[90%] h-52 animate-pulse"></div>

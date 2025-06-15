@@ -19,7 +19,7 @@ const Index = () => {
                 </div>
                 <div className="mt-4 text-neutral-700 text-center">
                     <h1 className="font-light text-xl md:text-2xl xl:text-3xl">Verify Your Identity</h1>
-                    <p className="md:text-base xl:text-lg sm">Please provide the necessary information to verify your identity.</p>
+                    <p className="text-sm md:text-base xl:text-lg">Please provide the necessary information to verify your identity.</p>
                 </div>
                 <Form />
             </div>

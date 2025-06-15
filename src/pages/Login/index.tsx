@@ -20,7 +20,7 @@ const Index = () => {
                 </div>
                 <div className="mt-4 text-neutral-700 text-center">
                     <h1 className="font-light text-xl md:text-2xl xl:text-3xl">Sign in an account</h1>
-                    <p className="md:text-base xl:text-lg sm">Log in to continue</p>
+                    <p className="text-sm md:text-base xl:text-lg">Log in to continue</p>
                 </div>
                 <Form />
                 <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center gap-y-2 mt-10 text-neutral-600">
