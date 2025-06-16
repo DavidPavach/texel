@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 
-const SideItem = ({ href, icon: Icon, label }: NavItem & { currentPath: string }) => {
+const SideItem = ({ href, icon: Icon, label }: NavItem) => {
     const isActive = useLocation().pathname === href;
 
     const baseClasses = "hover:bg-accent/30 duration-300";

@@ -14,7 +14,6 @@ declare type FancyButtonProps = {
 declare type NavItem = {
     href: string;
     icon: React.ElementType;
-    currentPath: string;
     label: string;
 }
 

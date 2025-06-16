@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-fox-toast";
 
 //Utils
@@ -27,7 +27,6 @@ const logoutItem = { icon: Logout, label: "Logout" };
 const AdminSideBar = () => {
 
     const navigate = useNavigate();
-    const { pathname } = useLocation();
 
     //Functions
     const handleLogOut = () => {
@@ -40,11 +39,11 @@ const AdminSideBar = () => {
         <main className="hidden fixed lg:flex flex-col bg-[#000000] px-10 py-6 w-[20rem] h-dvh text-[#c8c8c9]">
             <div className="flex flex-col flex-grow gap-y-8 mt-20">
                 {navItems.map((item, index) => (
-                    <SideItem key={`items-${index}`} currentPath={pathname} {...item} />
+                    <SideItem key={`items-${index}`} {...item} />
                 ))}
             </div>
             <div className="mt-8" onClick={handleLogOut}>
-                <SideItem href="" currentPath={pathname} {...logoutItem} />
+                <SideItem href="" {...logoutItem} />
             </div>
         </main>
     );

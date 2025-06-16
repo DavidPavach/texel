@@ -1,5 +1,3 @@
-import { useLocation } from "react-router-dom";
-
 //Components
 import NavItem from "./BottomNavItem";
 
@@ -16,13 +14,11 @@ const navItems = [
 
 const BottomNav = () => {
 
-  const { pathname } = useLocation();
-
   return (
     <main className="lg:hidden bottom-0 left-0 z-50 fixed bg-[#F0F0F0] p-2 w-full">
       <div className="flex justify-between items-center bg-black p-2 rounded-[2rem]">
         {navItems.map((item) => (
-          <NavItem key={item.label} currentPath={pathname} {...item} />
+          <NavItem key={item.label} {...item} />
         ))}
       </div>
     </main>

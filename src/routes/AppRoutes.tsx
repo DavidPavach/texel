@@ -3,6 +3,7 @@ import { Outlet, BrowserRouter as Router, Routes, Route } from 'react-router-dom
 //Layouts
 import UserLayout from '@/Layouts/UserLayout';
 import AdminLayout from '@/Layouts/AdminLayout';
+import HomePageLayout from '@/Layouts/HomeLayout';
 
 //Pages
 import Login from "@/pages/Login";
@@ -48,16 +49,25 @@ const Admin = () => (
     </AdminLayout>
 )
 
+const Home = () => (
+    <HomePageLayout>
+        <Outlet />
+    </HomePageLayout>
+)
+
 const AppRoutes = () => {
     return (
         <Router>
             <Routes>
+                <Route element={<Home />}>
+                    <Route path="/" element={<HomePage />} />
+                </Route>
+                
                 <Route path="/create" element={<Create />} />
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/kyc" element={<Kyc />} />
                 <Route path="/pin" element={<Pin />} />
-                <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/operations" element={<Operations />} />
                 <Route path="/unauthorised" element={<Unauthorised />} />

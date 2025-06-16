@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 
-const NavItem = ({ href, icon: Icon, label }: NavItem & { currentPath: string }) => {
+const NavItem = ({ href, icon: Icon, label }: NavItem) => {
     const isActive = useLocation().pathname === href;
 
     return (
