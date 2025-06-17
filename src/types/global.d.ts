@@ -275,7 +275,6 @@ declare type Testimonial = {
     location: string
     reviewCount: number
     rating: number
-    date: string
     title: string
     content: string
     verified: boolean

@@ -17,7 +17,7 @@ export default function TestimonialCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
-    }, 4000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [])
@@ -73,9 +73,6 @@ export default function TestimonialCarousel() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-neutral-500 text-sm">{testimonial.date}</div>
-                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -85,7 +82,6 @@ export default function TestimonialCarousel() {
                 <div className="space-y-3">
                   <h4 className="font-semibold text-lightBlack leading-tight">{testimonial.title}</h4>
                   <p className="text-neutral-600 leading-relaxed">{testimonial.content}</p>
-                  <div className="text-neutral-500 text-sm">Date of experience: {testimonial.date}</div>
                 </div>
 
                 <div className="flex justify-between items-center pt-4 border-neutral-200 border-t">

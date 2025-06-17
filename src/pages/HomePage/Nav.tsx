@@ -31,9 +31,9 @@ const Nav = () => {
     return (
         <nav className="relative xl:mx-auto xl:max-w-7xl grotesk">
             <div className="flex justify-between items-center px-4 sm:px-6 md:px-8 lg:px-10 2xl:px-16 xl:px-12 py-6">
-                <div className="flex items-center gap-x-2">
-                    <img src={logo} alt="TexelChain Logo" className="size-8 md:size-10 xl:size-12" />
-                    <h2 className="font-semibold text-lg md:text-xl xl:text-2xl">
+                <div className="flex items-center gap-x-1">
+                    <img src={logo} alt="TexelChain Logo" className="size-10 md:size-12 xl:size-14" />
+                    <h2 className="font-semibold text-xl md:text-2xl xl:text-3xl">
                         TexelChain
                     </h2>
                 </div>
