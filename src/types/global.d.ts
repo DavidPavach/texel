@@ -165,7 +165,7 @@ declare type AdminStore = {
     fetchPrices: () => void;
 }
 
-//Transactions
+//Admin Transactions
 declare type Transaction = {
     _id: string;
     amount: number;
@@ -183,6 +183,8 @@ declare type Transaction = {
         accountId: string;
     };
 }
+
+//User Transactions
 declare type UserTransaction = {
     _id: string;
     user: string;
@@ -264,4 +266,18 @@ declare type NewsArticle = {
     source_id: string;
     category?: string[];
     image_url?: string;
+}
+
+declare type Testimonial = {
+    id: string
+    name: string
+    avatar: string
+    location: string
+    reviewCount: number
+    rating: number
+    date: string
+    title: string
+    content: string
+    verified: boolean
+    helpful: number
 }

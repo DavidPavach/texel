@@ -29,11 +29,11 @@ const Nav = () => {
     const Icon = open ? CloseCircle : HambergerMenu;
 
     return (
-        <nav className="relative grotesk">
+        <nav className="relative xl:mx-auto xl:max-w-7xl grotesk">
             <div className="flex justify-between items-center px-4 sm:px-6 md:px-8 lg:px-10 2xl:px-16 xl:px-12 py-6">
                 <div className="flex items-center gap-x-2">
                     <img src={logo} alt="TexelChain Logo" className="size-8 md:size-10 xl:size-12" />
-                    <h2 className="font-semibold text-sm sm:text-base md:text-lg xl:text-xl 2xl:text-2xl">
+                    <h2 className="font-semibold text-lg md:text-xl xl:text-2xl">
                         TexelChain
                     </h2>
                 </div>
@@ -48,7 +48,7 @@ const Nav = () => {
                 <div className="hidden md:flex gap-4">
                     {Buttons.map(({ page, path }, idx) => (
                         <Link key={path} to={path} className={`text-sm lg:text-base rounded-xl px-4 lg:px-8 py-2 transition duration-300 border border-primary ${idx === 1
-                                    ? "bg-primary text-black hover:text-white hover:bg-primary/90"
+                                    ? "bg-primary text-black hover:text-white hover:bg-primary/90 hover:scale-105s"
                                     : "text-primary hover:bg-primary/10"  }`}>
                             {page}
                         </Link>
@@ -68,7 +68,7 @@ const Nav = () => {
                         ))}
                         <div className="flex flex-col gap-2 mt-4">
                             {Buttons.map(({ page, path }, idx) => (
-                                <Link key={path} to={path} onClick={() => setOpen(false)} className={`block text-center text-sm rounded-xl px-4 py-2 border border-primary transition duration-300 ${idx === 1 ? "bg-primary text-black hover:bg-primary/90 hover:text-white" : "text-primary hover:bg-primary/10"}`}>
+                                <Link key={path} to={path} onClick={() => setOpen(false)} className={`block text-center text-sm rounded-xl px-4 py-2 border border-primary transition duration-300 ${idx === 1 ? "bg-primary text-black hover:bg-primary/90 hover:text-white hover:scale-105" : "text-primary hover:bg-primary/10"}`}>
                                     {page}
                                 </Link>
                             ))}

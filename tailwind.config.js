@@ -24,6 +24,9 @@ export default {
           600: "#4B5563",
         },
       },
+      boxShadow: {
+        "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+      },
       backgroundImage: {
         "brand-gradient": "linear-gradient(180deg, #FAF9F6 0%, #FFC107 100%)",
       },
