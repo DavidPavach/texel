@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 //Images
-import heroSection from "/hero_section.webp";
+import heroSection from "/hero.png";
 
 const HeroSection = () => {
     return (

@@ -280,3 +280,10 @@ declare type Testimonial = {
     verified: boolean
     helpful: number
 }
+
+declare type FAQItem = {
+  id: string
+  question: string
+  answer: string
+  category: string
+}

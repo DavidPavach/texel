@@ -22,7 +22,7 @@ export default function Testimonial() {
             <div>
                 <div className="space-y-6 mb-16 text-center">
                     <Badge className="bg-primary/20 hover:bg-primary/20 px-4 py-2 font-medium text-primary">
-                        <Star className="fill-current mr-2 w-4 h-4" />
+                        <Star className="fill-current mr-2 size-4" />
                         Trusted by Thousands
                     </Badge>
                     <h1 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl grotesk">

@@ -163,7 +163,7 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
                                         </button>
                                     </div>
                                     <p className="mt-2 text-red-500 text-xs md:text-sm">
-                                        Please deposit <span className="text-primary">${cardPrice.toLocaleString()} of Ethereum</span> to this address. Ensure the network is only <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
+                                        Please deposit <span className="text-primary">${cardPrice.toLocaleString()} worth of Ethereum</span> to this address. Ensure the network is only <span className="text-primary">{coinNetwork}</span>. Sending other coins will result in permanent loss.
                                     </p>
                                 </div>
 

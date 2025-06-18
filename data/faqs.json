@@ -1,0 +1,86 @@
+[
+  {
+    "id": "1",
+    "question": "Why do I have to complete the KYC process accurately?",
+    "answer":
+      "It's important to fully verify your account accurately right after setting it up, prior to depositing any coins or making withdrawal attempts. Completing this verification is essential to avoid any possible interruptions such as account freezing or suspension.It's important to fully verify your account accurately right after setting it up, prior to depositing any coins or making withdrawal attempts. Completing this verification is essential to avoid any possible interruptions such as account freezing or suspension.",
+    "category": "Kyc"
+  },
+  {
+    "id": "2",
+    "question": "What are the eligibility requirements?",
+    "answer":
+      "To be eligible for our Premium Card, you must be at least 18 years old, have a valid government-issued ID, proof of income, and meet our credit requirements. We also require a minimum annual income threshold which varies by region.",
+    "category": "Card"
+  },
+  {
+    "id": "3",
+    "question": "How do I make a deposit?",
+    "answer":
+      "Please navigate to your account dashboard, select the coins icon, and then choose the 'receive' option. This action will direct you to the receiving page, where you can copy the wallet address. Once you have the address, you can proceed to deposit funds into it.",
+    "category": "Deposit"
+  },
+  {
+    "id": "4",
+    "question": "What security features does the card include?",
+    "answer":
+      "Our Premium Card includes advanced security features such as EMV chip technology, contactless payments, real-time fraud monitoring, instant transaction alerts, the ability to freeze/unfreeze your card instantly, and zero liability protection for unauthorized transactions.",
+    "category": "Card"
+  },
+  {
+    "id": "5",
+    "question": "Can I use the card internationally?",
+    "answer":
+      "Yes, our Premium Card is accepted worldwide wherever Mastercard is accepted. There are no foreign transaction fees, and you'll get competitive exchange rates. We also provide 24/7 global customer support for any issues while traveling.",
+    "category": "Card"
+  },
+  {
+    "id": "6",
+    "question": "How long does my deposit take before it can reflect on my WealthAssets account dashboard?",
+    "answer":
+      "This process should only take approximately 5 to 10 minutes, after which it will be reflected in your account.",
+    "category": "Deposit"
+  },
+  {
+    "id": "7",
+    "question": "What is the process of making a withdrawal?",
+    "answer":
+      "Kindly go to your account dashboard, click on the coins icon, and select 'send.' You will be taken to the page where you can enter the wallet address of your external receiving wallet. After entering the address, please enter the amount and select the appropriate crypto network that holds your funds to initiate the transfer.",
+    "category": "Withdrawals"
+  },
+  {
+    "id": "8",
+    "question": "How long does it take to process my withdrawal?",
+    "answer":
+      "Upon receipt of your withdrawal request, we will promptly process it and transfer the funds to your wallet address. You should expect to receive it in your external wallet within 5 to 10 minutes.",
+    "category": "Withdrawals"
+  },
+  {
+    "id": "9",
+    "question": "How can I activate my master card?",
+    "answer":
+      "To enable the use of your wealth assets Mastercard for online purchases, bill payments, and tax transactions, you have the option to activate it by depositing $1,600 in ethereum into your account.",
+    "category": "Card"
+  },
+  {
+    "id": "10",
+    "question": "How do I set up a new account on WealthAssets wallet?",
+    "answer": 
+    "Creating an account on our platform is entirely complimentary and incurs no costs. To get started, kindly select the 'Sign Up' button to initiate the creation of your account. Afterward, an OTP will be send for email verification, kindly enter the OTP to verify your email. Subsequently, you can move on to verify your account KYC with your national identity card. Finally, establish a six-digit PIN which will serve as your transaction security code. Should you experience any difficulties during the account setup process, please feel free to contact our online support team for help.",
+    "category": "Accounts"
+  },
+  {
+    "id": "11",
+    "question": "Is this platform legitimate?",
+    "answer": 
+    "TexelChain is proud to have a team of highly skilled developers and specialists in cryptocurrency and marketing. Our founding team and leaders bring substantial financial and technical expertise in software development and blockchain technologies. Additionally, we have partners who are leaders with international success and publicly recognized achievements.",
+    "category": "Security"
+  },
+  {
+    "id": "12",
+    "question": "What is your target audience?",
+    "answer": 
+    "Our platform serves a global cryptocurrency community, uniting countless individuals across the globe into one expansive network. As the financial resources managed by the TexelChain system grow, it enhances our ability to influence the market, thereby increasing the potential earnings for every member of our community",
+    "category": "Security"
+  }
+]

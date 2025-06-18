@@ -7,6 +7,8 @@ import Instant from "./Instant";
 import Collaborations from "./Collaborations";
 import Assets from "./Assets";
 import Testimonial from "./Testimonial";
+import CardShowcase from "./Card";
+import FAQ from "./FAQ";
 
 const index = () => {
     return ( 
@@ -19,6 +21,8 @@ const index = () => {
             <Collaborations />
             <Assets />
             <Testimonial />
+            <CardShowcase />
+            <FAQ />
         </main>
      );
 }
