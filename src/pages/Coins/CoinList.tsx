@@ -60,7 +60,7 @@ const CoinList = ({ page }: { page: string }) => {
 
     //Function
     const handlePageChange = (coin: string) => {
-        if (coin.toLowerCase() === "texel") return toast.info("Sending and receiving Texel token is unavailable.")
+        if (coin.toLowerCase() === "texel") return toast.info("Sending and receiving Texel token is unavailable at the moment ⏳ but will be available soon!")
         navigate(`/user/coin?coin=${coin}&page=${page}`)
     }
 

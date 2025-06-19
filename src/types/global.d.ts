@@ -268,6 +268,7 @@ declare type NewsArticle = {
     image_url?: string;
 }
 
+//Testimonial
 declare type Testimonial = {
     id: string
     name: string
@@ -281,9 +282,71 @@ declare type Testimonial = {
     helpful: number
 }
 
+//Frequently Asked Questions
 declare type FAQItem = {
-  id: string
-  question: string
-  answer: string
-  category: string
+    id: string
+    question: string
+    answer: string
+    category: string
+}
+
+//Reusable Hero Section
+declare type HeroProps = {
+    badge?: {
+        text: string
+        icon?: React.ReactNode
+    }
+    title: string
+    subtitle?: string
+    description: string
+
+    primaryCTA?: {
+        text: string
+        href?: string
+        onClick?: () => void
+        icon?: React.ReactNode
+    }
+    secondaryCTA?: {
+        text: string
+        href?: string
+        onClick?: () => void
+        icon?: React.ReactNode
+    }
+
+    backgroundImage?: string
+    backgroundGradient?: string
+    variant?: "default" | "centered" | "split" | "minimal"
+    size?: "sm" | "md" | "lg" | "xl"
+
+    breadcrumbs?: Array<{ label: string; href?: string }>
+
+    stats?: Array<{
+        label: string
+        value: string
+        icon?: React.ReactNode
+    }>
+
+    features?: Array<{
+        text: string
+        icon?: React.ReactNode
+    }>
+}
+
+//Investors Section
+declare type Investor = {
+    name: string;
+    logo?: string;
+    description?: string;
+    website?: string;
+    category: "venture" | "strategic" | "institutional";
+}
+
+//MV Items
+declare type MVVItem = {
+    title: string
+    content: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    icon: React.ComponentType<any>
+    gradient: string
+    iconBg: string
 }

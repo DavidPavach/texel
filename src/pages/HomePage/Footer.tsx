@@ -75,7 +75,7 @@ export default function Footer() {
                     </div>
 
                     <p className="text-[10px] text-neutral-400 md:text-xs xl:text-smtext-center md:text-right">
-                        <Copyright className="inline" /> {currentYear} CryptoTrade. All rights reserved.
+                        <Copyright size="16" className="inline" /> {currentYear} CryptoTrade. All rights reserved.
                     </p>
                 </div>
             </div>

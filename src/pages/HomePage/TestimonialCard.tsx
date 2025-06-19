@@ -17,7 +17,7 @@ export default function TestimonialCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
-    }, 10000)
+    }, 14000)
 
     return () => clearInterval(interval)
   }, [])
@@ -43,9 +43,8 @@ export default function TestimonialCarousel() {
         <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-3">
           {getVisibleTestimonials().map((testimonial, index) => (
             <Card key={`${testimonial.id}-${currentIndex}-${index}`}
-              className={`border-neutral-200 shadow-lg hover:shadow-xl transition-all duration-500 transform ${
-                index === 1 ? "lg:scale-105 lg:z-10" : "lg:scale-95"
-              }`}>
+              className={`border-neutral-200 shadow-lg hover:shadow-xl transition-all duration-500 transform ${index === 1 ? "lg:scale-105 lg:z-10" : "lg:scale-95"
+                }`}>
               <CardContent className="space-y-4 p-4 md:p-6 xl:p-8">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-3">
@@ -108,9 +107,8 @@ export default function TestimonialCarousel() {
       <div className="flex justify-center gap-2">
         {testimonials.map((_, index) => (
           <button key={index} onClick={() => setCurrentIndex(index)}
-            className={`size-3 rounded-full transition-all duration-300 ${
-              index === currentIndex ? "bg-primary scale-125" : "bg-neutral-300 hover:bg-neutral-400"
-            }`} />
+            className={`size-3 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-primary scale-125" : "bg-neutral-300 hover:bg-neutral-400"
+              }`} />
         ))}
       </div>
 

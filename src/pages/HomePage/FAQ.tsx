@@ -39,7 +39,7 @@ export default function FAQ() {
                 </h2>
 
                 <p className="mx-auto max-w-[60ch] text-sm md:text-base xl:text-lg">
-                    Find answers to common questions about our Premium Card. Can't find what you're looking for? Contact our
+                    Find answers to common questions about our TexelChain. Can't find what you're looking for? Contact our
                     support team.
                 </p>
             </div>
@@ -56,12 +56,12 @@ export default function FAQ() {
                 ))}
             </div>
 
-            <div className="space-y-4 mx-auto max-w-4xl">
+            <div className="space-y-4 mx-auto">
                 {filteredFAQs.length > 0 ? (
                     filteredFAQs.map((item) => (
                         <Card key={item.id} className="shadow-sm hover:shadow-md border-neutral-200 transition-shadow">
                             <CardContent className="p-0">
-                                <button onClick={() => toggleItem(item.id)} className="flex justify-between items-center hover:bg-neutral-50 p-6 w-full text-left transition-colors">
+                                <button onClick={() => toggleItem(item.id)} className="flex justify-between items-center hover:bg-neutral-50 p-4 rounded-xl w-full text-left transition-colors">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-2">
                                             <Badge className="bg-primary/20 hover:bg-primary/20 text-primary text-xs">{item.category}</Badge>
@@ -78,7 +78,7 @@ export default function FAQ() {
                                 </button>
 
                                 {openItems.includes(item.id) && (
-                                    <div className="px-6 pb-6">
+                                    <div className="px-4 pb-4">
                                         <div className="pt-4 border-neutral-200 border-t">
                                             <p className="text-neutral-600 leading-relaxed">{item.answer}</p>
                                         </div>

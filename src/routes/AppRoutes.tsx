@@ -16,6 +16,11 @@ import NotFound from '@/components/Not-Found';
 import Operations from '@/pages/Operations';
 import Unauthorised from '@/pages/Unauthorised';
 import Reset from '@/pages/PasswordReset';
+import Send from '@/pages/Send';
+import BuyPage from '@/pages/HomePageBuy';
+import About from '@/pages/About';
+import Businesses from '@/pages/Businesses';
+import Policy from '@/pages/Policy';
 
 //User Pages
 import Dashboard from '@/pages/Dashboard';
@@ -26,6 +31,7 @@ import Profile from '@/pages/Profile';
 import Connect from '@/pages/Connect';
 import Transactions from '@/pages/Transactions';
 import Discover from '@/pages/Discover';
+import Suspend from '@/pages/Suspend';
 
 //Admin Page
 import AdminTransactions from '@/pages/Admin/Transactions';
@@ -61,8 +67,13 @@ const AppRoutes = () => {
             <Routes>
                 <Route element={<Home />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/send" element={<Send />} />
+                    <Route path="/buy" element={<BuyPage />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/business" element={<Businesses />} />
+                    <Route path="/privacy" element={<Policy />} />
                 </Route>
-                
+
                 <Route path="/create" element={<Create />} />
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/login" element={<Login />} />
@@ -83,6 +94,7 @@ const AppRoutes = () => {
                     <Route path="connect" element={<Connect />} />
                     <Route path="transactions" element={<Transactions />} />
                     <Route path="discover" element={<Discover />} />
+                    <Route path="suspend" element={<Suspend />} />
                 </Route>
 
                 {/* Admin Routes */}

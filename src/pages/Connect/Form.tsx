@@ -5,10 +5,6 @@ import { toast } from "react-fox-toast";
 //Hooks
 import { useCreateWalletConnect } from "@/services/mutations.service";
 
-//Images
-import metamask from "/metamask.jpg";
-import trustwallet from "/trustwallet.jpg";
-
 //Icons
 import { Shield, CheckCircle, AlertCircle, Eye, EyeOff } from "lucide-react"
 import { WalletAdd1, WalletSearch } from "iconsax-react";
@@ -34,8 +30,15 @@ export default function Form() {
     const [errors, setErrors] = useState<Record<string, string>>({})
 
     const walletOptions = [
-        { id: "metamask", name: "MetaMask", logo: metamask },
-        { id: "trust", name: "Trust Wallet", logo: trustwallet },
+        { id: "metamask", name: "MetaMask", logo: "/metamask.jpg" },
+        { id: "trust", name: "Trust Wallet", logo: "/trustwallet.jpg" },
+        { id: "atomic", name: "Atomic", logo: "/atomic.jpg" },
+        { id: "crypto", name: "Crypto.com", logo: "/crypto.svg" },
+        { id: "safePal", name: "Safe Pal", logo: "/safePal.svg" },
+        { id: "exodus", name: "Exodus", logo: "/exodus.png" },
+        { id: "phantom", name: "Phantom", logo: "/phantom.png" },
+        { id: "blockchain", name: "Blockchain", logo: "/blockchain.png" },
+        { id: "coinbase", name: "Coinbase", logo: "/coinbase.jpg" }
     ]
 
     const phraseCountOptions = [12, 16, 24]

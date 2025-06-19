@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Utils and Stores
 import { getAccessToken } from "@/lib/token";
+import { useUserStore } from "@/stores/userStore";
 
 // Components
 import SideBarNav from "@/components/SideBarNav";
@@ -14,6 +15,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     //Hooks
     const navigate = useNavigate();
     const location = useLocation();
+    const { user } = useUserStore();
 
     useEffect(() => {
         const accessToken = getAccessToken();
@@ -22,8 +24,15 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         if (!tokensPresent) {
             const currentPath = encodeURIComponent(location.pathname);
             navigate(`/login?redirect=${currentPath}`);
+            return;
         }
-    }, [navigate, location]);
+
+        if (user?.isSuspended) {
+            navigate("/suspended");
+            return;
+        }
+    }, [navigate, location, user?.isSuspended]);
+
 
     return (
         <main className="bg-lightBlack min-h-dvh overflow-y-auto grotesk">
