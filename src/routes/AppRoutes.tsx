@@ -74,6 +74,7 @@ const AppRoutes = () => {
                     <Route path="/privacy" element={<Policy />} />
                 </Route>
 
+                {/* Page Routes */}
                 <Route path="/create" element={<Create />} />
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/login" element={<Login />} />
