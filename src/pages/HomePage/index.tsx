@@ -9,12 +9,10 @@ import Assets from "./Assets";
 import Testimonial from "./Testimonial";
 import CardShowcase from "./Card";
 import FAQ from "./FAQ";
-import LiveChat from "@/components/LiveChat";
 
 const index = () => {
     return ( 
         <main>
-            <LiveChat />
             <HeroSection />
             <CryptoWidget />
             <Manage />

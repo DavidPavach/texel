@@ -50,7 +50,7 @@ export default function TestimonialCarousel() {
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <Avatar className="border-2 border-neutral-200 size-12">
-                        <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
+                        <AvatarImage src={testimonial.avatar || "/logo.svg"} alt={testimonial.name} />
                         <AvatarFallback className="bg-primary/20 font-semibold text-primary">
                           {testimonial.name.split(" ").map((n) => n[0]).join("")}
                         </AvatarFallback>

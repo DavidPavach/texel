@@ -2,7 +2,7 @@
   {
     "id": "1",
     "name": "Abdel Mesih",
-    "avatar": "/placeholder.svg",
+    "avatar": "/abdel.jog",
     "location": "SE",
     "reviewCount": 8,
     "rating": 4,
@@ -15,7 +15,7 @@
   {
     "id": "2",
     "name": "Sarah Johnson",
-    "avatar": "/placeholder.svg",
+    "avatar": "/sarah.jpg",
     "location": "US",
     "reviewCount": 15,
     "rating": 5,
@@ -28,7 +28,7 @@
   {
     "id": "3",
     "name": "Michael Chen",
-    "avatar": "/placeholder.svg",
+    "avatar": "/micheal.jpg",
     "location": "CA",
     "reviewCount": 22,
     "rating": 5,
@@ -41,7 +41,7 @@
   {
     "id": "4",
     "name": "Emma Rodriguez",
-    "avatar": "/placeholder.svg",
+    "avatar": "/emma.jpg",
     "location": "ES",
     "reviewCount": 6,
     "rating": 4,
@@ -54,7 +54,7 @@
   {
     "id": "5",
     "name": "David Kim",
-    "avatar": "/placeholder.svg",
+    "avatar": "/david.jpg",
     "location": "KR",
     "reviewCount": 33,
     "rating": 5,
@@ -67,7 +67,7 @@
   {
     "id": "6",
     "name": "Lisa Thompson",
-    "avatar": "/placeholder.svg",
+    "avatar": "/lisa.jpg",
     "location": "AU",
     "reviewCount": 11,
     "rating": 4,

@@ -22,8 +22,6 @@ export default function Footer() {
 
     const legalLinks = [
         { name: "Privacy Policy", to: "/privacy" },
-        { name: "Terms of Service", to: "/terms" },
-        { name: "Support", to: "/support" },
     ]
 
     return (
