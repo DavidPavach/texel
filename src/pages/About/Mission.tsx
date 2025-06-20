@@ -82,9 +82,9 @@ export default function MissionVisionValues() {
                                 {index < mvvData.length - 1 && (
                                     <div className="hidden lg:block top-20 left-full z-0 absolute bg-gradient-to-r from-primary/30 to-transparent w-full h-0.5 translate-x-8 transform"></div>
                                 )}
-                                <div className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-sm border border-neutral-600/20 rounded-2xl p-8 hover:border-primary/30 transition-all duration-500 group-hover:transform group-hover:scale-105 z-10 h-full`}>
-                                    <div className="-top-4 -right-4 absolute flex justify-center items-center bg-gradient-to-br from-primary to-accent shadow-lg rounded-full size-12 font-bold text-black text-lg">
-                                        {String(index + 1).padStart(2, "0")}
+                                <div className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-sm border border-neutral-600/20 rounded-2xl p-4 md:-6 xl:p-8 hover:border-primary/30 transition-all duration-500 group-hover:transform group-hover:scale-105 z-10 h-full`}>
+                                    <div className="top-0 right-0 absolute flex justify-center items-center bg-gradient-to-br from-primary to-accent shadow-lg rounded-lg size-8 md:size-10 xl:size-12 font-bold text-black">
+                                        <p className="text-sm md:text-base xl:text-lg">{String(index + 1).padStart(2, "0")}</p>
                                     </div>
                                     <div className={`size-12 md:size-14 xl:size-16 bg-gradient-to-br ${item.iconBg} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                                         <IconComponent className="size-6 md:size-7 xl:size-8 text-primary" />

@@ -14,6 +14,9 @@ const Index = () => {
     return (
         <main className="flex justify-center lg:justify-between items-center bg-brand-gradient min-h-dvh overflow-auto">
             <div className="lg:mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-4 w-full lg:w-[40%]">
+                <Link to="/" className="group top-8 right-8 z-[2] absolute place-items-center grid bg-white rounded-[50%] size-10">
+                    <Add className="text-black group-hover:text-red-600 rotate-45 duration-300" size={30} />
+                </Link>
                 <div className="bg-black p-2 rounded-xl size-fit">
                     <img src={logo} alt="Texel chain logo" className="w-4 md:w-6 xl:w-8" />
                 </div>
@@ -26,13 +29,9 @@ const Index = () => {
                     <p>Already a user?<Link to="/login" className="ml-1 text-neutral-900 hover:text-white underline duration-300">Login</Link></p>
                 </div>
             </div>
-            <div className="relative p-2 w-[50%] h-dvh">
-                <Link to="/" className="group top-8 right-8 z-[2] absolute place-items-center grid bg-white rounded-[50%] size-10">
-                    <Add className="text-black group-hover:text-red-600 rotate-45 duration-300" size={30} />
-                </Link>
+            <div className="hidden lg:block relative p-2 w-[50%] h-dvh">
                 <video src={create} autoPlay loop muted playsInline className="hidden lg:block rounded-[2rem] w-full h-full object-center object-cover" />
             </div>
-
         </main>
     );
 };

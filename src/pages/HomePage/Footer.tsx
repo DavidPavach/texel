@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 //Icons
-import { Copyright } from "iconsax-react"
-import { Mail } from "lucide-react"
+import { Copyright } from "iconsax-react";
+import { Mail } from "lucide-react";
 
 const PAGES = [
     { page: "Send & Receive", path: "/send" },
@@ -19,9 +21,9 @@ export default function Footer() {
     const currentYear = new Date().getFullYear()
 
     const legalLinks = [
-        { name: "Privacy Policy", href: "/privacy" },
-        { name: "Terms of Service", href: "/terms" },
-        { name: "Support", href: "/support" },
+        { name: "Privacy Policy", to: "/privacy" },
+        { name: "Terms of Service", to: "/terms" },
+        { name: "Support", to: "/support" },
     ]
 
     return (
@@ -42,9 +44,9 @@ export default function Footer() {
                     <h4 className="font-semibold text-white">Platform</h4>
                     <div className="space-y-2">
                         {PAGES.map((link) => (
-                            <a key={link.path} href={link.path} className="block text-neutral-300 hover:text-primary text-sm transition-colors">
+                            <Link key={link.path} to={link.path} className="block text-neutral-300 hover:text-primary text-sm transition-colors">
                                 {link.page}
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -53,13 +55,10 @@ export default function Footer() {
                     <h4 className="font-semibold text-white">Account</h4>
                     <div className="space-y-2">
                         {BUTTONS.map((link) => (
-                            <a key={link.path} href={link.path} className="block text-neutral-300 hover:text-primary transition-colors">
+                            <Link key={link.path} to={link.path} className="block text-neutral-300 hover:text-primary transition-colors">
                                 {link.page}
-                            </a>
+                            </Link>
                         ))}
-                        <a href="/help" className="block text-neutral-300 hover:text-primary transition-colors">
-                            Help Center
-                        </a>
                     </div>
                 </div>
             </div>
@@ -68,9 +67,9 @@ export default function Footer() {
                 <div className="flex md:flex-row flex-col justify-between items-center gap-4">
                     <div className="flex flex-wrap justify-center md:justify-start gap-6">
                         {legalLinks.map((link) => (
-                            <a key={link.href} href={link.href} className="text-[10px] text-neutral-400 hover:text-primary md:text-xs xl:text-sm transition-colors">
+                            <Link key={link.to} to={link.to} className="text-[10px] text-neutral-400 hover:text-primary md:text-xs xl:text-sm transition-colors">
                                 {link.name}
-                            </a>
+                            </Link>
                         ))}
                     </div>
 

@@ -29,7 +29,7 @@ const Index = () => {
 
     return (
         <main>
-            <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center gap-y-3 mt-4">
+            <div className="flex md:flex-row flex-col md:justify-between sm:items-center gap-y-3 mt-4">
                 <button onClick={toggleNew} className="bg-primary hover:bg-yellow-600 px-6 py-3 rounded-xl font-medium duration-300"><MoneyAdd size={20} className="inline-flex mr-1 mb-0.5" />Create Transaction</button>
                 <div className="flex gap-x-5 text-[10px] text-neutral-100 md:text-sm xl:text-sm">
                     <button onClick={() => togglePage("sent")} className={`${page === "sent" ? "bg-accent" : "bg-neutral-600"} px-4 py-1 rounded-3xl duration-300`}><MoneySend className="inline-flex mr-1 mb-0.5" size={16} />Sent Transactions</button>

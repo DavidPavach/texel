@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { toast } from "react-fox-toast";
 
-//Enums, Hooks and Services
+//Enums, Hooks, Services and stores
 import { getWallet, TransactionCoin } from "@/enums";
 import { useAdminCreateTransaction } from "@/services/mutations.service";
 import { useSearchUser } from "@/services/queries.service";
 import { generateWalletAddress } from "@/utils/generate";
+import { formatCoinValue } from "@/stores/userStore";
+import { useAdminStore } from "@/stores/adminStore";
 
 //Icons
 import { CloseCircle, Refresh2 } from "iconsax-react";
 
 const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
 
+    const { prices } = useAdminStore();
     const [searchValue, setSearchValue] = useState("");
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
     const { data, isLoading, error } = useSearchUser(searchValue);
@@ -131,6 +134,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
                 <div className="mb-4">
                     <label className="block mb-1">Amount</label>
                     <input type="number" name="amount" value={formData.amount} onChange={handleChange} className="bg-black px-4 py-3 rounded-xl focus:outline-1 focus:outline-none focus:outline-primary w-full duration-300 focus:caret-primary" />
+                    <p>You will be sending {formatCoinValue(formData.coin, formData.amount, prices!)}</p>
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1">Status</label>

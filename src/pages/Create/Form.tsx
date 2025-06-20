@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from "react-fox-toast";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
 
 //Schemas
@@ -90,6 +90,7 @@ const Form = () => {
                 <CountryDropDown onSelect={selectCountry} />
                 <Button text="Submit" loadingText='Creating Account....' variant='primary' size='lg' disabled={disableButton} loading={registerUser.isPending} />
             </form>
+            <p className='mt-4'>By signing up, you agree to our <Link to="/privacy" className='font-semibold hover:underline duration-300'>Terms of Service and Privacy Policy</Link></p>
         </motion.div>
     );
 }

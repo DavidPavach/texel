@@ -13,7 +13,7 @@ const HeroSection = () => {
             <div className="relative mx-auto px-4 py-12 lg:py-20 container">
                 <div className="min-h-[80vh]">
                     <div className="space-y-8 lg:space-y-10">
-                        <div className="inline-flex items-center gap-2 bg-yellow-400/10 px-4 py-2 border border-yellow-400/20 rounded-full font-medium text-yellow-400 text-sm">
+                        <div className="inline-flex items-center gap-2 bg-yellow-400/10 px-4 py-2 border border-yellow-400/20 rounded-xl font-medium text-yellow-400">
                             <TrendingUp className="size-4" />
                             #1 Crypto Trading Platform
                         </div>
@@ -30,45 +30,45 @@ const HeroSection = () => {
                         </p>
                         <div className="gap-4 grid grid-cols-1 sm:grid-cols-3 py-6">
                             <div className="flex items-center gap-3 text-gray-300">
-                                <Shield className="w-5 h-5 text-yellow-400" />
-                                <span className="text-sm">Bank-level Security</span>
+                                <Shield className="size-5 text-yellow-400" />
+                                <span>Bank-level Security</span>
                             </div>
                             <div className="flex items-center gap-3 text-gray-300">
-                                <Zap className="w-5 h-5 text-yellow-400" />
-                                <span className="text-sm">Instant Trading</span>
+                                <Zap className="size-5 text-yellow-400" />
+                                <span>Instant Trading</span>
                             </div>
                             <div className="flex items-center gap-3 text-gray-300">
-                                <TrendingUp className="w-5 h-5 text-yellow-400" />
-                                <span className="text-sm">Real-time Analytics</span>
+                                <TrendingUp className="size-5 text-yellow-400" />
+                                <span>Real-time Analytics</span>
                             </div>
                         </div>
 
                         <div className="flex sm:flex-row flex-col gap-4 pt-4">
-                            <Link to="/create" className="group inline-flex justify-center items-center gap-2 bg-yellow-400 hover:bg-yellow-500 hover:shadow-lg hover:shadow-yellow-400/25 px-8 py-4 rounded-xl font-semibold text-black hover:scale-105 transition-all duration-300">
+                            <Link to="/create" className="group inline-flex justify-center items-center gap-2 bg-yellow-400 hover:bg-yellow-500 hover:shadow-lg hover:shadow-yellow-400/25 px-8 py-4 rounded-xl font-semibold text-black text-sm md:text-base xl:text-lg hover:scale-105 transition-all duration-300">
                                 Get Started
-                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
                             </Link>
                         </div>
 
                         <div className="gap-8 grid grid-cols-3 mx-auto pt-8 border-gray-800 border-t text-center">
                             <div>
-                                <div className="font-bold text-yellow-400 text-2xl lg:text-3xl">10M+</div>
-                                <div className="text-gray-400 text-sm">Active Users</div>
+                                <div className="font-bold text-yellow-400 text-xl md:text-2xl xl:text-3xl">10M+</div>
+                                <div className="text-gray-400">Active Users</div>
                             </div>
                             <div>
-                                <div className="font-bold text-yellow-400 text-2xl lg:text-3xl">$50B+</div>
-                                <div className="text-gray-400 text-sm">Trading Volume</div>
+                                <div className="font-bold text-yellow-400 text-xl md:text-2xl xl:text-3xl">$50B+</div>
+                                <div className="text-gray-400">Trading Volume</div>
                             </div>
                             <div>
-                                <div className="font-bold text-yellow-400 text-2xl lg:text-3xl">99.9%</div>
-                                <div className="text-gray-400 text-sm">Uptime</div>
+                                <div className="font-bold text-yellow-400 text-xl md:text-2xl xl:text-3xl">99.9%</div>
+                                <div className="text-gray-400">Uptime</div>
                             </div>
                         </div>
                     </div>
-                    <div className="relative flex justify-center items-center my-20 lg:h-[600px]">
+                    <div className="relative flex justify-center items-center mt-20 mb-10 lg:h-[600px]">
                         <div className="relative w-full max-w-lg">
                             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 blur-2xl rounded-3xl scale-110"></div>
-                            <div className="relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-8 border border-gray-700/50 rounded-3xl">
+                            <div className="relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-4 md:p-6 xl:p-8 border border-gray-700/50 rounded-3xl">
                                 <img src="/hero.png" alt="TexelChain Cryptocurrency Trading Platform" width={500} height={600} className="w-full h-auto object-contain" />
                             </div>
                             <div className="-top-4 -right-4 absolute bg-green-500 px-3 py-1 rounded-full font-medium text-white text-sm animate-pulse">
