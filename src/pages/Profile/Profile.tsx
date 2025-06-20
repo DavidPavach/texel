@@ -8,10 +8,9 @@ import { useUpdateProfilePicture, useUpdateUserProfile } from "@/services/mutati
 // Components
 import CountryDropDown from "./CountryDropDown";
 
-
 // Icons
 import { Camera, Edit3, Upload, Copy, CheckCircle } from "lucide-react";
-import { Call, Global, Location, Profile2User, Sms, UserTag } from "iconsax-react";
+import { Call, Global, Location, Lock, Profile2User, Sms, Unlock, UserTag } from "iconsax-react";
 
 // EditableField Type
 interface EditableFieldProps {
@@ -58,6 +57,7 @@ const EditableField = ({ label, value, onChange, type = "text", options = [], ic
 
 export default function UserProfilePage({ user }: { user: User }) {
 
+    const [see, setSee] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [updating, setUpdating] = useState<boolean>(false);
     const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -221,27 +221,30 @@ export default function UserProfilePage({ user }: { user: User }) {
                             {user.passPhrase.map((word, index) => (
                                 <div key={index} className="bg-neutral-800 px-3 py-2 border border-neutral-700 rounded-md text-sm text-center">
                                     <span className="mr-2 text-yellow-400">{index + 1}.</span>
-                                    <span>{word}</span>
+                                    <span>{see ? word : "****"}</span>
                                 </div>
                             ))}
                         </div>
+                        <div className="flex items-center gap-x-5">
+                            <button onClick={copyToClipboard} disabled={!see}
+                                className={`min-w-[80px] h-10 rounded-lg flex disabled:cursor-not-allowed disabled:bg-yellow-200 items-center justify-center transition-colors ${copied
+                                    ? "bg-yellow-800 text-primary"
+                                    : "bg-primary hover:bg-yellow-800 text-black font-medium hover:text-white duration-300"}`}>
+                                {copied ? (
+                                    <>
+                                        <CheckCircle size={16} className="mr-1" />
+                                        <span>Copied</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Copy size={16} className="mr-1" />
+                                        <span>Copy</span>
+                                    </>
+                                )}
+                            </button>
+                            <button onClick={() => setSee((prev) => !prev)} className="bg-green-400 hover:bg-green-600 px-4 md:px-6 xl:px-8 py-2 rounded-xl text-black hover:text-neutral-100 duration-300">{see ? <p><Lock size={16} className="inline" /> Lock</p> : <p><Unlock size={18} className="inline" /> Unlock</p>}</button>
+                        </div>
 
-                        <button onClick={copyToClipboard}
-                            className={`min-w-[80px] h-10 rounded-lg flex items-center justify-center transition-colors ${copied
-                                ? "bg-yellow-800 text-primary"
-                                : "bg-primary hover:bg-yellow-800 text-black font-medium hover:text-white duration-300"}`}>
-                            {copied ? (
-                                <>
-                                    <CheckCircle size={16} className="mr-1" />
-                                    <span>Copied</span>
-                                </>
-                            ) : (
-                                <>
-                                    <Copy size={16} className="mr-1" />
-                                    <span>Copy</span>
-                                </>
-                            )}
-                        </button>
                     </div>
                 </div>
             </div>

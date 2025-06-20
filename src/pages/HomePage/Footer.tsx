@@ -1,4 +1,9 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-fox-toast";
+
+//Images
+import google from "/googleStore.png";
+import apple from "/appleStore.png";
 
 //Icons
 import { Copyright } from "iconsax-react";
@@ -26,7 +31,7 @@ export default function Footer() {
 
     return (
         <footer className="bg-black p-4 md:p-6 xl:p-8 text-white">
-            <div className="gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
+            <div className="gap-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-8">
                 <div className="space-y-4">
                     <h3 className="font-bold text-primary text-sm md:text-base xl:text-xl">TexelChain</h3>
                     <p className="text-neutral-300">The world's most trusted cryptocurrency platform.</p>
@@ -58,6 +63,12 @@ export default function Footer() {
                             </Link>
                         ))}
                     </div>
+                </div>
+
+                <div className="space-y-4">
+                    <h4 className="font-semibold text-white">App Stores</h4>
+                    <img src={google} className="h-8 cursor-pointer" alt="Google Store" onClick={() => toast.info("The App is currently not available in your Region. Kindly use the web app.")} />
+                    <img src={apple} className="h-8 cursor-pointer" alt="Apple Store" onClick={() => toast.info("The App is currently not available in your Region. Kindly use the web app.")} />
                 </div>
             </div>
 

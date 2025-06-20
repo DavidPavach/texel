@@ -45,6 +45,16 @@
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
   <script src="//code.tidio.co/f1tbl42nobaztu4gh5jozsgto58ldm6s.js" async></script>
+  <script>
+    function onTidioChatApiReady() {
+      tidioChatApi.adjustStyles('#tidio { bottom: 50px !important; }');
+    }
+    if (window.tidioChatApi) {
+      window.tidioChatApi.on('ready', onTidioChatApiReady);
+    } else {
+      document.addEventListener('tidioChat-ready', onTidioChatApiReady);
+    }
+  </script>
 </body>
 
 </html>

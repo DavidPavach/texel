@@ -48,7 +48,7 @@ const Index = () => {
 
                 <h2 className="font-semibold text-lg">3. Restrictions on Use</h2>
                 <h3 className="font-medium">3.1. Prohibited Jurisdictions</h3>
-                <p>Accessing TexelChain from North Korea is prohibited. TexelChain may seize such funds and donate them to charity.</p>
+                <p>Accessing TexelChain from prohibited regions may result in some penalties. TexelChain may seize such funds and donate them to charity.</p>
 
                 <h3 className="font-medium">3.2. Source of Funds</h3>
                 <p>No funds from criminal or fraudulent sources are allowed. TexelChain reserves the right to deny transactions perceived as risky.</p>
