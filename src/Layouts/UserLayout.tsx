@@ -28,7 +28,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         }
 
         if (user?.isSuspended) {
-            navigate("/suspended");
+            navigate("/suspend");
             return;
         }
     }, [navigate, location, user?.isSuspended]);

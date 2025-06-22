@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import { formatDate } from "@/utils/format";
 import { formatCoinValue } from "@/stores/userStore";
 import { useUserStore } from "@/stores/userStore";
+import { getWallet } from "@/enums";
 
 //Icons
-import { Filter } from "lucide-react";
+import { Filter, X } from "lucide-react";
 
 // Transaction type definitions
 type TransactionType = "sent" | "received"
@@ -23,6 +24,7 @@ export default function TransactionActivityCard({ transactions, title = "Transac
     const { prices } = useUserStore();
     const [activeFilters, setActiveFilters] = useState<TransactionType[]>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [selectedTransaction, setSelectedTransaction] = useState<UserTransaction | null>(null);
 
     // Filter transactions based on active filters
     const filteredTransactions = activeFilters.length
@@ -37,6 +39,9 @@ export default function TransactionActivityCard({ transactions, title = "Transac
             setActiveFilters([...activeFilters, type])
         }
     }
+
+    //Close Transaction Details Box
+    const closeDetails = () => setSelectedTransaction(null);
 
     // Get color for transaction type
     const getTypeColor = (type: TransactionType) => {
@@ -169,7 +174,7 @@ export default function TransactionActivityCard({ transactions, title = "Transac
             <div className="divide-y divide-neutral-800">
                 {filteredTransactions.length > 0 ? (
                     filteredTransactions.map((transaction) => (
-                        <div key={transaction._id} className="hover:bg-neutral-900/50 p-4 transition-colors">
+                        <div key={transaction._id} onClick={() => setSelectedTransaction(transaction)} className="hover:bg-neutral-900/50 p-4 transition-colors cursor-pointer">
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center space-x-3">
                                     <div className="flex-shrink-0 rounded-full w-10 h-10 overflow-hidden">
@@ -205,7 +210,7 @@ export default function TransactionActivityCard({ transactions, title = "Transac
 
                                 <div className="flex items-center space-x-1">
                                     <span className="text-neutral-500">Address:</span>
-                                    <span className="font-mono text-neutral-300 text-xs">{formatAddress(transaction.walletAddress)}</span>
+                                    <span className="font-mono text-neutral-300 text-xs">{transaction.transactionType === "received" ? formatAddress(getWallet[transaction.coin].walletAddress) : formatAddress(transaction.walletAddress)}</span>
                                 </div>
 
                                 <div className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusBgColor(
@@ -222,7 +227,32 @@ export default function TransactionActivityCard({ transactions, title = "Transac
                     </div>
                 )}
             </div>
+            {selectedTransaction && (
+                <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/80">
+                    <div className="relative bg-neutral-900 p-6 rounded-xl w-[90vw] max-w-xl text-sm">
+                        <button className="top-3 right-3 absolute text-neutral-400 hover:text-red-400" onClick={closeDetails}>
+                            <X size={20} />
+                        </button>
 
+                        <div className="flex justify-between items-center my-4">
+                            <div className="mb-1 font-semibold text-white text-lg capitalize">{selectedTransaction.coin}</div>
+                            <div className={`text-xs px-4 py-0.5 inline-block rounded-full ${getTypeBgColor(selectedTransaction.transactionType)} ${getTypeColor(selectedTransaction.transactionType)}`}>
+                                {selectedTransaction.transactionType.toUpperCase()}
+                            </div>
+                        </div>
+
+                        <div className="space-y-2 text-neutral-400">
+                            <div><strong>Amount:</strong> {selectedTransaction.amount} {getImgSym(selectedTransaction.coin).symbol}</div>
+                            <div><strong>Status:</strong> <span className={`${getStatusColor(selectedTransaction.status)} capitalize`}>{selectedTransaction.status}</span></div>
+                            <div><strong>Network:</strong> <span className="capitalize">{selectedTransaction.network}</span></div>
+                            <div><strong>Hash:</strong> <span className="font-mono">{formatAddress(selectedTransaction.transactionHash)}</span></div>
+                            <div><strong>Address:</strong> <span className="font-mono">{selectedTransaction.transactionType === "received" ? formatAddress(getWallet[selectedTransaction.coin].walletAddress) : formatAddress(selectedTransaction.walletAddress)}</span></div>
+                            <div><strong>Date:</strong> {formatDate(selectedTransaction.createdAt)}</div>
+                            <div><strong>Value:</strong> {prices && formatCoinValue(selectedTransaction.coin, selectedTransaction.amount, prices)}</div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

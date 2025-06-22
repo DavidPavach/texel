@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 
 //Icons
 import { Loader2 } from "lucide-react";
-import { Send2, WalletAdd, DirectboxReceive, Category, Copy, CopySuccess } from "iconsax-react";
+import { Send2, WalletAdd, DirectboxReceive, Category, Copy, CopySuccess, Eye, EyeSlash } from "iconsax-react";
 
 
 export default function WalletCard({ walletId, balance, isLoading }: WalletCardProps) {
 
     const [copied, setCopied] = useState<boolean>(false)
+    const [see, setSee] = useState<boolean>(false);
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(walletId)
@@ -29,7 +30,7 @@ export default function WalletCard({ walletId, balance, isLoading }: WalletCardP
             <div className="p-4 md:p-5 xl:p-6 pb-0">
                 <div className="flex justify-between items-center mb-1">
                     <span className="font-medium text-primary">WALLET ID</span>
-                    {isLoading && <Loader2 className="w-4 h-4 text-primary animate-spin" />}
+                    {isLoading && <Loader2 className="size-4 text-primary animate-spin" />}
                 </div>
                 <div className="flex items-center space-x-2 mb-1">
                     <span className="text-neutral-300 text-sm md:text-base xl:text-lg">{walletId}</span>
@@ -42,6 +43,9 @@ export default function WalletCard({ walletId, balance, isLoading }: WalletCardP
                             Copied!
                         </motion.span>
                     )}
+                    <button onClick={() => setSee((prev) => !prev)} className="text-neutral-400 hover:text-neutral-200 transition-colors">
+                        {see ? <EyeSlash /> : <Eye />}
+                    </button>
                 </div>
             </div>
 
@@ -51,7 +55,7 @@ export default function WalletCard({ walletId, balance, isLoading }: WalletCardP
                         <div className="bg-neutral-800 rounded w-24 h-8 animate-pulse"></div>
                     </div>
                 ) : (
-                    <h2 className="font-bold text-white text-3xl md:text-4xl xl:text-5xl">{balance}</h2>
+                    <h2 className="font-bold text-white text-3xl md:text-4xl xl:text-5xl">{see ? balance : "****"}</h2>
                 )}
             </div>
 

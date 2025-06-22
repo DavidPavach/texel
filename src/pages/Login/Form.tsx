@@ -29,13 +29,14 @@ const Form = () => {
     const [searchParams] = useSearchParams();
 
     //Functions
-    const toggleShow = () => setShow(!show)
+    const toggleShow = () => setShow(!show);
     const toggleHasValue = (value: string) => setHasValue(value);
 
 
     // Data validation with Zod and React Hook Form
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginInput>({
         resolver: zodResolver(loginSchema),
+        mode: "onSubmit"
     });
 
     // TanStack Query mutation for user authentication
@@ -59,12 +60,9 @@ const Form = () => {
             onError: (error: any) => {
                 const message = error?.response?.data?.message || "Authentication failed, kindly check your credentials.";
                 toast.error(message);
-                reset();
             },
         });
     };
-
-    const disableButton = userLogin.isPending || !!errors.email || !!errors.password;
 
     return (
         <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
@@ -76,11 +74,11 @@ const Form = () => {
                 <div className="relative flex flex-col">
                     <ZodInput onChange={(event) => toggleHasValue(event.target.value)} type={`${show ? "text" : "password"}`} label='Password' placeholder="Password" id="password" name="password" register={register} required={true} />
                     {errors.password && <ErrorText message={errors.password.message} />}
-                    {hasValue !== "" && (
-                        <div className='top-8 md:top-9 xl:top-11 right-4 absolute cursor-pointer' onClick={toggleShow}>{show ? <Eye size={16} /> : <EyeClosed size={16} />}</div>
+                    {hasValue !== "" && hasValue.length > 0 && (
+                        <div className='top-8 md:top-9 xl:top-11 right-4 absolute cursor-pointer' onClick={toggleShow}>{show ? <Eye size={18} /> : <EyeClosed size={18} />}</div>
                     )}
                 </div>
-                <Button text="Login" loadingText='Signing In....' variant='primary' size='lg' disabled={disableButton} loading={userLogin.isPending} />
+                <Button text="Login" loadingText='Signing In....' variant='primary' size='lg' disabled={userLogin.isPending} loading={userLogin.isPending} />
             </form>
         </motion.div>
     );

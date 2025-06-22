@@ -36,7 +36,7 @@
   },
   {
     "id": "6",
-    "question": "How long does my deposit take before it can reflect on my WealthAssets account dashboard?",
+    "question": "How long does my deposit take before it can reflect on my TexelChain account dashboard?",
     "answer":
       "This process should only take approximately 5 to 10 minutes, after which it will be reflected in your account.",
     "category": "Deposit"
@@ -64,7 +64,7 @@
   },
   {
     "id": "10",
-    "question": "How do I set up a new account on WealthAssets wallet?",
+    "question": "How do I set up a new account on TexelChain wallet?",
     "answer": 
     "Creating an account on our platform is entirely complimentary and incurs no costs. To get started, kindly select the 'Sign Up' button to initiate the creation of your account. Afterward, an OTP will be send for email verification, kindly enter the OTP to verify your email. Subsequently, you can move on to verify your account KYC with your national identity card. Finally, establish a six-digit PIN which will serve as your transaction security code. Should you experience any difficulties during the account setup process, please feel free to contact our online support team for help.",
     "category": "Accounts"

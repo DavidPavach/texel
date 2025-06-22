@@ -227,7 +227,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
                                 </button>
                                 <div className="flex justify-between items-center mt-8 text-neutral-400 hover:text-white text-sm">
                                     <button type="button" onClick={closeModal}>Cancel</button>
-                                    <Link to="/user/profile?page=profile" className="font-bold text-accent">{!user?.transactionPin ? "Create New Pin" : "Change Pin"}</Link>
+                                    <Link to="/user/account?page=profile" className="font-bold text-accent">{!user?.transactionPin ? "Create New Pin" : "Change Pin"}</Link>
                                 </div>
                             </div>
                         </motion.div>

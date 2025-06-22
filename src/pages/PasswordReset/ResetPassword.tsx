@@ -61,6 +61,7 @@ const ResetPassword = () => {
                     }} className="bg-[#F8F6F1] px-4 py-3 rounded-3xl focus:outline-none text-sm md:text-base xl:text-lg duration-300 focus:caret-primary" placeholder="Enter new password" />
                 <div className='top-4 md:top-5 right-4 absolute cursor-pointer' onClick={togglePasswordVisibility}>{showPassword ? <Eye size={16} /> : <EyeClosed size={16} />}</div>
             </div>
+            {password.length < 8 && <p className="my-4 text-xs md:text-sm">Password must be more than 8 Characters</p>}
             <FancyButton text="Submit" loadingText='Submitting....' variant='primary' size='lg' onClick={() => handleSubmit()} disabled={password.length < 8} loading={resetPassword.isPending} />
         </motion.div>
     );

@@ -69,7 +69,7 @@ const Table = ({ users }: { users: User[] }) => {
     }
 
     return (
-        <div className="w-full overflow-x-auto">
+        <div className="mt-2 w-full overflow-x-auto">
             <table className="bg-lightBlack rounded-xl min-w-full overflow-hidden text-white">
                 <thead className="bg-gray-800">
                     <tr>
