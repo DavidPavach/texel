@@ -10,7 +10,7 @@ import { Send2, WalletAdd, DirectboxReceive, Category, Copy, CopySuccess, Eye, E
 export default function WalletCard({ walletId, balance, isLoading }: WalletCardProps) {
 
     const [copied, setCopied] = useState<boolean>(false)
-    const [see, setSee] = useState<boolean>(false);
+    const [see, setSee] = useState<boolean>(true);
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(walletId)

@@ -83,43 +83,44 @@ const CoinList = ({ page }: { page: string }) => {
             </div>
 
             <div className="divide-y divide-neutral-800">
-                {assetList.map((asset) => (
-                    <div onClick={() => handlePageChange(asset.id)} key={asset.id} className="hover:bg-neutral-900/50 p-4 md:p-5 xl:p-6 transition-colors cursor-pointer">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center space-x-3">
-                                <div className="flex-shrink-0 bg-neutral-800 rounded-full w-10 h-10 overflow-hidden">
-                                    <img src={asset.logo} alt={asset.name} className="w-full h-full object-cover" />
+                {assetList.sort((a, b) => b.value - a.value)
+                    .map((asset) => (
+                        <div onClick={() => handlePageChange(asset.id)} key={asset.id} className="hover:bg-neutral-900/50 p-4 md:p-5 xl:p-6 transition-colors cursor-pointer">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center space-x-3">
+                                    <div className="flex-shrink-0 bg-neutral-800 rounded-full w-10 h-10 overflow-hidden">
+                                        <img src={asset.logo} alt={asset.name} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div>
+                                        <div className="font-medium text-white">{asset.name}</div>
+                                        <div className="text-neutral-500 text-sm">{asset.symbol}</div>
+                                    </div>
                                 </div>
+
+                                <div className="text-right">
+                                    <div className="font-medium text-white">{asset.name === "Texel" ? formatCurrency(52) : formatCurrency(asset.price)}</div>
+                                    <div className={`text-sm ${asset.priceChange24h >= 0 ? "text-green-500" : "text-red-500"}`}>
+                                        {formatPercentage(asset.priceChange24h)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center mt-3">
                                 <div>
-                                    <div className="font-medium text-white">{asset.name}</div>
-                                    <div className="text-neutral-500 text-sm">{asset.symbol}</div>
+                                    <div className="text-neutral-500 text-sm">Holdings</div>
+                                    <div className="font-medium text-white">
+                                        {`${formatCryptoAmount(asset.balance)} ${asset.symbol}`}
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="text-right">
-                                <div className="font-medium text-white">{asset.name === "Texel" ? formatCurrency(52) : formatCurrency(asset.price)}</div>
-                                <div className={`text-sm ${asset.priceChange24h >= 0 ? "text-green-500" : "text-red-500"}`}>
-                                    {formatPercentage(asset.priceChange24h)}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-between items-center mt-3">
-                            <div>
-                                <div className="text-neutral-500 text-sm">Holdings</div>
-                                <div className="font-medium text-white">
-                                    {`${formatCryptoAmount(asset.balance)} ${asset.symbol}`}
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <div className="text-neutral-500 text-sm">Value</div>
-                                <div className="font-medium text-white">
-                                    {formatCurrency(asset.value)}
+                                <div className="text-right">
+                                    <div className="text-neutral-500 text-sm">Value</div>
+                                    <div className="font-medium text-white">
+                                        {formatCurrency(asset.value)}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     );

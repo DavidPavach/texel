@@ -114,7 +114,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
         if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
         if (!user?.transactionPin) {
             toast.info("You don't have a Transaction Pin, kindly add one, to continue. Redirecting...");
-            setTimeout(() => navigate("/user/profile?page=profile"), 1000)
+            setTimeout(() => navigate("/user/profile?page=pin"), 2000)
         }
         if (user?.transactionPin !== fullPin) return toast.error("Incorrect Pin, kindly try again")
         setIsSubmitting(true);

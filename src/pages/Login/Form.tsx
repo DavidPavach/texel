@@ -1,59 +1,61 @@
 import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from "react-fox-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { useSearchParams } from "react-router-dom";
+import { loginSchema } from '@/schema/login.schema';
 
-//Services
 import { useAuthUser } from '@/services/mutations.service';
-
-//Components
-import ZodInput from "@/components/ZodInput";
+import Input from "@/components/Input";
 import ErrorText from "@/components/ErrorText";
 import Button from '@/components/Button';
 
-//Schemas and utils
-import { LoginInput, loginSchema } from '@/schema/login.schema';
-
-//Icons
 import { EyeClosed, Eye } from 'lucide-react';
 
 const Form = () => {
-
-    //States and Hooks
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [show, setShow] = useState<boolean>(false);
     const [hasValue, setHasValue] = useState<string>("");
+    const [formErrors, setFormErrors] = useState<{ email?: string; password?: string }>({});
+
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
-    //Functions
-    const toggleShow = () => setShow(!show);
-    const toggleHasValue = (value: string) => setHasValue(value);
-
-
-    // Data validation with Zod and React Hook Form
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginInput>({
-        resolver: zodResolver(loginSchema),
-        mode: "onSubmit"
-    });
-
-    // TanStack Query mutation for user authentication
     const userLogin = useAuthUser();
 
-    // Form submission handler
-    const onSubmit: SubmitHandler<LoginInput> = (data) => {
+    const toggleShow = () => setShow(!show);
+    const toggleHasValue = (value: string) => setHasValue(value);
+    const reset = () => {
+        setEmail("");
+        setPassword("");
+        setFormErrors({});
+    };
 
-        userLogin.mutate(data, {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        console.log("The email", email, "Password", password)
+
+        const result = loginSchema.safeParse({ email, password });
+
+        if (!result.success) {
+            const errors: { email?: string; password?: string } = {};
+            result.error.errors.forEach((err) => {
+                if (err.path[0] === "email") errors.email = err.message;
+                if (err.path[0] === "password") errors.password = err.message;
+            });
+            setFormErrors(errors);
+
+            // Clear errors after 60 seconds
+            setTimeout(() => setFormErrors({}), 60000);
+            return;
+        }
+
+        userLogin.mutate({ email, password }, {
             onSuccess: (response) => {
                 toast.success(response.data.message || "You were authenticated successfully!");
-                if (searchParams.has("redirect")) {
-                    const page = searchParams.get("redirect")
-                    navigate(`${page}`);
-                } else {
-                    navigate(`/${response.data.redirect}`);
-                }
+                const page = searchParams.get("redirect");
+                navigate(page ? `${page}` : `/${response.data.redirect}`);
                 reset();
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,22 +68,29 @@ const Form = () => {
 
     return (
         <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
-            <form className="flex flex-col gap-y-4 mt-8" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-y-4 mt-8" onSubmit={onSubmit}>
                 <div className="flex flex-col">
-                    <ZodInput type="email" placeholder="Johndoe@mail.com" label="Email" name="email" register={register} required />
-                    {errors.email && <ErrorText message={errors.email.message} />}
+                    <Input type="email" placeholder="Johndoe@mail.com" label="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    {formErrors.email && <ErrorText message={formErrors.email} />}
                 </div>
+
                 <div className="relative flex flex-col">
-                    <ZodInput onChange={(event) => toggleHasValue(event.target.value)} type={`${show ? "text" : "password"}`} label='Password' placeholder="Password" id="password" name="password" register={register} required={true} />
-                    {errors.password && <ErrorText message={errors.password.message} />}
-                    {hasValue !== "" && hasValue.length > 0 && (
-                        <div className='top-8 md:top-9 xl:top-11 right-4 absolute cursor-pointer' onClick={toggleShow}>{show ? <Eye size={18} /> : <EyeClosed size={18} />}</div>
+                    <Input
+                        onChange={(event) => {
+                            toggleHasValue(event.target.value);
+                            setPassword(event.target.value);
+                        }} type={show ? "text" : "password"} label="Password" placeholder="Password" name="password" value={password} required />
+                    {formErrors.password && <ErrorText message={formErrors.password} />}
+                    {hasValue && hasValue.length > 0 && (
+                        <div className="top-8 md:top-9 xl:top-11 right-4 absolute cursor-pointer" onClick={toggleShow}>
+                            {show ? <Eye size={18} /> : <EyeClosed size={18} />}
+                        </div>
                     )}
                 </div>
-                <Button text="Login" loadingText='Signing In....' variant='primary' size='lg' disabled={userLogin.isPending} loading={userLogin.isPending} />
+                <Button text="Login" loadingText="Signing In...." variant="primary" size="lg" disabled={userLogin.isPending} loading={userLogin.isPending} />
             </form>
         </motion.div>
     );
-}
+};
 
 export default Form;
