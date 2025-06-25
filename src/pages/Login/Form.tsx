@@ -46,8 +46,8 @@ const Form = () => {
             });
             setFormErrors(errors);
 
-            // Clear errors after 60 seconds
-            setTimeout(() => setFormErrors({}), 60000);
+            // Clear errors after 2 seconds
+            setTimeout(() => setFormErrors({}), 2000);
             return;
         }
 
