@@ -67,11 +67,22 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Start of texelchain Zendesk Widget script -->
-    <script
-      id="ze-snippet"
-      src="https://static.zdassets.com/ekr/snippet.js?key=fe5b7292-c114-4804-b427-af210c44a341"
-    ></script>
-    <!-- End of texelchain Zendesk Widget script -->
+    <script>
+      (function (d, t) {
+        var BASE_URL = "https://app.chatwoot.com";
+        var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src = BASE_URL + "/packs/js/sdk.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g, s);
+        g.onload = function () {
+          window.chatwootSDK.run({
+            websiteToken: "JG6ZhtTtZghE53fwahFK2c86",
+            baseUrl: BASE_URL,
+          });
+        };
+      })(document, "script");
+    </script>
   </body>
 </html>
