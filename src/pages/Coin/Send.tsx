@@ -114,7 +114,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
         if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
         if (!user?.transactionPin) {
             toast.info("You don't have a Transaction Pin, kindly add one, to continue. Redirecting...");
-            setTimeout(() => navigate("/user/profile?page=pin"), 2000)
+            setTimeout(() => navigate("/user/account?page=pin"), 2000)
         }
         if (user?.transactionPin !== fullPin) return toast.error("Incorrect Pin, kindly try again")
         setIsSubmitting(true);
@@ -227,7 +227,7 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
                                 </button>
                                 <div className="flex justify-between items-center mt-8 text-neutral-400 hover:text-white text-sm">
                                     <button type="button" onClick={closeModal}>Cancel</button>
-                                    <Link to="/user/account?page=profile" className="font-bold text-accent">{!user?.transactionPin ? "Create New Pin" : "Change Pin"}</Link>
+                                    <Link to="/user/account?page=pin" className="font-bold text-accent">{!user?.transactionPin ? "Create New Pin" : "Change Pin"}</Link>
                                 </div>
                             </div>
                         </motion.div>
