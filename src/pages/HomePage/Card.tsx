@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //Images
-import cardFront from "/card_front.jpg";
-import cardBack from "/card_back.jpg";
+import cardFront from "/card_front.svg";
+import cardBack from "/card_back.svg";
 
 //Components
 import { Card, CardContent } from "@/components/ui/card";

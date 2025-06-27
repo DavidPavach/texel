@@ -33,9 +33,7 @@ const Form = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        console.log("The email", email, "Password", password)
-
+        
         const result = loginSchema.safeParse({ email, password });
 
         if (!result.success) {

@@ -9,8 +9,8 @@ import { GetUtility } from "@/services/queries.service";
 
 //Icons and Images
 import { RotateCcw, Copy, CheckCircle, X } from "lucide-react";
-import cardFront from "/card_front.jpg";
-import cardBack from "/card_back.jpg";
+import cardFront from "/card_front.svg";
+import cardBack from "/card_back.svg";
 import card from "/card.svg";
 
 

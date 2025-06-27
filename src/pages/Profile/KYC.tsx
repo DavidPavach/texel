@@ -6,6 +6,7 @@ import Done from "./Done";
 import { Information } from "iconsax-react";
 
 const KYC = ({ user }: { user: User }) => {
+
     return (
         <main>
             {user.kyc && user.kyc.status === "rejected" && (

@@ -4,6 +4,11 @@ import { GetCardRequest } from "@/services/queries.service";
 //Component
 import CardForm from "./CardForm";
 import ErrorDisplay from "@/components/Error";
+import CardAccepted from "./CardAccepted";
+import CardRejected from "./CardRejected";
+
+//Icons
+import { CheckCircle, X } from "lucide-react";
 
 const Card = () => {
 
@@ -34,42 +39,69 @@ const Card = () => {
     return (
         <main className="flex md:flex-row flex-col md:justify-between gap-y-5 mt-10">
             <div className="w-full md:w-[45%] lg:w-[48%]">
-                <CardForm hasApplied={data.data !== null} />
+                {!data.data ? <CardForm hasApplied={false} />
+                    : data.data.status === "pending" ? <CardForm hasApplied={true} />
+                        : data.data.status === "successful" ? <CardAccepted cardNumber={data.data.cardNumber} expiryDate={data.data.expiryDate} />
+                            : data.data.status === "declined" ? <CardRejected /> : <CardForm hasApplied={false} />
+                }
+
             </div>
             <div className="w-full md:w-[45%] lg:w-[48%] text-neutral-100">
-                <div className="bg-black px-4 py-8 border border-neutral-800 rounded-xl">
-                    <h2 className="mb-4 font-bold text-base md:text-lg xl:text-xl">How it Works</h2>
-                    <div className="space-y-4 text-neutral-300">
-                        <div className="flex items-start gap-3">
-                            <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
-                                1
+                {data.data.status === "pending" ?
+                    <div className="bg-black px-4 py-8 border border-neutral-800 rounded-xl">
+                        <h2 className="mb-4 font-bold text-base md:text-lg xl:text-xl">How it Works</h2>
+                        <div className="space-y-4 text-neutral-300">
+                            <div className="flex items-start gap-3">
+                                <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
+                                    1
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-sm md:text-base xl:text-lg">Apply for Card</h3>
+                                    <p className="text-neutral-400">Click the apply button to start your card application process.</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="font-medium text-sm md:text-base xl:text-lg">Apply for Card</h3>
-                                <p className="text-neutral-400">Click the apply button to start your card application process.</p>
-                            </div>
-                        </div>
 
-                        <div className="flex items-start gap-3">
-                            <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
-                                2
+                            <div className="flex items-start gap-3">
+                                <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
+                                    2
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-sm md:text-base xl:text-lg">Make Required Payment</h3>
+                                    <p className="text-neutral-400">View the payment details, read the instructions and send the required amount.</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="font-medium text-sm md:text-base xl:text-lg">Make Required Payment</h3>
-                                <p className="text-neutral-400">View the payment details, read the instructions and send the required amount.</p>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
-                                3
-                            </div>
-                            <div>
-                                <h3 className="font-medium text-sm md:text-base xl:text-lg">Check the Checkbox</h3>
-                                <p className="text-neutral-400">Check the box after payment in order to be able to submit your application.</p>
+                            <div className="flex items-start gap-3">
+                                <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 rounded-full size-5 font-bold text-black">
+                                    3
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-sm md:text-base xl:text-lg">Check the Checkbox</h3>
+                                    <p className="text-neutral-400">Check the box after payment in order to be able to submit your application.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    : data.data.status === "successful" ?
+                        <div className="bg-black px-4 py-8 border border-neutral-800 rounded-xl">
+                            <p className="text-neutral-400">Card Status Summary</p>
+                            <h1 className="font-semibold text-xl md:text-2xl xl:text-3xl"><CheckCircle className="inline text-green-400" /> Verified</h1>
+                            <div className="flex items-start gap-3 mt-10">
+                                <div className="flex flex-shrink-0 justify-center items-center bg-primary mt-0.5 p-1 rounded-full size-6 font-bold text-black">
+                                    <CheckCircle />
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-sm md:text-base xl:text-lg">Make Payment</h3>
+                                    <p className="text-neutral-400">You can now make virtual payment using the card. Contact Support for more details.</p>
+                                </div>
+                            </div>
+                        </div>
+                        : <div className="bg-black px-4 py-8 border border-neutral-800 rounded-xl">
+                            <p className="text-neutral-400">Card Status Summary</p>
+                            <h1 className="font-semibold text-xl md:text-2xl xl:text-3xl"><X className="inline text-red-600" /> Declined</h1>
+                        </div>
+                }
+
+
             </div>
         </main >
     )
