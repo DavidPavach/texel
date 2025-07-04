@@ -108,6 +108,8 @@ const Send = ({ page, coin, prices, balance }: { page: string, coin: string, pri
     const createTransaction = useCreateTransaction();
     const handlePinSubmit = async () => {
 
+        if (user?.kyc?.status !== 'accepted') return toast.error("KYC approval is required for transactions. Reach out to support for more details.");
+        
         //Create transaction data
         const data = { coin, transactionType: page === "send" ? "sent" : page, amount: parseFloat(amount), network: getNetwork(coin), walletAddress: address };
         const fullPin = pin.join("");

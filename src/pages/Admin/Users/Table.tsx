@@ -5,8 +5,12 @@ import { toast } from "react-fox-toast";
 //Hooks
 import { useAdminSuspendUser, useAdminUserKyc } from "@/services/mutations.service";
 
+//Components
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+
 //Icons
-import { Clock, DirectUp, Forbidden, ProfileTick, Unlock } from "iconsax-react";
+import { Clock, CloseCircle, DirectUp, Forbidden, ProfileTick, Unlock } from "iconsax-react";
 
 const Table = ({ users }: { users: User[] }) => {
 
@@ -17,19 +21,6 @@ const Table = ({ users }: { users: User[] }) => {
     const handleViewMore = (userName: string) => {
         searchParams.set("user", userName)
         setSearchParams(searchParams)
-    }
-
-    const getUpdateIcon = (status: "accepted" | "pending" | "rejected") => {
-        switch (status) {
-            case "accepted":
-                return <span className="text-primary hover:text-yellow-700 duration-300"><Clock size={20} variant="Bold" /></span>;
-            case "pending":
-                return <span className="text-green-500 hover:text-green-700 duration-300"><ProfileTick size={20} variant="Bold" /></span>;
-            case "rejected":
-                return <span className="text-primary hover:text-yellow-700 duration-300"><Clock size={20} variant="Bold" /></span>;
-            default:
-                return null;
-        }
     }
 
     const suspendUser = useAdminSuspendUser()
@@ -54,7 +45,7 @@ const Table = ({ users }: { users: User[] }) => {
     const handleKyc = (email: string, status: "accepted" | "pending" | "rejected") => {
 
         setLoadingEmail(email);
-        updateKyc.mutate({ email, kyc: { status: status === "pending" ? "accepted" : "pending" } }, {
+        updateKyc.mutate({ email, kyc: { status: status } }, {
             onSuccess: (response) => {
                 toast.success(response.message || "The user KYC status was updated successfully!");
                 setLoadingEmail(null)
@@ -122,16 +113,30 @@ const Table = ({ users }: { users: User[] }) => {
                                         )}
                                     </button>
                                     <button onClick={() => handleViewMore(user.userName)}><DirectUp variant="Bold" size={18} className="text-blue-400 hover:text-blue-600 duration-300" /></button>
-                                    <button onClick={() => handleKyc(user.email, user.kyc?.status ?? "pending")} disabled={loadingEmail === user.email}>
+                                    <div>
                                         {loadingEmail === user.email ? (
                                             <svg className="mt-1 size-4 animate-spin" viewBox="0 0 24 24">
                                                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                                 <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5 0 0 5 0 12h4z" />
                                             </svg>
                                         ) : (
-                                            getUpdateIcon(user.kyc?.status ?? "pending")
+                                            <Popover>
+                                                <PopoverTrigger className="bg-green-600 px-2 py-0.5 rounded-lg text-xs">Open</PopoverTrigger>
+                                                <PopoverContent className="flex gap-x-5 bg-black border-0 w-44">
+                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "pending")} disabled={loadingEmail === user.email}>
+                                                        <Clock variant="Bold" className="text-primary hover:text-yellow-700 duration-300" />
+                                                    </Button>
+                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "accepted")} disabled={loadingEmail === user.email}>
+                                                        <ProfileTick variant="Bold" className="text-green-500 hover:text-green-700 duration-300" />
+                                                    </Button>
+                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "rejected")} disabled={loadingEmail === user.email}>
+                                                        <CloseCircle variant="Bold" className="text-red-400 hover:text-red-600 duration-300" />
+                                                    </Button>
+                                                </PopoverContent>
+                                            </Popover>
                                         )}
-                                    </button>
+
+                                    </div>
                                 </td>
                             </tr>
                         ))
