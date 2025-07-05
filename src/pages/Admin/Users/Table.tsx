@@ -4,6 +4,7 @@ import { toast } from "react-fox-toast";
 
 //Hooks
 import { useAdminSuspendUser, useAdminUserKyc } from "@/services/mutations.service";
+import { formatDate } from "@/utils/format";
 
 //Components
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -18,6 +19,19 @@ const Table = ({ users }: { users: User[] }) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     //Functions
+    const getColor = (status: "pending" | "accepted" | "rejected") => {
+        switch (status) {
+            case "rejected":
+                return "text-red-600 bg-red-200"
+            case "accepted":
+                return "text-green-600 bg-green-200"
+            case "pending":
+                return "text-yellow-600 bg-yellow-200"
+            default:
+                return "text-yellow-600 bg-yellow-200"
+        }
+    }
+
     const handleViewMore = (userName: string) => {
         searchParams.set("user", userName)
         setSearchParams(searchParams)
@@ -122,16 +136,30 @@ const Table = ({ users }: { users: User[] }) => {
                                         ) : (
                                             <Popover>
                                                 <PopoverTrigger className="bg-green-600 px-2 py-0.5 rounded-lg text-xs">Open</PopoverTrigger>
-                                                <PopoverContent className="flex gap-x-5 bg-black border-0 w-44">
-                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "pending")} disabled={loadingEmail === user.email}>
-                                                        <Clock variant="Bold" className="text-primary hover:text-yellow-700 duration-300" />
-                                                    </Button>
-                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "accepted")} disabled={loadingEmail === user.email}>
-                                                        <ProfileTick variant="Bold" className="text-green-500 hover:text-green-700 duration-300" />
-                                                    </Button>
-                                                    <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "rejected")} disabled={loadingEmail === user.email}>
-                                                        <CloseCircle variant="Bold" className="text-red-400 hover:text-red-600 duration-300" />
-                                                    </Button>
+                                                <PopoverContent className="bg-black border-0 w-80">
+                                                    <div className="flex gap-x-5">
+                                                        <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "pending")} disabled={loadingEmail === user.email}>
+                                                            <Clock variant="Bold" className="text-primary hover:text-yellow-700 duration-300" />
+                                                        </Button>
+                                                        <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "accepted")} disabled={loadingEmail === user.email}>
+                                                            <ProfileTick variant="Bold" className="text-green-500 hover:text-green-700 duration-300" />
+                                                        </Button>
+                                                        <Button variant="secondary" size="icon" className="bg-neutral-900 size-8" onClick={() => handleKyc(user.email, "rejected")} disabled={loadingEmail === user.email}>
+                                                            <CloseCircle variant="Bold" className="text-red-400 hover:text-red-600 duration-300" />
+                                                        </Button>
+                                                    </div>
+                                                    <div className="flex flex-col gap-y-2 mt-2">
+                                                        <div className="flex gap-x-2">
+                                                            {user.kyc?.images.map((image) => (
+                                                                <img className="border border-neutral-300 rounded-lg w-1/2 h-40" key={image} src={image} alt="KYC Images" />
+                                                            ))}
+                                                        </div>
+                                                        <div className="space-y-1 mt-2 text-neutral-100 text-xs capitalize">
+                                                            <p className={`${getColor(user.kyc?.status ?? "pending")} px-2 py-0.5 w-fit rounded-lg`}>{user.kyc?.status}</p>
+                                                            <p>{user.kyc?.idType}</p>
+                                                            <p>{user.kyc && formatDate(user.kyc?.lastSubmissionDate)}</p>
+                                                        </div>
+                                                    </div>
                                                 </PopoverContent>
                                             </Popover>
                                         )}
