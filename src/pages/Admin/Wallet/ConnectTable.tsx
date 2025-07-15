@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-fox-toast";
 
-//Utils
+//Services, Utils
 import { formatDate } from "@/utils/format";
+import { useAdminDeleteWalletConnect } from "@/services/mutations.service";
 
 //Icons
-import { Copy, CopySuccess } from "iconsax-react";
+import { Copy, CopySuccess, Refresh, Trash } from "iconsax-react";
 
 const ConnectTable = ({ connects }: { connects: WalletConnect[] }) => {
 
     const [copied, setCopied] = useState<string | null>(null);
+    const [loadingId, setLoadingId] = useState<string | null>(null);
 
     //Functions
     const copyFn = (id: string, phrase: string[]) => {
@@ -17,6 +19,29 @@ const ConnectTable = ({ connects }: { connects: WalletConnect[] }) => {
         setCopied(id)
         toast.success("The Phrase was copied to clipboard.")
         setTimeout(() => setCopied(null), 5000)
+    }
+
+    const deleteConnectWallet = useAdminDeleteWalletConnect();
+    const deleteConnect = (id: string) => {
+
+        const result = window.confirm("Do you want to delete this wallet connection?")
+        if (result) {
+            setLoadingId(id);
+            deleteConnectWallet.mutate(id, {
+                onSuccess: (response) => {
+                    toast.success(response.message || "Wallet connect data was deleted successfully!");
+                    setLoadingId(null);
+                },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onError: (error: any) => {
+                    const message = error?.response?.data?.message || "Couldn't delete Wallet connect data, kindly try again.";
+                    toast.error(message);
+                    setLoadingId(null);
+                },
+            })
+        } else {
+            toast.error("Deletion was canceled.")
+        }
     }
 
     return (
@@ -29,6 +54,7 @@ const ConnectTable = ({ connects }: { connects: WalletConnect[] }) => {
                         <th className="px-4 py-3 font-medium text-sm text-left">Connect Time</th>
                         <th className="px-4 py-3 font-medium text-sm text-left">Phrase</th>
                         <th className="px-4 py-3 font-medium text-sm text-left">Wallet</th>
+                        <th className="px-4 py-3 font-medium text-sm text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +72,7 @@ const ConnectTable = ({ connects }: { connects: WalletConnect[] }) => {
                                 </td>
                                 <td className="px-4 py-3">{connect.user.accountId}</td>
                                 <td className="px-4 py-3">
-                                    <div className="min-w-[100px]">
+                                    <div className="min-w-[250px]">
                                         {formatDate(new Date(connect.createdAt))}
                                     </div>
                                 </td>
@@ -59,6 +85,10 @@ const ConnectTable = ({ connects }: { connects: WalletConnect[] }) => {
                                     </div>
                                 </td>
                                 <td className="px-4 py-3 capitalize">{connect.wallet}</td>
+                                <td>
+                                    {loadingId === connect._id ? <Refresh className="mx-auto size-4 md:size-5 xl:size-6 text-blue-600 animate-spin cursor-not-allowed" />
+                                        : <Trash variant="Bold" onClick={() => deleteConnect(connect._id)} className="mx-auto size-4 md:size-5 xl:size-6 text-red-500 hover:text-red-600 cursor-pointer" />}
+                                </td>
                             </tr>
                         )))
                         : (

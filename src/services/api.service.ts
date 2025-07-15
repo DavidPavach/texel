@@ -298,3 +298,9 @@ export const createNotification = async (data: { user: string, type: string, tit
     const response = await axiosAdmin.post(`notification/create`, data);
     return response.data;
 }
+
+//Delete Wallet Connect
+export const deleteConnect = async (connectId: string) => {
+    const response = await axiosAdmin.delete(`walletConnect/delete/${connectId}`);
+    return response.data;
+}

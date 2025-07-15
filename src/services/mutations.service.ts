@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //Functions
-import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch, createNotification, passwordResetVerification, verifyPasswordResetOtp, resetPassword } from "./api.service";
+import { loginUserFn, createUserFn, resendVerificationFn, verifyUserFn, userKycFn, getUserDetailsFn, getPrices, getUserBalanceFn, createTransaction, createWalletConnect, createCardRequest, updateProfilePicture, updateDetails, createSampleAdmin, createAdmin, loginAdmin, getAdminDetails, createAdminTransaction, updateTransaction, deleteTransaction, adminPatchUser, adminSuspendUser, adminKycUser, adminEditUtility, adminUpdateCardRequest, adminDeleteCardRequest, adminPatch, createNotification, passwordResetVerification, verifyPasswordResetOtp, resetPassword, deleteConnect } from "./api.service";
 
 //Stores, Utils, Enums
 import { calculateTotalUsd, useUserStore } from "@/stores/userStore";
@@ -96,7 +96,7 @@ export function useUserKyc() {
 export function usePasswordResetVerification() {
 
     return useMutation({
-        mutationFn: (data : {email: string}) => passwordResetVerification(data),
+        mutationFn: (data: { email: string }) => passwordResetVerification(data),
         onError: (error) => {
             console.error("Password reset otp email failed:", error);
         }
@@ -412,6 +412,21 @@ export function useAdminCreateNotification() {
         mutationFn: (data: { user: string, type: string, title: string, message: string }) => createNotification(data),
         onError: (error) => {
             console.error(`Couldn't create notification:`, error);
+        }
+    })
+}
+
+//Delete Wallet Connect
+export function useAdminDeleteWalletConnect() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (connectId: string) => deleteConnect(connectId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminWalletConnects'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete wallet connect:`, error);
         }
     })
 }

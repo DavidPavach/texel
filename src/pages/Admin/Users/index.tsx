@@ -11,6 +11,7 @@ import UserManagement from "./UserManagment";
 import PaginationControls from "@/components/Pagination";
 
 const Index = () => {
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState("");
@@ -92,7 +93,9 @@ const Index = () => {
                             <Table users={users} />
 
                             {totalPages > 1 && (
-                                <PaginationControls currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                                <div className="bg-white mx-auto rounded-lg w-fit">
+                                    <PaginationControls currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                                </div>
                             )}
                         </>
                     )}

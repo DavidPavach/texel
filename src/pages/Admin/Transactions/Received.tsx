@@ -44,7 +44,9 @@ const Received = ({ prices }: { prices: Prices }) => {
                 <div className="mt-10">
                     <Table transactions={transactions} prices={prices} />
                     {totalPages > 1 && (
-                        <PaginationControls currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                        <div className="bg-white mx-auto rounded-lg w-fit">
+                            <PaginationControls currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                        </div>
                     )}
                 </div>
             )}
