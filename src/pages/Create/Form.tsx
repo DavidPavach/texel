@@ -38,6 +38,7 @@ const Form = () => {
     // Data validation with Zod and React Hook Form
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateInput>({
         resolver: zodResolver(createSchema),
+        reValidateMode: "onBlur"
     });
 
 
