@@ -59,7 +59,7 @@ const Form = ({ email }: { email: string }) => {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-y-5">
                     <div className="flex flex-col gap-y-2">
                         <label htmlFor="newPin" className="font-medium">New PIN</label>
-                        <input id="newPin" type="text" inputMode="numeric" value={newPin} placeholder="New Form"
+                        <input id="newPin" type="text" inputMode="numeric" value={newPin} placeholder="New Pin"
                             onChange={(e) => {
                                 const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 6);
                                 setNewPin(digitsOnly);

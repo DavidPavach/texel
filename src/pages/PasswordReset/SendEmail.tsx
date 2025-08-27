@@ -23,6 +23,7 @@ const SendEmail = () => {
     // Data validation with Zod and React Hook Form
     const { register, handleSubmit, reset, formState: { errors } } = useForm<PasswordResetInput>({
         resolver: zodResolver(passwordResetSchema),
+        reValidateMode: "onBlur"
     });
 
     const passwordReset = usePasswordResetVerification()

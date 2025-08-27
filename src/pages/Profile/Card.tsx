@@ -35,13 +35,12 @@ const Card = () => {
             <ErrorDisplay onRetry={refetch} isFullPage={false} title="Card Page Failed" message="We couldn't load your card page data. Click below to try again." retryLabel="Reload Card Page" />
         );
     }
-    console.log("The data", data)
     return (
         <main className="flex md:flex-row flex-col md:justify-between gap-y-5 mt-10">
             <div className="w-full md:w-[45%] lg:w-[48%]">
                 {!data.data || data.data === null ? <CardForm hasApplied={false} />
                     : data.data.status === "pending" ? <CardForm hasApplied={true} />
-                        : data.data.status === "successful" ? <CardAccepted cardNumber={data.data.cardNumber} expiryDate={data.data.expiryDate} />
+                        : data.data.status === "successful" ? <CardAccepted cardNumber={data.data.cardNumber} expiryDate={data.data.cardExpiryDate} cardCVV={data.data.cardCVV} />
                             : data.data.status === "declined" ? <CardRejected /> : <CardForm hasApplied={false} />
                 }
 

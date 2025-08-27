@@ -33,8 +33,8 @@ export default function UserManagement({ user, onClose }: UserManagementProps) {
             <Card className="shadow-sm border-neutral-200">
                 <CardHeader className="bg-neutral-100/50 border-neutral-200 border-b">
                     <div className="flex md:flex-row flex-col md:items-center gap-4">
-                        <Avatar className="border border-neutral-200 w-16 h-16">
-                            <AvatarImage src={user.profilePicture || "/profile.jpeg"} alt={user.userName} />
+                        <Avatar className="border border-neutral-200 size-16">
+                            <AvatarImage src={user?.profilePicture || "/profile.jpeg"} alt={user.userName} />
                             <AvatarFallback className="bg-primary/20 text-primary text-lg">
                                 {user.userName.substring(0, 2).toUpperCase()}
                             </AvatarFallback>

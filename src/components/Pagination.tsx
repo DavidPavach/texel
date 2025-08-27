@@ -26,7 +26,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
                                 e.preventDefault();
                                 onPageChange(currentPage - 1);
                             }}
-                            className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                         />
                     </PaginationItem>
 
@@ -37,8 +37,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
                                 onClick={(e) => {
                                     e.preventDefault();
                                     onPageChange(pageNumber);
-                                }}
-                            >
+                                }}>
                                 {pageNumber}
                             </PaginationLink>
                         </PaginationItem>
@@ -50,7 +49,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
                                 e.preventDefault();
                                 onPageChange(currentPage + 1);
                             }}
-                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                         />
                     </PaginationItem>
                 </PaginationContent>

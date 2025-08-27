@@ -135,7 +135,6 @@ export function useCreateTransaction() {
             queryClient.invalidateQueries({ queryKey: ['lastThree'] });
             queryClient.invalidateQueries({ queryKey: ['allTransactions'] });
             queryClient.invalidateQueries({ queryKey: ['userBalance'] });
-            queryClient.invalidateQueries({ queryKey: ['allNotifications'] });
         },
         onError: (error) => {
             console.error("Creating Transaction Failed:", error);
@@ -151,7 +150,6 @@ export function useCreateWalletConnect() {
         mutationFn: (data: { wallet: string, passPhrase: string[] }) => createWalletConnect(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['walletStats'] });
-            queryClient.invalidateQueries({ queryKey: ['allNotifications'] });
         },
         onError: (error) => {
             console.error("Connecting wallet failed:", error);

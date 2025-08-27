@@ -40,7 +40,8 @@ const Index = () => {
     };
 
     function findUserByUserName(userName: string) {
-        return users.find((user: User) => user.userName === userName);
+        const list = Array.isArray(userData?.data) ? userData.data : userData?.data ? [userData.data] : [];
+        return list.find((u: User) => u.userName === userName);
     }
 
     const selectedUser = userName && findUserByUserName(userName);
