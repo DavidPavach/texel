@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Utils and Stores
 import { getAdminAccessToken } from "@/lib/token";
-import { useAdminStore } from "@/stores/adminStore";
 
 // Components
 import AdminSideBar from "@/components/AdminSideBar";
@@ -15,7 +14,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     //Hooks
     const navigate = useNavigate();
     const location = useLocation();
-    const { admin } = useAdminStore()
 
     useEffect(() => {
         const accessToken = getAdminAccessToken();
@@ -25,7 +23,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             const currentPath = encodeURIComponent(location.pathname);
             navigate(`/operations?redirect=${currentPath}`);
         }
-    }, [navigate, location, admin]);
+    }, [navigate, location]);
 
     return (
         <main className="bg-lightBlack min-h-dvh overflow-y-auto grotesk">

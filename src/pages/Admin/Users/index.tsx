@@ -15,9 +15,9 @@ const Index = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState("");
-    const userName = searchParams.get("user");
+    const userName = searchParams.get("user") || "zedpriest";
 
-    const { data: userData, isLoading: userLoading, error } = useSearchUser(searchValue);
+    const { data: userData, isLoading: userLoading, error } = useSearchUser(userName);
     const { data, isFetching, isLoading, isError, refetch } = GetAllUsers(currentPage.toString(), "30");
 
     const users = data?.data?.data || [];
@@ -64,7 +64,7 @@ const Index = () => {
                 </div>
             ) : (
                 <div className="mt-10">
-                    {userName ? (
+                    {userName &&  selectedUser ? (
                         <UserManagement user={selectedUser} onClose={clearParam} />
                     ) : (
                         <>
