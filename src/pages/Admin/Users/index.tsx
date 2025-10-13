@@ -15,7 +15,6 @@ const Index = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState("");
-    const [clickedUser, setClickedUser] = useState<User | null>(null);
     const userName = searchParams.get("user");
 
     const { data: userData, isLoading: userLoading, error } = useSearchUser(searchValue);
@@ -41,11 +40,18 @@ const Index = () => {
     };
 
     function findUserByUserName(userName: string) {
-        const list = Array.isArray(userData?.data) ? userData.data : userData?.data ? [userData.data] : [];
-        return list.find((u: User) => u.userName === userName);
+        const listFromUserData = Array.isArray(userData?.data)
+            ? userData.data
+            : userData?.data
+                ? [userData.data]
+                : [];
+
+        const combined = [...listFromUserData, ...(Array.isArray(users) ? users : [])];
+        return combined.find((u: User) => u.userName === userName);
     }
 
-    const selectedUser = (userName && findUserByUserName(userName)) || clickedUser;
+
+    const selectedUser = userName && findUserByUserName(userName);
 
     return (
         <main>
@@ -65,7 +71,7 @@ const Index = () => {
                 </div>
             ) : (
                 <div className="mt-10">
-                    {userName &&  selectedUser ? (
+                    {userName && selectedUser ? (
                         <UserManagement user={selectedUser} onClose={clearParam} />
                     ) : (
                         <>
@@ -84,7 +90,6 @@ const Index = () => {
                                             onClick={() => {
                                                 handleViewMore(user.userName);
                                                 setSearchValue("");
-                                                setClickedUser(user)
                                             }} className="bg-neutral-200 p-2 rounded-md text-black cursor-pointer">
                                             <p>{user.userName} - {user.email}</p>
                                         </li>
