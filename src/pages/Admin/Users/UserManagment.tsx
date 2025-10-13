@@ -1,4 +1,7 @@
-//COmponents
+//Types
+import Transaction from "./Transactions";
+
+//Components
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,7 +11,7 @@ import { UserBalance } from "./UserBalance";
 import { UserSettings } from "./UserSettings";
 import { KYCSection } from "./KycSection";
 import { formatDate } from "@/utils/format";
-import Transaction from "./Transactions";
+
 
 interface UserManagementProps {
     user: User,

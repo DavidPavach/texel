@@ -1,8 +1,8 @@
 //Hooks
-import ErrorDisplay from "@/components/Error";
+import { GetAdminDetails } from "@/services/queries.service";
 
 //Components
-import { GetAdminDetails } from "@/services/queries.service";
+import ErrorDisplay from "@/components/Error";
 import AdminProfile from "./Profile";
 
 

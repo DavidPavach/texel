@@ -15,9 +15,9 @@ const Index = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState("");
-    const userName = searchParams.get("user") || "zedpriest";
+    const userName = searchParams.get("user");
 
-    const { data: userData, isLoading: userLoading, error } = useSearchUser(userName);
+    const { data: userData, isLoading: userLoading, error } = useSearchUser(searchValue);
     const { data, isFetching, isLoading, isError, refetch } = GetAllUsers(currentPage.toString(), "30");
 
     const users = data?.data?.data || [];

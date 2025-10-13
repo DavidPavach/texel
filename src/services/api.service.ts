@@ -288,7 +288,7 @@ export const adminDeleteCardRequest = async (requestId: string) => {
 }
 
 //Edit an Admin
-export const adminPatch = async (data: { adminId: string, email?: string, password?: string, role?: "admin" | "super_admin", isSuspended: boolean }) => {
+export const adminPatch = async (data: { adminId: string, email?: string, password?: string, role?: "admin" | "super_admin", isSuspended?: boolean }) => {
     const response = await axiosAdmin.patch(`admins/updateAdmin`, data);
     return response.data;
 }
