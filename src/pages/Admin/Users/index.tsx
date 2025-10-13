@@ -15,6 +15,7 @@ const Index = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState("");
+    const [clickedUser, setClickedUser] = useState<User | null>(null);
     const userName = searchParams.get("user");
 
     const { data: userData, isLoading: userLoading, error } = useSearchUser(searchValue);
@@ -44,7 +45,7 @@ const Index = () => {
         return list.find((u: User) => u.userName === userName);
     }
 
-    const selectedUser = userName && findUserByUserName(userName);
+    const selectedUser = (userName && findUserByUserName(userName)) || clickedUser;
 
     return (
         <main>
@@ -83,6 +84,7 @@ const Index = () => {
                                             onClick={() => {
                                                 handleViewMore(user.userName);
                                                 setSearchValue("");
+                                                setClickedUser(user)
                                             }} className="bg-neutral-200 p-2 rounded-md text-black cursor-pointer">
                                             <p>{user.userName} - {user.email}</p>
                                         </li>
