@@ -27,7 +27,6 @@ export default function Index() {
         message: "",
     })
     const [errors, setErrors] = useState<Partial<NotificationFormData>>({})
-    const [loading, setLoading] = useState<boolean>(false);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
     const [searchValue, setSearchValue] = useState("");
 
@@ -71,7 +70,6 @@ export default function Index() {
         setFormData({ user: "", type: "", title: "", message: "" })
         setSelectedUserId(null); 
         setSearchValue('')
-        setLoading((prev) => !prev)
     }
 
     const createNotification = useAdminCreateNotification();
@@ -79,7 +77,6 @@ export default function Index() {
         e.preventDefault();
 
         if (!selectedUserId) return toast.error("Kindly Search and Select a User")
-        setLoading(true)
         if (validateForm()) {
             createNotification.mutate({ ...formData, user: selectedUserId }, {
                 onSuccess: (response) => {
@@ -218,9 +215,9 @@ export default function Index() {
                         </div>
 
                         <div className="pt-4 border-neutral-200 border-t">
-                            <Button type="submit" disabled={loading} className="bg-primary hover:bg-primary/90 font-medium text-black">
+                            <Button type="submit" disabled={createNotification.isPending} className="bg-primary hover:bg-primary/90 font-medium text-black">
                                 <Send className="mr-2 size-4" />
-                                {loading ? "Sending..." : "Send Notification"}
+                                {createNotification.isPending ? "Sending..." : "Send Notification"}
                             </Button>
                         </div>
                     </form>

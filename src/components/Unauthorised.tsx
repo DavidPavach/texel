@@ -16,7 +16,7 @@ export default function Unauthorised() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gradient-to-br from-lightBlack to-black p-4 min-h-screen">
+        <div className="flex flex-col justify-center items-center bg-gradient-to-br from-lightBlack to-black p-4 min-h-dvh">
             <div className="w-full max-w-xl">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="bg-[#fdfbfb] shadow-xl rounded-2xl overflow-hidden">
                     <div className="bg-gradient-to-r from-red-500 to-red-600 p-6 text-center">

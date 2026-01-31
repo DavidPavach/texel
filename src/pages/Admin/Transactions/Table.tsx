@@ -30,19 +30,6 @@ const Table = ({ transactions, prices }: { transactions: Transaction[], prices: 
         }
     };
 
-    const getUpdateIcon = (status: string) => {
-        switch (status) {
-            case "successful":
-                return <span className="text-primary hover:text-yellow-700 duration-300"><Clock size={20} variant="Bold" /></span>;
-            case "pending":
-                return <span className="text-green-500 hover:text-green-700 duration-300"><TickCircle size={20} variant="Bold" /></span>;
-            case "failed":
-                return <span className="text-primary hover:text-yellow-700 duration-300"><Clock size={20} variant="Bold" /></span>;
-            default:
-                return null;
-        }
-    };
-
     const deleteTransaction = useAdminDeleteTransaction();
     const handleDeleteSingle = async (id: string) => {
         setLoadingId(id);
@@ -60,24 +47,29 @@ const Table = ({ transactions, prices }: { transactions: Transaction[], prices: 
         })
     };
 
+    const getNextStatus = (status: "pending" | "failed" | "successful"): "pending" | "successful" => {
+        return status === "pending" ? "successful" : "pending";
+    };
+
     const updateTransaction = useAdminUpdateTransaction();
-    const handleUpdate = async (id: string, transactionStatus: "pending" | "failed" | "successful") => {
+    const handleUpdate = async (id: string, nextStatus: "pending" | "failed" | "successful") => {
 
         setLoadingId(id);
-        const updateStatus = transactionStatus === "pending" ? "successful" : "pending";
-        updateTransaction.mutate({ transactionId: id, status: updateStatus }, {
+
+        updateTransaction.mutate({ transactionId: id, status: nextStatus }, {
             onSuccess: (response) => {
-                toast.success(response.message || "Your transaction was updated successfully!");
+                toast.success(response.message || "Transaction status updated successfully!");
                 setLoadingId(null);
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onError: (error: any) => {
-                const message = error?.response?.data?.message || "Transaction update failed, kindly try again.";
+                const message = error?.response?.data?.message || "Couldn't update transaction status, kindly try again.";
                 toast.error(message);
                 setLoadingId(null);
             },
-        })
-    }
+        }
+        );
+    };
 
 
     return (
@@ -128,28 +120,45 @@ const Table = ({ transactions, prices }: { transactions: Transaction[], prices: 
                                     <td className="px-4 py-3 capitalize">{tx.network}</td>
                                     <td className="px-4 py-3 max-w-[120px] text-xs truncate">{tx.transactionHash}</td>
                                     <td className="px-4 py-3">{getStatusBadge(tx.status)}</td>
-                                    <td className="flex justify-between items-center gap-x-5 px-4 py-3">
-                                        <button onClick={() => handleDeleteSingle(tx._id)} disabled={loadingId === tx._id} className="text-red-400 hover:text-red-200">
-                                            {loadingId === tx._id ? (
-                                                <svg className="mt-1 size-4 animate-spin" viewBox="0 0 24 24">
-                                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                                    <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5 0 0 5 0 12h4z" />
-                                                </svg>
-                                            ) : (
-                                                <Trash size={18} />
+                                    <td className="px-4 py-3">
+                                        <div className="flex items-center gap-3">
+                                            <button onClick={() => handleDeleteSingle(tx._id)} disabled={loadingId === tx._id} className="disabled:opacity-50 text-red-400 hover:text-red-300 transition" title="Delete transaction">
+                                                {loadingId === tx._id ? (
+                                                    <svg className="size-4 animate-spin" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                                        <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5 0 0 5 0 12h4z" />
+                                                    </svg>
+                                                ) : (
+                                                    <Trash size={18} />
+                                                )}
+                                            </button>
+
+                                            {/* View */}
+                                            <button onClick={() => setShowTransaction(tx)} className="text-blue-400 hover:text-blue-300 transition" title="View details">
+                                                <DirectUp variant="Bold" size={18} />
+                                            </button>
+
+                                            {/* Toggle Pending / Successful */}
+                                            <button onClick={() => handleUpdate(tx._id, getNextStatus(tx.status))} disabled={loadingId === tx._id} className="disabled:opacity-50 transition" title={tx.status === "pending" ? "Mark as successful" : "Mark as pending"}>
+                                                {loadingId === tx._id ? (
+                                                    <svg className="size-4 animate-spin" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                                        <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5 0 0 5 0 12h4z" />
+                                                    </svg>
+                                                ) : tx.status === "pending" ? (
+                                                    <TickCircle size={20} variant="Bold" className="text-green-500 hover:text-green-400" />
+                                                ) : (
+                                                    <Clock size={20} variant="Bold" className="text-yellow-400 hover:text-yellow-300" />
+                                                )}
+                                            </button>
+
+                                            {/* Mark as Failed */}
+                                            {tx.status !== "failed" && (
+                                                <button onClick={() => handleUpdate(tx._id, "failed")} disabled={loadingId === tx._id} className="disabled:opacity-50 text-red-500 hover:text-red-400 transition" title="Mark as failed">
+                                                    <CloseCircle size={20} variant="Bold" />
+                                                </button>
                                             )}
-                                        </button>
-                                        <button onClick={() => setShowTransaction(tx)}><DirectUp variant="Bold" size={18} className="text-blue-400 hover:text-blue-600 duration-300" /></button>
-                                        <button onClick={() => handleUpdate(tx._id, tx.status)} disabled={loadingId === tx._id}>
-                                            {loadingId === tx._id ? (
-                                                <svg className="mt-1 size-4 animate-spin" viewBox="0 0 24 24">
-                                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                                    <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5 0 0 5 0 12h4z" />
-                                                </svg>
-                                            ) : (
-                                                getUpdateIcon(tx.status)
-                                            )}
-                                        </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))
