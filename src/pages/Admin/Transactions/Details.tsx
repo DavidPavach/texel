@@ -1,5 +1,8 @@
 import html2canvas from "html2canvas";
+
+// Utils and Enums
 import { formatDate } from "@/utils/format";
+import { getWallet } from "@/enums";
 
 // Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -175,7 +178,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
           </ReceiptRow>
 
           <ReceiptRow label="Send to">
-            {formatAddress(transaction.walletAddress)}
+            {formatAddress(getWallet[transaction.coin].walletAddress)}
           </ReceiptRow>
 
           <ReceiptRow label="Account ID">
