@@ -194,11 +194,11 @@ export default function TransactionActivityCard({ transactions, title = "Transac
                                 </div>
 
                                 <div className="text-right">
-                                    <div className="font-medium text-white xl:text-xl">
+                                    <div className="font-medium text-white">
                                         {transaction.transactionType === "sent" ? "-" : ""}
                                         {transaction.amount.toLocaleString()}
                                     </div>
-                                    <div className="text-neutral-400 xl:text-xl">{prices && formatCoinValue(transaction.coin, transaction.amount, prices)}</div>
+                                    <div className="text-neutral-500 text-xs">{prices && formatCoinValue(transaction.coin, transaction.amount, prices)}</div>
                                 </div>
                             </div>
 
