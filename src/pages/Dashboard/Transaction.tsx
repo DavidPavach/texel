@@ -2,13 +2,15 @@
 import TransactionActivityCard from "./TransactionCard";
 
 //Components
-import { GetUserLastThreeTransactions } from "@/services/queries.service";
+import { GetAllTransactions } from "@/services/queries.service";
 import ErrorDisplay from "@/components/Error";
+
+// GetUserLastThreeTransactions
 
 
 const Transaction = () => {
 
-    const { data, isLoading, isError, isFetching, refetch } = GetUserLastThreeTransactions();
+    const { data, isLoading, isError, isFetching, refetch } = GetAllTransactions("1", "8");
 
     return (
         <main>
@@ -26,7 +28,7 @@ const Transaction = () => {
                     ))}
                 </div>
             ) : (
-                <TransactionActivityCard title="Recent Activity" transactions={data.data} />
+                <TransactionActivityCard title="Recent Activity" transactions={data.data.data} />
             )}
         </main>
     );
