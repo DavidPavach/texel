@@ -17,7 +17,7 @@ import card from "/card.svg";
 
 export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
 
-    //States
+    // States
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
     const [showToast, setShowToast] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -26,11 +26,11 @@ export default function CardForm({ hasApplied }: { hasApplied: boolean }) {
     const [timeLeft, setTimeLeft] = useState(10);
     const { data, isError } = GetUtility(utilityId);
 
-    //Constants
+    // Constants
     const address = getWallet["ethereum"].walletAddress;
     const coinQrCode = getWallet["ethereum"].qrCode;
     const coinNetwork = getWallet["ethereum"].network;
-    let cardPrice: number = 1600;
+    let cardPrice: number = 3800;
     if (!isError && data?.data?.cardPrice != null) {
         cardPrice = data.data.cardPrice;
     }
