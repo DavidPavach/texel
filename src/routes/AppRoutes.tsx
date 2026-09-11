@@ -128,8 +128,8 @@ const CombinedError = () => {
     return (
         <div className="flex justify-center items-center bg-slate-950 px-4 w-full h-dvh text-center">
             <div>
-                <p className="mb-2 text-[11px] text-red-400 md:text-xs xl:text-sm">502</p>
-                <h1 className="font-bold text-white text-xl md:text-2xl xl:text-3xl">Bad Gateway</h1>
+                <p className="mb-2 text-red-400">502</p>
+                <h1 className="text-white text-xl md:text-2xl xl:text-3xl">Bad Gateway</h1>
             </div>
         </div>
     );
