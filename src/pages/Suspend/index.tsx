@@ -77,7 +77,7 @@ export default function Index() {
                             <p className="mb-3 text-neutral-300 text-sm">
                                 Have questions? Our support team is here to help explain the situation.
                             </p>
-                            <Link to={`mailto:support@texelchain.org?subject=Account Suspension - Case ${user && user.accountId || "TXT23456"}`}
+                            <Link to={`mailto:support@texelchaincore.org?subject=Account Suspension - Case ${user && user.accountId || "TXT23456"}`}
                                 className="font-medium text-blue-400 hover:text-blue-300 text-sm transition-colors">
                                 support@texelchain.org
                             </Link>

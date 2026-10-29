@@ -38,7 +38,7 @@ export default function Footer() {
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 text-neutral-300">
                             <Mail className="size-4" />
-                            <span>support@texelchain.org</span>
+                            <span>support@texelchaincore.org</span>
                         </div>
                     </div>
                 </div>
